@@ -10,7 +10,9 @@ const RoomSchema = new Schema({
     },
     seats:[{
         blockName:String,
-        nbOfSeats:Number,
+        rowSeats:[{
+            name:String
+        }],
     }]
 
 });

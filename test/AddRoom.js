@@ -5,16 +5,36 @@ const RoomModel = require("../Server/modules/Room");
 
 
 const Room1 = new RoomModel({
-    name: 'queen',
+    name: 'Balkis',
     seats:[
         {
             blockName:"A", 
-            nbOfSeats:5
+            rowSeats:[
+                {
+                    name:"A1"
+                },
+                {
+                    name:"A2"
+                },
+                {
+                    name:"A3"
+                }
+            ]
         }, 
         {
             blockName:"B", 
-            nbOfSeats:4
-        }
+            rowSeats:[
+                {
+                    name:"AB"
+                },
+                {
+                    name:"B2"
+                },
+                {
+                    name:"B3"
+                }
+            ]
+        },
     ]
     
 });   
