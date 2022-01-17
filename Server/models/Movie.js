@@ -2,13 +2,15 @@ const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
     title : String,
-    description : [{
-       aboutMovie: String,
-       actors: [String]
-    }],
+    releasedate: String,
+    plot: String,
+    director: String,
+    actors: [String],
     fromDate : Date,
     toDate : Date,
-    duration: Number,
+    runtime: Number,
+    technology: String,
+    price: Number,
     Availability: Number,
     dateTime:[{
         day : Date,
@@ -18,6 +20,6 @@ const movieSchema = new mongoose.Schema({
         },
         times: [String]
     }]
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Movie', movieSchema)

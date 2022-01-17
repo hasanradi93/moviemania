@@ -6,8 +6,8 @@ const branchSchema = new mongoose.Schema({
     room :  [{
         type: mongoose.SchemaTypes.ObjectId,
         ref:"Room"}], 
-  
-    })
+         
+    }, { timestamps: true })
 
 
 module.exports = mongoose.model('Branch', branchSchema)
