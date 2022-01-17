@@ -9,12 +9,12 @@ const movieModel=require('../Server/modules/Movie.js')
 const addMovie=new movieModel({
     title : 'Lord of the rings',
     description : [{
-        aboutMovie: 'shire',
+        plot: 'shire',
         actors: ["frodo", "sam"]
      }],
     fromDate : Date.now(),
     toDate : Date.now(),
-    duration: 120,
+    runtime: 120,
     Availability: 1,
     dateTime:[{
         day : Date.now(),

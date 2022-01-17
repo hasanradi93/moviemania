@@ -13,10 +13,9 @@ const ticketSchema = new mongoose.Schema({
     roomId : {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Room"}, 
-        price: Number,
     date: Date,
     times: String
-    })
+    }, { timestamps: true })
 
 
 module.exports = mongoose.model('Ticket', ticketSchema)
