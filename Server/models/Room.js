@@ -9,7 +9,7 @@ const RoomSchema = new Schema({
         unique: true,
     },
     seats:[{
-        blockName:String,
+        block:String,
         rowSeats:[{
             name:String
         }],

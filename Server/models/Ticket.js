@@ -14,7 +14,11 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Room"}, 
     date: Date,
-    times: String
+    times: String,
+    seat: {
+        block: String,
+        rowSeats: String
+    }
     }, { timestamps: true })
 
 
