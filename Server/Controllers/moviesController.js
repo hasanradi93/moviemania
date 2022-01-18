@@ -23,11 +23,7 @@ exports.addMovie = async(req, res) => {
         technology: req.body.technology,
         price:req.body.price,
         Availability: req.body.Availability,
-        times: req.body.dateTime.times,
-        dateTime:[{
-            day : req.body.dateTime.day,
-            room: req.body.dateTime.room
-        }]
+        dateTime: req.body.dateTime
     });
   
     try {

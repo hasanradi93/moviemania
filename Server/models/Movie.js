@@ -13,13 +13,13 @@ const movieSchema = new mongoose.Schema({
     technology: String,
     price: Number,
     Availability: Number,
-    times: [String],
     dateTime:[{
         day : Date,
         room: {
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Room"
-        }
+        },
+        times: [String]
     }]
 }, { timestamps: true })
 
