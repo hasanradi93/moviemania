@@ -1,5 +1,7 @@
 require('../models/connectDB')
+const { json } = require('express');
 const Movie = require('../models/Movie')
+const Room = require('../models/Room')
 
 exports.movies = async(req, res) => {  
     try {
@@ -80,4 +82,19 @@ exports.addMovie = async(req, res) => {
     } catch (error) {
         res.status(404).json( {message: error })
     } 
+}
+
+//MOVIE DETAILS
+
+exports.movie = async(req, res) => {  
+  try {
+      let title =  req.params.name
+      const movie = await Movie.find({"title" : title })   
+      let roomId = movie[0].dateTime[0].room 
+      const movieRoom = await Room.findById({_id:roomId})
+      console.log(movieRoom)
+      res.json({"movie" : movie, "movieRoom" : movieRoom})
+  } catch (error) {
+      res.status(404).json( {message: error })
+  } 
 }
