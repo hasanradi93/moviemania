@@ -10,24 +10,22 @@ exports.movies = async(req, res) => {
     } 
 }
 
-let objMovie= {
-    title : req.body.title,
-    releasedate: req.body.releasedate,
-    plot:req.body.plot,
-    director: req.body.director,
-    actors: req.body.actors,
-    fromDate : req.body.fromDate,
-    toDate :req.body.toDate,
-    runtime: req.body.runtime,
-    technology: req.body.technology,
-    price:req.body.price,
-    Availability: req.body.Availability,
-    dateTime:req.body.dateTime
-}
-
 exports.addMovie = async(req, res) => {
-    const newMovie = new Movie(objMovie);
-    console.log(req.body.dateTime)
+    const newMovie = new Movie({
+      title : req.body.title,
+      releasedate: req.body.releasedate,
+      plot:req.body.plot,
+      director: req.body.director,
+      actors: req.body.actors,
+      fromDate : req.body.fromDate,
+      toDate :req.body.toDate,
+      runtime: req.body.runtime,
+      technology: req.body.technology,
+      price:req.body.price,
+      Availability: req.body.Availability,
+      dateTime:req.body.dateTime
+  });
+
     try {
       await newMovie.save();
       res.json(newMovie);
@@ -38,7 +36,20 @@ exports.addMovie = async(req, res) => {
 
   exports.updateMovie = async(req, res) => {
     const movieId = req.params.id;
-    const newMovie =objMovie;
+    const newMovie ={
+      title : req.body.title,
+      releasedate: req.body.releasedate,
+      plot:req.body.plot,
+      director: req.body.director,
+      actors: req.body.actors,
+      fromDate : req.body.fromDate,
+      toDate :req.body.toDate,
+      runtime: req.body.runtime,
+      technology: req.body.technology,
+      price:req.body.price,
+      Availability: req.body.Availability,
+      dateTime:req.body.dateTime
+  };
     try {
       const updateMovie = await Movie.findByIdAndUpdate({ _id:movieId }, newMovie );
       res.json(updateMovie);
@@ -56,5 +67,17 @@ exports.addMovie = async(req, res) => {
       res.status(400).json( { message: error })
     }
   }
-  
-  
+
+  //USER MOVIES
+
+  exports.theMovies = async(req, res) => {  
+    try {
+        let date = new Date()
+        console.log(date)
+        const movies = await Movie.find({"toDate" : { $lte : date }})
+        console.log(movies)
+        res.json(movies);
+    } catch (error) {
+        res.status(404).json( {message: error })
+    } 
+}
