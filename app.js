@@ -3,6 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const movieRoutes = require('./Server/routes/moviesRoutes.js')
 const userRoutes = require('./Server/routes/usersRoutes.js')
+const roomsRoutes = require('./Server/routes/roomsRoutes.js')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -13,5 +14,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/movies', movieRoutes)
 app.use('/users', userRoutes)
+app.use('/rooms', roomsRoutes)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

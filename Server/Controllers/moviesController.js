@@ -1,5 +1,4 @@
 require('../models/connectDB')
-const { json } = require('express');
 const Movie = require('../models/Movie')
 const Room = require('../models/Room')
 

@@ -13,9 +13,9 @@ const movieSchema = new mongoose.Schema({
     technology: String,
     price: Number,
     Availability: Number,
-    category: {
+    genre: {
         type: mongoose.Schema.ObjectId,
-        ref: "Category"
+        ref: "Genre"
     },
     dateTime: [{
         room: {
