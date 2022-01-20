@@ -43,10 +43,11 @@ exports.updateUser = async(req, res) => {
     } 
 }
 
-exports.deleteUser = async(req, res) => {
-    const userId = req.params.id;
+exports.signIn = async(req, res) => {    
+    const username = req.body.username;
+    const password = req.body.password;
     try {
-      const data = await User.deleteOne({ _id:userId });
+      const data = await User.find({$or:[{username: username},{email: username}], password: password})
       res.json(data);
     } catch (error) {
       res.status(400).json( { message: error })
