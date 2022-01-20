@@ -6,3 +6,5 @@ const roomsController = require('../Controllers/roomsController');
 
 router.route('/')
     .get(roomsController.rooms)
+
+module.exports = router
