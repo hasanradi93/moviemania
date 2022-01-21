@@ -22,9 +22,9 @@ const movieSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: "Room"
         },
-        day: String,
+        day: Date,
         times: [String]
     }]
-}, { timestamps: true })
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 
 module.exports = mongoose.model('Movie', movieSchema)

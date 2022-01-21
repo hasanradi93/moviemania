@@ -1,6 +1,5 @@
 require('../models/connectDB')
 const Movie = require('../models/Movie')
-const Room = require('../models/Room')
 
 exports.movies = async (req, res) => {
   try {
@@ -24,7 +23,7 @@ exports.addMovie = async (req, res) => {
     technology: req.body.technology,
     price: req.body.price,
     Availability: req.body.Availability,
-    category: req.body.category,
+    genre: req.body.genre,
     dateTime: req.body.dateTime
   });
 
@@ -50,7 +49,7 @@ exports.updateMovie = async (req, res) => {
     technology: req.body.technology,
     price: req.body.price,
     Availability: req.body.Availability,
-    category: req.body.category,
+    genre: req.body.genre,
     dateTime: req.body.dateTime
   };
   try {
@@ -92,10 +91,10 @@ exports.movie = async (req, res) => {
   try {
     let movieId = req.params.id
     console.log(movieId);
-    const movie = await Movie.find({ _id: movieId });
-    let roomId = movie[0].dateTime[0].room
-    const movieRoom = await Room.findById({ _id: roomId })
-    console.log(movieRoom)
+    const movie = await Movie.find({ _id: movieId }).populate({ path: 'dateTime.room', model: 'Room' }).populate({ path: 'genre', model: 'Genre' });
+    // let roomId = movie[0].dateTime[0].room
+    // const movieRoom = await Room.findById({ _id: roomId })
+    // console.log(movieRoom)
     res.json({ data: movie });
   } catch (error) {
     res.status(404).json({ messageError: error })

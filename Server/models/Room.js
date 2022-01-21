@@ -8,10 +8,10 @@ const RoomSchema = new Schema({
         required: true,
         unique: true,
     },
-    seats:[{
-        block:String,
-        rowSeats:[{
-            name:String
+    seats: [{
+        block: String,
+        rowSeats: [{
+            number: Number
         }],
     }]
 

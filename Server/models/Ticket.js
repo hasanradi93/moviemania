@@ -1,25 +1,29 @@
 const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
-    userId :  {
+    userId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "User"}, 
-    branchId :  {
+        ref: "User"
+    },
+    branchId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "Branch"}, 
-    movieId :  {
+        ref: "Branch"
+    },
+    movieId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "Movie"}, 
-    roomId : {
+        ref: "Movie"
+    },
+    roomId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "Room"}, 
+        ref: "Room"
+    },
     date: Date,
     times: String,
     seat: {
         block: String,
-        rowSeats: String
+        rowSeats: Number
     }
-    }, { timestamps: true })
+}, { timestamps: true })
 
 
 module.exports = mongoose.model('Ticket', ticketSchema)
