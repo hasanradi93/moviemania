@@ -6,7 +6,6 @@ exports.tickets = async (req, res) => {
     const tickets = await Ticket.find()
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
-      .populate({ path: 'branchId', model: 'Branch' })
       .populate({ path: 'userId', model: 'User' })
     res.json(tickets);
   } catch (error) {
@@ -17,7 +16,7 @@ exports.tickets = async (req, res) => {
 exports.addTicket = async (req, res) => {
   const newTicket = new Ticket({
     userId: req.body.userId,
-    branchId: req.body.branchId,
+    cancelTicket: req.body.cancelTicket,
     movieId: req.body.movieId,
     roomId: req.body.roomId,
     seat: req.body.seat
@@ -31,11 +30,24 @@ exports.addTicket = async (req, res) => {
   }
 }
 
-exports.deleteTicket = async (req, res) => {
+exports.cancelTicket = async (req, res) => {
+  const ticketId = req.params.id
+  try {
+    const data = await Ticket.findByIdAndUpdate({ _id: ticketId}, {cancelTicket: true})
+    res.json(data)
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
+exports.getTicketById = async (req, res) => {
   const ticketId = req.params.id;
   try {
-    const data = await Ticket.deleteOne({ _id: ticketId });
-    res.json(data);
+    const data = await Ticket.findById({ _id: ticketId})
+      .populate({ path: 'roomId', model: 'Room' })
+      .populate({ path: 'movieId', model: 'Movie' })
+      .populate({ path: 'userId', model: 'User' })
+    res.json(data)
   } catch (error) {
     res.status(400).json({ message: error })
   }

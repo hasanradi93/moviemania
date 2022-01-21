@@ -2,14 +2,14 @@ const express = require('express')
 
 const router = express.Router()
 
-const ticketController = require('../Controllers/ticketsController')
+const ticketsController = require('../Controllers/ticketsController')
 
 router.route('/')
-    .post(ticketController.addTicket)
-    .get(ticketController.tickets)
-    .delete(ticketController.deleteTicket)
+    .post(ticketsController.addTicket)
+    .get(ticketsController.tickets)
 
 router.route('/:id')
-// .get(TicketController.getTicketById)
+    .get(ticketsController.getTicketById)
+    .put(ticketsController.cancelTicket)
 
 module.exports = router;

@@ -92,9 +92,6 @@ exports.movie = async (req, res) => {
     let movieId = req.params.id
     console.log(movieId);
     const movie = await Movie.find({ _id: movieId }).populate({ path: 'dateTime.room', model: 'Room' }).populate({ path: 'genre', model: 'Genre' });
-    // let roomId = movie[0].dateTime[0].room
-    // const movieRoom = await Room.findById({ _id: roomId })
-    // console.log(movieRoom)
     res.json({ data: movie });
   } catch (error) {
     res.status(404).json({ messageError: error })
