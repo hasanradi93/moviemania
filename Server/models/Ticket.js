@@ -5,9 +5,8 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "User"
     },
-    branchId: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: "Branch"
+    cancelTicket: {
+        type: Boolean,
     },
     movieId: {
         type: mongoose.SchemaTypes.ObjectId,
