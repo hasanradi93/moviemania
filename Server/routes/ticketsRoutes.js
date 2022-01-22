@@ -10,9 +10,6 @@ router.route('/')
 
 router.route('/admin')
     .get(ticketsController.tickets)
-    
-    // .get(roomsController.rooms)
-    // .post(roomsController.addRoom)
 
 
 router.route('/:id')
