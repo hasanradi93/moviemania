@@ -8,4 +8,8 @@ router.route('/')
     .get(genresController.genres)
     .post(genresController.addGenre)
 
+    router.route('/:id')
+    .delete(genresController.deleteGenre)
+    .put(genresController.editGenre)
+
 module.exports = router
