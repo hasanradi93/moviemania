@@ -13,12 +13,11 @@ exports.branches = async (req, res) => {
 exports.addBranch = async (req, res) => {
     const newBranch = new Branch({
         name: req.body.name,
-
+        rooms: req.body.rooms,
         cancelBranch: req.body.cancelBranch,
         editBranch: req.body.editBranch,
+        location: req.body.location
         
-        location: req.body.location,
-        rooms: req.body.rooms
     });
 
     try {
@@ -28,3 +27,31 @@ exports.addBranch = async (req, res) => {
         res.status(400).json({ message: error })
     }
 }
+
+exports.deleteBranch = async (req, res) => {
+    const branchId = req.params.id;
+    try {
+      const data = await Branch.deleteOne({ _id: branchId });
+      res.json(data);
+    } catch (error) {
+      res.status(400).json({ message: error })
+    }
+  }
+
+
+  exports.editBranch = async (req, res) => {
+    const branchId = req.params.id;
+    const newBranch = {
+        name: req.body.name,
+        rooms: req.body.rooms,
+        cancelBranch: req.body.cancelBranch,
+        editBranch: req.body.editBranch,
+        location: req.body.location
+    };
+    try {
+      const updatebranch = await Branch.findByIdAndUpdate({ _id: branchId }, newBranch);
+      res.json(updatebranch);
+    } catch (error) {
+      res.status(400).json({ message: error })
+    }
+  }

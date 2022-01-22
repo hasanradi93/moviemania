@@ -72,4 +72,14 @@ exports.editRoomById = async (req, res) => {
   }
 }
 
+exports.deleteRoom = async (req, res) => {
+  const roomId = req.params.id;
+  try {
+    const data = await Room.deleteOne({ _id: roomId });
+    res.json(data);
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
 module.exports = mongoose.model('Room', RoomSchema)

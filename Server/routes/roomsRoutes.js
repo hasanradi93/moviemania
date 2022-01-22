@@ -11,5 +11,6 @@ router.route('/')
 router.route('/:name')
     .put(roomsController.cancelRoom)
     .put(roomsController.editRoom)
+    .delete(roomsController.deleteRoom)
 
 module.exports = router
