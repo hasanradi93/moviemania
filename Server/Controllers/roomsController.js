@@ -27,45 +27,53 @@ exports.addRoom = async (req, res) => {
     }
 }
 
+
+//     try {
+//         const users = await User.findByIdAndUpdate({ _id:userId }, newUser)
+//         res.json(users);
+//     } catch (error) {
+//         res.status(404).json( {message: error })
+//     } 
+// }
+
+
     exports.cancelRoom = async (req, res) => {
-        const RoomName = req.params.name
+        const roomId = req.params.id
+
         try {
-          const data = await Room.findByIdAndUpdate({ _name: RoomName}, {cancelRoom: true})
+          const data = await Room.findByIdAndUpdate({ _id: roomId}, {cancelRoom: true})
           res.json(data)
         } catch (error) {
           res.status(400).json({ message: error })
         }
       }
 
-      exports.cancelRoomByName = async (req, res) => {
-        const RoomName = req.params.name;
+      exports.cancelRoomById = async (req, res) => {
+        const RoomId = req.params.id;
         try {
-          const data = await Room.findById({ _name: RoomName})
-            .populate({ path: 'name', model: 'Room' })
-            // .populate({ path: 'movieId', model: 'seats' })
-           
-          res.json(data)
+          const data = await Room.findById({ _id: RoomId})
+            .populate({ path: 'RoomId', model: 'Room' })
+        res.json(data)
         } catch (error) {
           res.status(400).json({ message: error })
         }
       }
 
 exports.editRoom = async (req, res) => {
-        const RoomName = req.params.name
+        const RoomId = req.params.id
         try {
-          const data = await Room.findByIdAndUpdate({ _name: RoomName}, {editRoom: true})
+          const data = await Room.findByIdAndUpdate({ _id: RoomId}, {editRoom: true})
           res.json(data)
         } catch (error) {
           res.status(400).json({ message: error })
         }
       }
 
-      exports.editRoomByName = async (req, res) => {
-        const RoomName = req.params.name;
+      exports.editRoomById = async (req, res) => {
+        const RoomId = req.params.id;
         try {
-          const data = await Room.findById({ _name: RoomName})
-            .populate({ path: 'name', model: 'Room' })
-            // .populate({ path: 'movieId', model: 'seats' })
+          const data = await Room.findById({ _id: RoomId})
+          .populate({ path: 'RoomId', model: 'Room' })
            
           res.json(data)
         } catch (error) {
