@@ -13,8 +13,14 @@ const RoomSchema = new Schema({
         rowSeats: [{
             number: Number
         }],
-    }]
-
+    }],
+    cancelRoom: {
+        type: Boolean,
+    },
+    editRoom: {
+        type: Boolean,
+    }
+    
 }, { timestamps: true });
 
 // export the created model

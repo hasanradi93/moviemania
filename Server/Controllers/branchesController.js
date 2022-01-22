@@ -13,6 +13,10 @@ exports.branches = async (req, res) => {
 exports.addBranch = async (req, res) => {
     const newBranch = new Branch({
         name: req.body.name,
+
+        cancelBranch: req.body.cancelBranch,
+        editBranch: req.body.editBranch,
+        
         location: req.body.location,
         rooms: req.body.rooms
     });

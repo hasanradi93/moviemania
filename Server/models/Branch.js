@@ -9,6 +9,12 @@ const branchSchema = new mongoose.Schema({
             ref: "Room"
         }
     }],
+    cancelBranch:{
+        type: Boolean,
+    },
+    editBranch:{
+        type: Boolean,
+    },
 
 }, { timestamps: true })
 

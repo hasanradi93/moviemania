@@ -8,4 +8,8 @@ router.route('/')
     .get(roomsController.rooms)
     .post(roomsController.addRoom)
 
+router.route('/:name')
+    .put(roomsController.cancelRoom)
+    .put(roomsController.editRoom)
+
 module.exports = router
