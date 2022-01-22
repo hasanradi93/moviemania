@@ -7,6 +7,7 @@ exports.tickets = async (req, res) => {
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
+      console.log(tickets)
     res.json(tickets);
   } catch (error) {
     res.status(404).json({ message: error })
@@ -53,3 +54,15 @@ exports.getTicketById = async (req, res) => {
   }
 }
 
+exports.getMovieTicketsById = async (req, res) => {
+  const movieId = req.params.id
+  try {
+    const data = await Ticket.find({movieId: movieId})
+      .populate({ path: 'roomId', model: 'Room' })
+      .populate({ path: 'movieId', model: 'Movie' })
+      .populate({ path: 'userId', model: 'User' })
+    res.json(data)
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}

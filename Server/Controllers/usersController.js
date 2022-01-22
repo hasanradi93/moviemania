@@ -15,7 +15,8 @@ exports.addUser = async(req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        profile: req.body.profile
+        profile: req.body.profile,
+        userType : req.body.userType
     })
 console.log(newUser)
     try {
@@ -32,7 +33,8 @@ exports.updateUser = async(req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        profile: req.body.profile
+        profile: req.body.profile,
+        userType : req.body.userType
     }
 
     try {

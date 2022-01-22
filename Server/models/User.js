@@ -18,7 +18,8 @@ const userSchema=new mongoose.Schema({
         required:true,
         minlength:8
     },
-    profile: String
+    profile: String,
+    userType: String
 }, { timestamps: true })
 
 //note: validate email and password
