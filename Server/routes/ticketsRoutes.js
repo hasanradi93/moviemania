@@ -7,6 +7,8 @@ const ticketsController = require('../Controllers/ticketsController')
 
 router.route('/')
     .post(ticketsController.addTicket)
+
+router.route('/admin')
     .get(ticketsController.tickets)
     
     // .get(roomsController.rooms)
@@ -17,9 +19,9 @@ router.route('/:id')
     .get(ticketsController.getTicketById)
     .put(ticketsController.cancelTicket)
 
-// router.route('/:name')
-//     .put(roomsController.cancelRoom)
-//     .put(roomsController.editRoom)
+
+router.route('/admin/movie/:id')
+    .get(ticketsController.getMovieTicketsById)
 
 
 module.exports = router;
