@@ -2,8 +2,9 @@ import React, { Component } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 
-class TheMovies extends Component{
 
+class TheMovies extends Component{
+  
     constructor(props){
         super(props)
         let allMovies =''
