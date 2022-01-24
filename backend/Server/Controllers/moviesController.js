@@ -83,6 +83,19 @@ exports.theMovies = async (req, res) => {
   }
 }
 
+exports.ComingSoon = async (req, res) => {
+  try {
+    console.log("ssfsd")
+    let date = new Date()
+    console.log(date)
+    const movies = await Movie.find({ "toDate": { $gte: date } })
+    console.log(movies)
+    res.json(movies);
+  } catch (error) {
+    res.status(404).json({ message: error })
+  }
+}
+
 //MOVIE DETAILS
 
 exports.movie = async (req, res) => {

@@ -23,6 +23,10 @@ class BackendDataServices {
         return http.delete(`/movies/?id=${id}`);
     }
 
+    getMovies() {
+        return http.get('movies/get-newest-movies')
+    }
+
 }
 
 export default new BackendDataServices();
