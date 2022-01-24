@@ -3,31 +3,31 @@ import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 
 const MoviesAdmin = props => {
-    const [movies, setMovies] = useState([]);
-    const [searchName, setSearchName] = useState("");
+    const [movies, setMovies] = useState([])
+    const [searchName, setSearchName] = useState("")
 
     useEffect(() => {
-        retrieveMovies();
-    }, []);
+        retrieveMovies()
+    }, [])
 
     const onChangeSearchName = e => {
-        const searchName = e.target.value;
-        setSearchName(searchName);
-    };
+        const searchName = e.target.value
+        setSearchName(searchName)
+    }
 
 
 
     const retrieveMovies = () => {
         BackendDataServices.getAll()
             .then(response => {
-                console.log("dataa", response.data);
-                setMovies(response.data);
+                console.log("dataa", response.data)
+                setMovies(response.data)
 
             })
             .catch(e => {
-                console.log(e);
-            });
-    };
+                console.log(e)
+            })
+    }
 
 
 
@@ -36,45 +36,45 @@ const MoviesAdmin = props => {
     const findByName = () => {
         //find(searchName, "name")
         console.log("find y name")
-    };
-
-    const getParsedDate = (strDate) => {
-        var strSplitDate = String(strDate).split('T');
-        var date = new Date(strSplitDate[0]);
-        // alert(date);
-        var dd = date.getDate();
-        var mm = date.getMonth() + 1; //January is 0!
-
-        var yyyy = date.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        date = dd + "-" + mm + "-" + yyyy;
-        return date.toString();
     }
 
-    let setMoviesData = ``;
+    const getParsedDate = (strDate) => {
+        var strSplitDate = String(strDate).split('T')
+        var date = new Date(strSplitDate[0])
+        // alert(date)
+        var dd = date.getDate()
+        var mm = date.getMonth() + 1 //January is 0!
+
+        var yyyy = date.getFullYear()
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        date = dd + "-" + mm + "-" + yyyy
+        return date.toString()
+    }
+
+    let setMoviesData = ``
     if (movies) {
         setMoviesData = movies.map((movie) => {
-            let actors = '';
+            let actors = ''
             movie.actors.forEach(element => {
-                actors += `${element} - `;
-            });
+                actors += `${element} - `
+            })
             actors = actors.substring(0, actors.length - 2)
-            let dateTimeData = '';
+            let dateTimeData = ''
             movie.dateTime.forEach(element => {
-                let times = '';
+                let times = ''
                 for (let i = 0; i < element.times.length; i++)
                     times += element.times[i] + '-'
                 times = times.substring(0, times.length - 2)
                 let day = getParsedDate(element.day)
                 console.log(day)
-                dateTimeData += <tr><td>{element.room.name}</td> <td>{times}</td> <td>{day}</td></tr>;
+                dateTimeData += <tr><td>{element.room.name}</td> <td>{times}</td> <td>{day}</td></tr>
                 console.log(dateTimeData)
-            });
+            })
             return (
                 <div key={movie._id} className="col-lg-4 pb-1">
                     <div className="card">
@@ -98,7 +98,7 @@ const MoviesAdmin = props => {
                         </div>
                     </div>
                 </div>
-            );
+            )
         })
     }
 
@@ -134,7 +134,7 @@ const MoviesAdmin = props => {
 
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default MoviesAdmin;
+export default MoviesAdmin

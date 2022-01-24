@@ -16,4 +16,7 @@ router.route('/:id')
     .put(moviesController.updateMovie)
     .delete(moviesController.deleteMovie)
 
+router.route('/ComingSoon')
+    .get(moviesController.ComingSoon)
+
 module.exports = router;
