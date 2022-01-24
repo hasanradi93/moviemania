@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import TheMovies from './components/TheMovies'
@@ -7,6 +7,9 @@ import MovieDetails from './components/MovieDetails'
 import MoviesAdmin from './components/MoviesAdmin'
 import AdminMovieTicket from './components/AdminMovieTicket'
 import Login from './components/Login'
+import NotFound from './components/NotFound'
+import ComingSoon from './components/ComingSoon'
+import Navbar from './components/Navbar'
 
 function App() {
 
@@ -22,59 +25,39 @@ function App() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/movies" className="navbar-brand">
-          MovieMania
-        </a>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/movies"} className="nav-link">
-              Movies
-            </Link>
-          </li>
-          <li className="nav-item" >
-            {user ? (
-              <a onClick={logout} className="nav-link" style={{ cursor: 'pointer' }}>
-                Logout {user.name}
-              </a>
-            ) : (
-              <Link to={"/login"} className="nav-link">
-                Login
-              </Link>
-            )}
 
-          </li>
-        </div>
-      </nav>
-
+      <Navbar />
       <div className="container mt-3">
-        <Switch>
-          <Route exact path={["/", "/movies"]} component={TheMovies} />
+        <Routes>
+          <Route exact path={"/"} element={<TheMovies />} />
+          <Route exact path={"/ComingSoon"} element={<ComingSoon />} />
           <Route
-            path="/movies/admin"
+            path="movies/admin" element={<MoviesAdmin />}
             render={(props) => (
               <MoviesAdmin {...props} user={user} />
             )}
           />
           <Route
-            path="/movies/:id"
+            path="/movies/:id" element={<MovieDetails />}
             render={(props) => (
               <MovieDetails {...props} user={user} />
             )}
           />
           <Route
-            path="/login"
+            path="/login" element={<Login />}
             render={(props) => (
               <Login {...props} login={login} />
             )}
           />
           <Route
-            path="/admin/movie/:id"
+            path="/admin/movies/:id" element={<AdminMovieTicket />}
             render={(props) => (
-              <AdminMovieTicket {...props} user={user} />
+              <AdminMovieTicket {...props} user={user} logout={logout} />
             )}
           />
-        </Switch>
+          <Route
+            path="*" element={<NotFound />} />
+        </Routes>
       </div>
     </div>
   );
