@@ -27,6 +27,10 @@ class BackendDataServices {
         return http.get('movies/get-newest-movies')
     }
 
+    getUserDataById(id) {
+        return http.get(`/users/${id}`);
+    }
+
 }
 
 export default new BackendDataServices();

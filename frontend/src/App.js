@@ -10,6 +10,7 @@ import Login from './components/Login'
 import NotFound from './components/NotFound'
 import ComingSoon from './components/ComingSoon'
 import Navbar from './components/Navbar'
+import Profile from './components/Profile'
 
 function App() {
 
@@ -57,7 +58,22 @@ function App() {
           />
           <Route
             path="*" element={<NotFound />} />
+            <Route
+            path="/Profile" element={<Profile />}
+            render={(props) => (
+              <Login {...props} login={login} />
+            )}
+          />
+
+          <Route
+            path="/Profile/:id" element={<Profile />}
+            render={(props) => (
+              <Login {...props} login={login} />
+            )}
+          />
         </Routes>
+
+        
       </div>
     </div>
   );
