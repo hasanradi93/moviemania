@@ -56,3 +56,14 @@ exports.signIn = async(req, res) => {
     }
   }
 
+
+exports.getUserData = async(req, res) => {  
+    const userId = req.params.id
+    try {
+        const users = await User.findById({ _id:userId })
+        res.json(users);
+    } catch (error) {
+        res.status(404).json( {message: error })
+    } 
+}
+
