@@ -72,10 +72,9 @@ exports.deleteMovie = async (req, res) => {
 
 exports.theMovies = async (req, res) => {
   try {
-    console.log("ssfsd")
     let date = new Date()
     console.log(date)
-    const movies = await Movie.find({ "toDate": { $lte: date } })
+    const movies = await Movie.find({ "toDate": { $gte: date }, "fromDate":{ $lte: date } })
     console.log(movies)
     res.json(movies);
   } catch (error) {
@@ -85,10 +84,9 @@ exports.theMovies = async (req, res) => {
 
 exports.ComingSoon = async (req, res) => {
   try {
-    console.log("ssfsd")
     let date = new Date()
     console.log(date)
-    const movies = await Movie.find({ "toDate": { $gte: date } })
+    const movies = await Movie.find({ "fromDate": { $gte: date } })
     console.log(movies)
     res.json(movies);
   } catch (error) {
