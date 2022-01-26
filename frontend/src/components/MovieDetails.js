@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
+import FunctionTools from '../services/FunctionTools'
 
 const MoviesDetails = props => {
     const [movie, setMovie] = useState([])
     const  movieId  = useParams().id
-    console.log(movieId)
 
     useEffect(() => {
         retrieveMovie()
@@ -16,8 +16,8 @@ const MoviesDetails = props => {
         BackendDataServices.get(movieId)
             .then(response => {
                 console.log("dataa", response.data)
-                setMovie(response.data)
-                console.log(movie)
+                const movieData = response.data
+                setMovie(movieData)
 
             })
             .catch(e => {
@@ -25,67 +25,52 @@ const MoviesDetails = props => {
             })
     }
 
-    const getParsedDate = (strDate) => {
-        var strSplitDate = String(strDate).split('T')
-        var date = new Date(strSplitDate[0])
-        // alert(date)
-        var dd = date.getDate()
-        var mm = date.getMonth() + 1 //January is 0!
-
-        var yyyy = date.getFullYear()
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-        date = dd + "-" + mm + "-" + yyyy
-        return date.toString()
-    }
-
     let setMoviesData = ``
-    if (movie) {
-            let actors = ''
-            movie.actors.forEach(element => {
-                actors += `${element} - `
-            })
-            actors = actors.substring(0, actors.length - 2)
-            let dateTimeData = ''
-            movie.dateTime.forEach(element => {
-                let times = ''
-                for (let i = 0; i < element.times.length; i++)
-                    times += element.times[i] + '-'
-                times = times.substring(0, times.length - 2)
-                let day = getParsedDate(element.day)
-                console.log(day)
-                dateTimeData += <tr><td>{element.room.name}</td> <td>{times}</td> <td>{day}</td></tr>
-                console.log(dateTimeData)
-            })
-            return (
-                <div key={movie._id} className="col-lg-4 pb-1">
+    if (movie[0]) {
+        
+        setMoviesData =
+                <div key={movie[0]._id} className="col-lg-4 pb-1">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">{movie.name}</h5>
-                            <p className="card-text">
-                                <strong>Release Date: </strong>{movie.releasedate}<br />
-                                <strong>Plot: </strong>{movie.plot}<br />
-                                <strong>Actors: </strong>{actors}
+                            <h5 className="card-title">{movie[0].title}</h5>
+                            <div className="card-text">
+                                <strong>Release Date: </strong>{movie[0].releasedate}<br />
+                                <strong>Plot: </strong>{movie[0].plot}<br />
+                                <strong>Actors: </strong>
+                                {
+                                     movie[0].actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)
+                               }<br></br>
                                 <strong>Date Times:</strong>
-                                <table>
-                                    <tr><td>Room</td><td>Times</td><td>Day</td></tr>
-                                    {dateTimeData}
+                                <table className='dateTimeAdminStyle'>
+                                    <thead><tr><th>Room</th><th>Times</th><th>Day</th></tr></thead>
+                                    <tbody>
+                                        {
+                                           movie[0].dateTime.map((dateTime, i) => {
+                                                return <tr key={i}>
+                                                    <td>{dateTime.room.name}</td>
+                                                    <td>{
+                                                        dateTime.times.map((time, i, arr) => { return <span key={i} className="timesMovie">{time} {i !== (arr.length - 1) ? ',' : ''}</span> })
+                                                    }</td>
+                                                    <td>{FunctionTools.formatDate(dateTime.day)}</td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+
                                 </table>
-                            </p>
+                            </div>
                             <div className="row">
-                                <Link to={"/movies/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                                <Link to={"/movies/" + movie[0]._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
                                     View Detail
+                                </Link>
+                                <Link to={"/movies/" + movie[0]._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                                    View tickets
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-            )
-    }
+}
 
     return (
         <div>
