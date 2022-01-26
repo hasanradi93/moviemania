@@ -11,8 +11,8 @@ const movieSchema = new mongoose.Schema({
     toDate: Date,
     runtime: Number,
     technology: [{
-        price: Number,
-        type: String
+        type: String,
+        price: Number
     }],
     Availability: Number,
     genre: {
@@ -25,7 +25,11 @@ const movieSchema = new mongoose.Schema({
             ref: "Room"
         },
         day: Date,
-        times: [String]
+        times: [String],
+        technologyId: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Technology"
+        }
     }]
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 

@@ -16,6 +16,10 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Room"
     },
+    technologyId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Technology"
+    },
     date: Date,
     times: String,
     seat: {

@@ -9,7 +9,7 @@ import AdminMovieTicket from './components/AdminMovieTicket'
 import Login from './components/Login'
 import NotFound from './components/NotFound'
 import ComingSoon from './components/ComingSoon'
-import Navbar from './components/Navbar'
+import SideBar from './components/SideBar'
 import Profile from './components/Profile'
 
 function App() {
@@ -27,11 +27,11 @@ function App() {
   return (
     <div>
 
-      <Navbar />
+      <SideBar />
       <div className="container mt-3">
         <Routes>
           <Route exact path={"/"} element={<TheMovies />} />
-          <Route exact path={"/ComingSoon"} element={<ComingSoon />} />
+          <Route exact path={"ComingSoon"} element={<ComingSoon />} />
           <Route
             path="movies/admin" element={<MoviesAdmin />}
             render={(props) => (
@@ -39,41 +39,40 @@ function App() {
             )}
           />
           <Route
-            path="/movies/:id" element={<MovieDetails />}
+            path="movies/:id" element={<MovieDetails />}
             render={(props) => (
               <MovieDetails {...props} user={user} />
             )}
           />
           <Route
-            path="/login" element={<Login />}
+            path="Login" element={<Login />}
             render={(props) => (
               <Login {...props} login={login} />
             )}
           />
           <Route
-            path="/admin/movies/:id" element={<AdminMovieTicket />}
+            path="admin/movies/:id" element={<AdminMovieTicket />}
             render={(props) => (
               <AdminMovieTicket {...props} user={user} logout={logout} />
             )}
           />
           <Route
-            path="*" element={<NotFound />} />
-            <Route
-            path="/Profile" element={<Profile />}
+            path="Profile" element={<Profile />}
             render={(props) => (
               <Login {...props} login={login} />
             )}
           />
-
           <Route
-            path="/Profile/:id" element={<Profile />}
+            path="Profile/:id" element={<Profile />}
             render={(props) => (
               <Login {...props} login={login} />
             )}
           />
+          <Route
+            path="*" element={<NotFound />} />
         </Routes>
 
-        
+
       </div>
     </div>
   );
