@@ -76,10 +76,6 @@ const MoviesAdmin = props => {
                                 {
                                     movie.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)
                                 }<br></br>
-                                <strong>Technologies: </strong>
-                                {
-                                    movie.technologies.map((technology, i, arr) => <span key={i} className="technologyMovie">{technology} {i !== (arr.length - 1) ? ',' : ''}</span>)
-                                }<br></br>
                                 <strong>Date Times:</strong>
                                 <table className='dateTimeAdminStyle'>
                                     <thead><tr><th>Room</th><th>Times</th><th>Day</th></tr></thead>
