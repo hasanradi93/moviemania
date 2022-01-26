@@ -103,7 +103,7 @@ exports.movie = async (req, res) => {
     let movieId = req.params.id
     console.log(movieId);
     const movie = await Movie.find({ _id: movieId }).populate({ path: 'dateTime.room', model: 'Room' }).populate({ path: 'genre', model: 'Genre' });
-    res.json({ data: movie });
+    res.json(movie);
   } catch (error) {
     res.status(404).json({ messageError: error })
   }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 import '../App.css'
+import FunctionTools from '../services/FunctionTools'
 
 const MoviesAdmin = props => {
     const [movies, setMovies] = useState([])
@@ -15,9 +16,7 @@ const MoviesAdmin = props => {
         const searchName = e.target.value
         setSearchName(searchName)
     }
-
-
-
+    
     const retrieveMovies = () => {
         BackendDataServices.getAll()
             .then(response => {
@@ -32,33 +31,6 @@ const MoviesAdmin = props => {
     const findByName = () => {
         //find(searchName, "name")
         console.log("find y name")
-    }
-
-    function formatDate(newDate) {
-        const months = {
-            0: 'January',
-            1: 'February',
-            2: 'March',
-            3: 'April',
-            4: 'May',
-            5: 'June',
-            6: 'July',
-            7: 'August',
-            8: 'September',
-            9: 'October',
-            10: 'November',
-            11: 'December',
-        }
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-        let d = String(newDate).split('T')
-        d = new Date(d[0])
-        const year = d.getFullYear()
-        const date = d.getDate()
-        const monthIndex = d.getMonth()
-        const monthName = months[monthIndex]
-        const dayName = days[d.getDay()] // Thu
-        const formatted = `${dayName}, ${date} ${monthName} ${year}`
-        return formatted.toString()
     }
 
     let setMoviesData = ``
@@ -87,7 +59,7 @@ const MoviesAdmin = props => {
                                                     <td>{
                                                         dateTime.times.map((time, i, arr) => { return <span key={i} className="timesMovie">{time} {i !== (arr.length - 1) ? ',' : ''}</span> })
                                                     }</td>
-                                                    <td>{formatDate(dateTime.day)}</td>
+                                                    <td>{FunctionTools.formatDate(dateTime.day)}</td>
                                                 </tr>
                                             })
                                         }
