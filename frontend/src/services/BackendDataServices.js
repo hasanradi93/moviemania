@@ -35,6 +35,10 @@ class BackendDataServices {
         return http.get(`/users/${id}`);
     }
 
+    ComingSoon() {
+        return http.get('movies/ComingSoon')
+    }
+
 }
 
 export default new BackendDataServices();
