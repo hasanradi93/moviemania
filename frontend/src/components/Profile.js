@@ -31,8 +31,30 @@ function Profile(props) {
     return (
     
         <div>
-            {user.email}
+            <form>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src={user.profile} alt="Profile Pic" width='200px' heigth='200px' ></img>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <input type='text' value={user.username}></input>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <input type='email' value={user.email}></input>
+                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
+
+        
     );
 
 }
