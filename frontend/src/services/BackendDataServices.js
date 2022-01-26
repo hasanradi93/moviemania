@@ -31,6 +31,10 @@ class BackendDataServices {
         return http.get(`/users/${id}`);
     }
 
+    getUserTicketById(id) {
+        return http.get(`/users/${id}`);
+    }
+
 }
 
 export default new BackendDataServices();

@@ -11,6 +11,7 @@ import NotFound from './components/NotFound'
 import ComingSoon from './components/ComingSoon'
 import SideBar from './components/SideBar'
 import Profile from './components/Profile'
+import UserTicket from './components/UserTicket'
 
 function App() {
 
@@ -64,6 +65,12 @@ function App() {
           />
           <Route
             path="Profile/:id" element={<Profile />}
+            render={(props) => (
+              <Login {...props} login={login} />
+            )}
+          />
+          <Route
+            path="UserTicket/:id" element={<UserTicket />}
             render={(props) => (
               <Login {...props} login={login} />
             )}
