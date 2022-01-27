@@ -1,44 +1,30 @@
 import React, { Component } from 'react';
+import { Routes, Route } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import SideBarAdmin from './SideBarAdmin';
 
 class AdminPanel extends Component {
     constructor(props) {
         super(props);
-
     }
 
-    componentWillMount() {
 
-    }
 
     componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
+        console.log("componentDidMount")
     }
 
     componentDidUpdate(prevProps, prevState) {
-
+        console.log("componentDidUpdate")
     }
 
-    componentWillUnmount() {
 
-    }
 
     render() {
         return (
             <div>
-
+                <SideBarAdmin />
+                Admin Panel
             </div>
         );
     }

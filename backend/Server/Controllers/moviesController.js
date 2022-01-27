@@ -3,14 +3,26 @@ const Movie = require('../models/Movie')
 
 exports.movies = async (req, res) => {
   try {
-    const movies = await Movie.find().populate({ path: 'dateTime.room', model: 'Room' }).populate({ path: 'genre', model: 'Genre' });
+    const movies = await Movie.find()
+      .populate({ path: 'dateTime.room', model: 'Room' })
+      .populate({ path: 'genre', model: 'Genre' })
+      .populate({ path: 'technology.technologyId', model: 'Technology' })
+      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
     res.json(movies);
   } catch (error) {
     res.status(404).json({ message: error })
   }
 }
 
-exports.addMovie = async (req, res) => {
+exports.addMovie = async (req, res, next) => {
+  if (body.title === undefined || body.releasedate === undefined
+    || body.plot === undefined || body.director === undefined
+    || body.actors === undefined || body.fromDate === undefined
+    || body.toDate === undefined || body.runtime === undefined
+    || body.technology === undefined || body.genre === undefined
+    || body.dateTime === undefined) {
+    return response.status(400).json({ error: 'content missing' })
+  }
   const newMovie = new Movie({
     title: req.body.title,
     releasedate: req.body.releasedate,
@@ -30,7 +42,7 @@ exports.addMovie = async (req, res) => {
     await newMovie.save();
     res.json(newMovie);
   } catch (error) {
-    res.status(400).json({ message: error })
+    next(error)
   }
 }
 
@@ -74,7 +86,7 @@ exports.theMovies = async (req, res) => {
   try {
     let date = new Date()
     console.log(date)
-    const movies = await Movie.find({ "toDate": { $gte: date }, "fromDate":{ $lte: date } })
+    const movies = await Movie.find({ "toDate": { $gte: date }, "fromDate": { $lte: date } })
     console.log(movies)
     res.json(movies);
   } catch (error) {
@@ -100,7 +112,11 @@ exports.movie = async (req, res) => {
   try {
     let movieId = req.params.id
     console.log(movieId);
-    const movie = await Movie.find({ _id: movieId }).populate({ path: 'dateTime.room', model: 'Room' }).populate({ path: 'genre', model: 'Genre' });
+    const movie = await Movie.find({ _id: movieId })
+      .populate({ path: 'dateTime.room', model: 'Room' })
+      .populate({ path: 'genre', model: 'Genre' })
+      .populate({ path: 'technology.technologyId', model: 'Technology' })
+      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
     res.json(movie);
   } catch (error) {
     res.status(404).json({ messageError: error })

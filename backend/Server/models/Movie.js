@@ -2,34 +2,77 @@ const mongoose = require('mongoose');
 
 
 const movieSchema = new mongoose.Schema({
-    title: String,
-    releasedate: String,
-    plot: String,
-    director: String,
-    actors: [String],
-    fromDate: Date,
-    toDate: Date,
-    runtime: Number,
-    technology: [{
+    title: {
         type: String,
-        price: Number
+        required: true
+    },
+    releasedate: {
+        type: Date,
+        required: Date
+    },
+    plot: {
+        type: String,
+        required: true
+    },
+    director: {
+        type: String,
+        required: true
+    },
+    actors: [{
+        type: String,
+        required: true
     }],
-    Availability: Number,
+    fromDate: {
+        type: Date,
+        required: true
+    },
+    toDate: {
+        type: Date,
+        required: true
+    },
+    runtime: {
+        type: Number,
+        required: true
+    },
+    technology: [{
+        technologyId: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Technology",
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
+        }
+    }],
+    Availability: {
+        type: Number,
+        required: true
+    },
     genre: {
         type: mongoose.Schema.ObjectId,
-        ref: "Genre"
+        ref: "Genre",
+        required: true
     },
     dateTime: [{
         room: {
             type: mongoose.Schema.ObjectId,
-            ref: "Room"
+            ref: "Room",
+            required: true
         },
-        day: Date,
-        times: [String],
+        day: {
+            type: Date,
+            required: true
+        },
         technologyId: {
             type: mongoose.Schema.ObjectId,
-            ref: "Technology"
-        }
+            ref: "Technology",
+            required: true
+        },
+        times: [{
+            type: String,
+            required: true
+        }],
     }]
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 

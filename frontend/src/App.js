@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import TheMovies from './components/TheMovies'
 import MovieDetails from './components/MovieDetails'
-import MoviesAdmin from './components/MoviesAdmin'
+import AdminPanel from './components/AdminPanel'
 import AdminMovieTicket from './components/AdminMovieTicket'
 import Login from './components/Login'
 import NotFound from './components/NotFound'
@@ -12,6 +12,8 @@ import ComingSoon from './components/ComingSoon'
 import SideBar from './components/SideBar'
 import Profile from './components/Profile'
 import UserTicket from './components/UserTicket'
+import TheTickets from './components/TheTickets'
+import MoviesAdmin from './components/NotFound'
 
 function App() {
 
@@ -34,13 +36,7 @@ function App() {
           <Route exact path={"/"} element={<TheMovies />} />
           <Route exact path={"ComingSoon"} element={<ComingSoon />} />
           <Route
-            path="movies/admin" element={<MoviesAdmin />}
-            render={(props) => (
-              <MoviesAdmin {...props} user={user} />
-            )}
-          />
-          <Route
-            path="movies/:id" element={<MovieDetails />}
+            path="Movies/:id" element={<MovieDetails />}
             render={(props) => (
               <MovieDetails {...props} user={user} />
             )}
@@ -49,12 +45,6 @@ function App() {
             path="Login" element={<Login />}
             render={(props) => (
               <Login {...props} login={login} />
-            )}
-          />
-          <Route
-            path="admin/movies/:id" element={<AdminMovieTicket />}
-            render={(props) => (
-              <AdminMovieTicket {...props} user={user} logout={logout} />
             )}
           />
           <Route
@@ -75,13 +65,20 @@ function App() {
               <Login {...props} login={login} />
             )}
           />
+          <Route path="AdminPanel" element={<AdminPanel />} render={(props) => (
+            <Login {...props} login={login} />
+          )}>
+            {/* nest these routes inside of the dashboard route */}
+            <Route path="TheTickets" element={<TheTickets />} />
+            <Route path="Movies" element={<MoviesAdmin />} />
+          </Route>
           <Route
             path="*" element={<NotFound />} />
         </Routes>
 
 
       </div>
-    </div>
+    </div >
   );
 }
 

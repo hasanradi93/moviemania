@@ -12,9 +12,7 @@ exports.genres = async (req, res) => {
 
 exports.addGenre = async (req, res) => {
   const newGenre = new Genre({
-    name: req.body.name,
-    cancelGenre: req.body.cancelGenre,
-    editGenre: req.body.editGenre
+    name: req.body.name
   });
 
   try {

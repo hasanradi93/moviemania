@@ -34,6 +34,7 @@ const roomsRoutes = require('./Server/routes/roomsRoutes.js')
 const genresRoutes = require('./Server/routes/genresRoutes.js')
 const ticketsRoutes = require('./Server/routes/ticketsRoutes.js')
 const branchesRoutes = require('./Server/routes/branchesRoutes.js')
+const technologiesRoutes = require('./Server/routes/technologiesRoutes')
 
 app.use('/movies', movieRoutes)
 app.use('/users', userRoutes)
@@ -41,6 +42,7 @@ app.use('/tickets', ticketsRoutes)
 app.use('/rooms', roomsRoutes)
 app.use('/genres', genresRoutes)
 app.use('/branches', branchesRoutes)
+app.use('/technology', technologiesRoutes)
 
 const errorHandler = (error, request, response, next) => {
     console.error("From error handler: ", error.message)

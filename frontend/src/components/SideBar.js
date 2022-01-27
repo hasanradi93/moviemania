@@ -9,9 +9,9 @@ function SideBar(props) {
             <NavItem eventKey="Home">
                 <NavIcon className="d-none d-md-block bg-dark">
                     <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-                    <a href="/">
+                    <Link to="/">
                         MovieMania
-                    </a>
+                    </Link>
                 </NavIcon>
             </NavItem>
             <SideNav.Toggle />
@@ -58,7 +58,7 @@ function SideBar(props) {
                                 Logout {props.user.name}
                             </Link>
                         ) : (
-                            <Link to={"/login"} className="nav-link">
+                            <Link to={"/Login"} className="nav-link">
                                 Login
                             </Link>
                         )}
