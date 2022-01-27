@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './components/nav.css'
 
 import TheMovies from './components/TheMovies'
 import MovieDetails from './components/MovieDetails'
@@ -31,7 +32,7 @@ function App() {
     <div>
 
       <SideBar />
-      <div className="container mt-3">
+      <div className="container mt-3 navclass" id='content' >
         <Routes>
           <Route exact path={"/"} element={<TheMovies />} />
           <Route exact path={"ComingSoon"} element={<ComingSoon />} />
