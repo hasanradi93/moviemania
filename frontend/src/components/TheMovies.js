@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 
-
 class TheMovies extends Component{
   
     constructor(props){

@@ -7,17 +7,21 @@ import FunctionTools from '../services/FunctionTools'
 const MoviesDetails = props => {
     const [movie, setMovie] = useState([])
     const  movieId  = useParams().id
+    console.log(movieId)
 
     useEffect(() => {
         retrieveMovie()
+        console.log('retrive1',movie)
     }, [])
 
-    const retrieveMovie = () => {
+    const retrieveMovie = () => { 
         BackendDataServices.get(movieId)
             .then(response => {
                 console.log("dataa", response.data)
                 const movieData = response.data
                 setMovie(movieData)
+                console.log('retrive2',movie)
+                console.log(movie.actors)
 
             })
             .catch(e => {
