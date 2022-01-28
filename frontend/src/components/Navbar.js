@@ -8,23 +8,6 @@ function Navbar(props) {
             </Link>
             <div className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <Link to={"/ComingSoon"} className="nav-link">
-                        Coming soon
-                    </Link>
-                </li>
-                <li className="nav-item" >
-                    {props.user ? (
-                        <a onClick={props.logout} className="nav-link" style={{ cursor: 'pointer' }}>
-                            Logout {props.user.name}
-                        </a>
-                    ) : (
-                        <Link to={"/login"} className="nav-link">
-                            Login
-                        </Link>
-                    )}
-
-                </li>
-                <li className="nav-item">
                     <Link to={"/Profile"} className="nav-link">
                         profile
                     </Link>

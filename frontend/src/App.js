@@ -13,6 +13,8 @@ import Profile from './components/Profile'
 import UserTicket from './components/UserTicket'
 import TicketsAdmin from './components/TicketsAdmin'
 import MoviesAdmin from './components/MoviesAdmin'
+import { navbar } from 'react-bootstrap'
+import Navbar from './components/Navbar'
 
 function App() {
 
@@ -28,7 +30,7 @@ function App() {
 
   return (
     <div>
-
+      <Navbar />
       <SideBar />
       <div className="container mt-3 navclass" id='content' >
         <Routes>
