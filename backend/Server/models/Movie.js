@@ -6,6 +6,10 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    photo: {
+        type: String,
+        required: true
+    },
     releasedate: {
         type: Date,
         required: Date

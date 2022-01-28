@@ -4,7 +4,7 @@ const router = express.Router()
 
 const moviesController = require('../Controllers/moviesController');
 
-router.route('/admin')
+router.route('/movies')
     .get(moviesController.movies)
     .post(moviesController.addMovie)
 

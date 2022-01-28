@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { nav } from "react-bootstrap"
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
+import '../css/nav.css'
 function SideBarAdmin(props) {
+    let stateSidebar = false
+    const pushItemsAdmin = () => {
+        if (stateSidebar === false) {
+            document.getElementById('content').style.marginLeft = "250px"
+            stateSidebar = true
+        }
+        else {
+            document.getElementById('content').style.marginLeft = "100px"
+            stateSidebar = false
+        }
+    }
     return (
-        <SideNav>
+        <SideNav style={{ transition: "all 0.7s ease-in-out" }}>
             <NavItem eventKey="Home">
                 <NavIcon className="d-none d-md-block bg-dark">
                     <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
@@ -14,14 +25,14 @@ function SideBarAdmin(props) {
                     </Link>
                 </NavIcon>
             </NavItem>
-            <SideNav.Toggle />
-            <SideNav.Nav defaultSelected="Home">
+            <SideNav.Toggle onClick={pushItemsAdmin} />
+            <SideNav.Nav defaultSelected="Tickets">
                 <NavItem eventKey="Tickets">
                     <NavIcon>
                         <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>
-                        <Link to={"TheTickets/"} className="nav-link">
+                        <Link to={"Tickets"} className="nav-link">
                             Tickets
                         </Link>
                     </NavText>
@@ -31,7 +42,7 @@ function SideBarAdmin(props) {
                         <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>
-                        <Link to={"Movies/"} className="nav-link">
+                        <Link to={"Movies"} className="nav-link">
                             Movies
                         </Link>
                     </NavText>

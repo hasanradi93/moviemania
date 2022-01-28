@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { nav } from "react-bootstrap"
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
-import './nav.css'
+import '../css/nav.css'
 function SideBar(props) {
     let stateSidebar = false
     const pushItems = () => {
-        if(stateSidebar === false){
+        if (stateSidebar === false) {
             document.getElementById('content').style.marginLeft = "250px"
             stateSidebar = true
         }
@@ -17,7 +17,7 @@ function SideBar(props) {
         }
     }
     return (
-        <SideNav style={{transition: "all 0.7s ease-in-out"}}>
+        <SideNav style={{ transition: "all 0.7s ease-in-out" }}>
             <NavItem eventKey="Logo">
                 <NavIcon className="d-none d-md-block bg-dark">
                     <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
@@ -26,7 +26,7 @@ function SideBar(props) {
                     </Link>
                 </NavIcon>
             </NavItem>
-            <SideNav.Toggle onClick={pushItems}/>
+            <SideNav.Toggle onClick={pushItems} />
             <SideNav.Nav defaultSelected="Home">
                 <NavItem eventKey="Home">
                     <NavIcon>

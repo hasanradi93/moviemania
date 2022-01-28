@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Routes, Route } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import SideBarAdmin from './SideBarAdmin';
 
@@ -22,9 +22,10 @@ class AdminPanel extends Component {
 
     render() {
         return (
-            <div>
+            <div id='contentAdmin' >
                 <SideBarAdmin />
                 Admin Panel
+                <Outlet />
             </div>
         );
     }

@@ -16,7 +16,7 @@ const MoviesAdmin = props => {
         const searchName = e.target.value
         setSearchName(searchName)
     }
-    
+
     const retrieveMovies = () => {
         BackendDataServices.getAll()
             .then(response => {
@@ -42,8 +42,17 @@ const MoviesAdmin = props => {
                         <div className="card-body">
                             <h5 className="card-title">{movie.name}</h5>
                             <div className="card-text">
-                                <strong>Release Date: </strong>{movie.releasedate}<br />
+                                <h2>{movie.title}</h2><br />
+                                <div className="imgMovie">
+                                    <img src={movie.photo} width='100%' height='400px' alt={movie.title} />
+                                </div>
+                                <strong>Release Date: </strong>{FunctionTools.formatDate(movie.releasedate)}<br />
                                 <strong>Plot: </strong>{movie.plot}<br />
+                                <strong>Genre: </strong>{movie.genre.name}<br />
+                                <strong>Available: </strong>
+                                {FunctionTools.formatDate(movie.fromDate)} to
+                                {FunctionTools.formatDate(movie.toDate)}<br />
+                                <strong>Status: </strong> {(movie.Availability === 1) ? 'Available' : (movie.Availability === 0) ? 'Coming soon' : 'Ended'}<br />
                                 <strong>Actors: </strong>
                                 {
                                     movie.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)

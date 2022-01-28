@@ -43,6 +43,7 @@ app.use('/rooms', roomsRoutes)
 app.use('/genres', genresRoutes)
 app.use('/branches', branchesRoutes)
 app.use('/technology', technologiesRoutes)
+app.use('/admin', movieRoutes)
 
 const errorHandler = (error, request, response, next) => {
     console.error("From error handler: ", error.message)

@@ -3,7 +3,7 @@ import http from "../http-common";
 
 class BackendDataServices {
     getAll() {
-        return http.get(`movies/admin`);
+        return http.get(`admin/movies`);
     }
 
     get(id) {
@@ -12,7 +12,7 @@ class BackendDataServices {
 
 
     createMovie(data) {
-        return http.post("/movies/admin/", data);
+        return http.post("/admin/movies", data);
     }
 
     updateMovie(data) {

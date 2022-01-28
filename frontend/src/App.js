@@ -1,20 +1,18 @@
 import { React, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './components/nav.css'
 
 import TheMovies from './components/TheMovies'
 import MovieDetails from './components/MovieDetails'
 import AdminPanel from './components/AdminPanel'
-import AdminMovieTicket from './components/AdminMovieTicket'
 import Login from './components/Login'
 import NotFound from './components/NotFound'
 import ComingSoon from './components/ComingSoon'
 import SideBar from './components/SideBar'
 import Profile from './components/Profile'
 import UserTicket from './components/UserTicket'
-import TheTickets from './components/TheTickets'
-import MoviesAdmin from './components/NotFound'
+import TicketsAdmin from './components/TicketsAdmin'
+import MoviesAdmin from './components/MoviesAdmin'
 
 function App() {
 
@@ -70,11 +68,11 @@ function App() {
             <Login {...props} login={login} />
           )}>
             {/* nest these routes inside of the dashboard route */}
-            <Route path="TheTickets" element={<TheTickets />} />
+            <Route index element={<TicketsAdmin />} />
+            <Route path="Tickets" element={<TicketsAdmin />} />
             <Route path="Movies" element={<MoviesAdmin />} />
           </Route>
-          <Route
-            path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
 
