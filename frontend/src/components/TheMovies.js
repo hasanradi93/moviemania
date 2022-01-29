@@ -3,7 +3,6 @@ import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
 
-
 class TheMovies extends Component{
   
     constructor(props){
