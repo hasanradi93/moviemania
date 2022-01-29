@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef} from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
@@ -7,16 +7,15 @@ import '../css/movieDetails.css'
 
 const MoviesDetails = props => {
     const [movie, setMovie] = useState([])
+    const [day,setday] =useState([])
+    const [room,setRoom] = useState([])
+    // const day = useRef('') 
+    // const room = useRef(0) 
     const  movieId  = useParams().id
 
     useEffect(() => {
         retrieveMovie()
     }, [])
-
-  const groupByDays = (arr) => {
-    const newarr = Array.from(new Set(arr.map(JSON.stringify))).map(JSON.parse);
-    return newarr
-  }
 
   const retrieveMovie = () => { 
     BackendDataServices.get(movieId)
@@ -28,17 +27,46 @@ const MoviesDetails = props => {
         .catch(e => {
             console.log(e)
         })
-}
+  }
+
+  const groupByDays = (arr) => {
+    const newarr = Array.from(new Set(arr.map(JSON.stringify))).map(JSON.parse);
+    
+    day.current=arr[0]
+    console.log("dayy",day)
+    return newarr
+  }
+
+   const getRoomsDay = (daySelected) => {
+     const rooms= movie[0].dateTime.filter((dateTime) => {
+         if (dateTime.day === daySelected)
+         return dateTime.room 
+     })
+     day.current =daySelected
+     console.log("daySelected",day)
+     console.log("room", room)
+     return rooms
+   }
+
+
+   const getTimesDay = (roomIdSelected) => {
+    const times= movie[0].dateTime.filter((dateTime) => {
+        if ((dateTime.room._id  === roomIdSelected) && (dateTime.day === day)){
+            room.current = roomIdSelected
+            return dateTime.times
+        }
+    })
+    return times
+  }
+  
 
     let setMoviesData = ``
-    
     if (movie[0]) {
         let movieDetails= movie[0]
-        
         let arrDays = movieDetails.dateTime.map((dateTime) => dateTime.day)
-        let arrTimes = movieDetails.dateTime.map((dateTime) => dateTime.times)
-        setMoviesData =
+        // let arrRoom = movieDetails.dateTime.map((dateTime) => dateTime.room)
 
+        setMoviesData =
         <div className="containerMovie">
             <div className="containerImageDetails">
                <div className="conatinerImage">
@@ -85,18 +113,22 @@ const MoviesDetails = props => {
             <div className="reservation">
                 <div className="dayData">
                   <ul>
-                    { groupByDays(arrDays).map((day , i ,arr) => { return <li key={i} className={i !== 1 ? 'active' : ''}>{FunctionTools.formatDate(day)}</li>}) }
+                    { groupByDays(arrDays).map((dayData , i ,arr) => { return <li key={i} className={i === 0 ? 'active' : ''} onClick={ () => getRoomsDay(dayData)}>{FunctionTools.formatDate(dayData)}</li>}) }
                   </ul>
                 </div>
                 <div className="roomData">  
-               
-                   </div>
-                <div className="timeData"></div>
+                  <ul> 
+                    { getRoomsDay(arrDays[0]).map((roomData,i,arr) => { return <li key={i} className={i === 0 ? 'active' : ''} onClick={ () => getTimesDay(roomData.room._id)}>{roomData.room.name}</li>})}
+                  </ul>
+                </div>
+                <div className="timeData">
+                <ul> 
+                    {getTimesDay(arrDays[0]).map((timeData,i,arr) => { return <li key={i} className={i === 0 ? 'active' : ''}>{timeData}</li>})}
+                  </ul>
+                </div>
             </div>
             <div className="paymentForm"></div>
         </div>
-
-
 
 
                 // <div key={movie[0]._id} className="col-lg-4 pb-1">

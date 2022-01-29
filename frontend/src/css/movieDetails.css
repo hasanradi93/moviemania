@@ -28,13 +28,13 @@
     clear: both;
 }
 
-.dayData{
+.dayData, .roomData , .timeData{
     width: 25%;
     text-align: left;
     float: left;
 }
 
-.dayData ul li {
+.dayData ul li , .roomData ul li , .timeData ul li {
     font-size: 22px;
     margin-top: 7px;
     margin-bottom: 7px;
@@ -44,26 +44,9 @@
     list-style-type: none;
     padding-left: 5px;
 }
-.dayData ul li .active {
+.dayData .active , .roomData .active , .timeData ul li .active{
     background-color: rgba(43, 107, 226, 0.747);
 }
-
-.timeData ul li {
-    font-size: 22px; 
-    border: 1px solid #333;
-    margin-top: 7px;
-    margin-bottom: 5px;
-    float: left;
-    list-style-type: none;
-    text-align: center;
-}
-
-.roomData li{
-    font-size: 22px; 
-    border: 1px solid #333;
-    margin-top: 7px;
-    margin-bottom: 5px;
-    float: right;
-    list-style-type: none;
-    text-align: center;
+.dayData ul li:hover , .roomData ul li :hover , .timeData ul li :hover{
+    cursor: pointer;
 }
