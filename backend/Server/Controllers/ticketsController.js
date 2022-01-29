@@ -72,3 +72,21 @@ exports.getMovieTicketsById = async (req, res) => {
     res.status(400).json({ message: error })
   }
 }
+
+
+exports.takenSeats = async (req, res) => {
+  if (!req.body.movieId && !req.body.roomId && !req.body.date && !req.body.time) {
+    res.status(400).json({ message: "Data error" })
+  }
+  let movieId = req.body.movieId
+  let roomId = req.body.roomId
+  let date = req.body.date
+  let time = req.body.time
+  try {
+    const data = await Ticket.find({ movieId: movieId, roomId: roomId, date: date, time: time });
+    console.log(data)
+    res.json(data);
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}

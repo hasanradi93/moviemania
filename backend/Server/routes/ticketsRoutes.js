@@ -11,6 +11,8 @@ router.route('/')
 router.route('/admin')
     .get(ticketsController.tickets)
 
+router.route('/takenSeats')
+    .post(ticketsController.takenSeats)
 
 router.route('/:id')
     .get(ticketsController.getTicketById)

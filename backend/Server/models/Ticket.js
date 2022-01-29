@@ -21,11 +21,8 @@ const ticketSchema = new mongoose.Schema({
         ref: "Technology"
     },
     date: Date,
-    times: String,
-    seat: {
-        block: String,
-        rowSeats: Number
-    }
+    time: String,
+    seatNumber: String
 }, { timestamps: true })
 
 

@@ -39,6 +39,10 @@ class BackendDataServices {
         return http.get('movies/ComingSoon')
     }
 
+    getTakenSeats(data) {
+        return http.post('tickets/takenSeats', data)
+    }
+
 }
 
 export default new BackendDataServices();
