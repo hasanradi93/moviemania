@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom'
 import React, { useState, useEffect } from "react"
 import BackendDataServices from "../services/BackendDataServices"
-
+import useHidePageInformation from '../hooks/useHidePageInformation';
 
 
 
 function Profile(props) {
-    const  userId  = useParams().id
+    useHidePageInformation(); // Custom hook
+
+    const userId = useParams().id
     console.log(userId)
     const [user, setUser] = useState('')
 
@@ -29,7 +31,7 @@ function Profile(props) {
 
 
     return (
-    
+
         <div>
             <form>
                 <table>
@@ -41,20 +43,20 @@ function Profile(props) {
                         </tr>
                         <tr>
                             <td>
-                            <input type='text' value={user.username}></input>
-                             </td>
+                                <input type='text' value={user.username}></input>
+                            </td>
                         </tr>
                         <tr>
                             <td>
-                            <input type='email' value={user.email}></input>
-                             </td>
+                                <input type='email' value={user.email}></input>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </form>
         </div>
 
-        
+
     );
 
 }

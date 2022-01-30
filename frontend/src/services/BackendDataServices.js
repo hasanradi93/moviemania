@@ -27,10 +27,6 @@ class BackendDataServices {
         return http.get('movies/get-newest-movies')
     }
 
-    getUserDataById(id) {
-        return http.get(`/users/${id}`);
-    }
-
     getUserTicketById(id) {
         return http.get(`/users/${id}`);
     }
@@ -47,6 +43,21 @@ class BackendDataServices {
         return http.get('admin/tickets')
     }
 
+    registerUser(data) {
+        return http.get('users/register', data)
+    }
+
+    loginUser(data) {
+        return http.get('users/login', data)
+    }
+
+    checkToken(data, headers) {
+        return http.get('users/tokenIsValid', data, headers)
+    }
+
+    getUserData(headers) {
+        return http.get(`/users/`, headers);
+    }
 }
 
 export default new BackendDataServices();
