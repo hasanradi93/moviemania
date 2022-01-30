@@ -1,18 +1,23 @@
 require('../models/connectDB')
 const Ticket = require('../models/Ticket')
 
-exports.tickets = async (req, res) => {
+exports.tickets = async (req, res, next) => {
   try {
-    const tickets = await Ticket.find()
+    const date = new Date()
+    console.log(date)
+    const tickets = await Ticket.find({ date: date })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
-      .populate({ path: 'technology.technologyId', model: 'Technology' })
-      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
-    console.log(tickets)
+      .populate({ path: 'technologyId', model: 'Technology' })
+    // if (!tickets.length > 0) {
+    //   console.log("ffffffff")
+    //   return res.status(404).json({ message: "No Tickets Today" })
+    // }
+
     res.json(tickets);
   } catch (error) {
-    res.status(404).json({ message: error })
+    next(error)
   }
 }
 

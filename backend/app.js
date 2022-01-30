@@ -43,7 +43,8 @@ app.use('/rooms', roomsRoutes)
 app.use('/genres', genresRoutes)
 app.use('/branches', branchesRoutes)
 app.use('/technology', technologiesRoutes)
-app.use('/admin', movieRoutes)
+app.use('/admin/movies', movieRoutes)
+app.use('/admin/tickets', ticketsRoutes)
 
 const errorHandler = (error, request, response, next) => {
     console.error("From error handler: ", error.message)
@@ -52,6 +53,9 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'malformatted id' })
     }
     else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
+    }
+    else {
         return response.status(400).json({ error: error.message })
     }
     next(error)

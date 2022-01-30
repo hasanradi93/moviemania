@@ -43,6 +43,10 @@ class BackendDataServices {
         return http.post('tickets/takenSeats', data)
     }
 
+    getTickets() {
+        return http.get('admin/tickets')
+    }
+
 }
 
 export default new BackendDataServices();

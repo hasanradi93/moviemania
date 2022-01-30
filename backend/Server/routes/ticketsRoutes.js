@@ -4,12 +4,10 @@ const { rooms } = require('../Controllers/roomsController')
 const router = express.Router()
 
 const ticketsController = require('../Controllers/ticketsController')
-
+//get all ticekts for admin
 router.route('/')
-    .post(ticketsController.addTicket)
-
-router.route('/admin')
     .get(ticketsController.tickets)
+    .post(ticketsController.addTicket)
 
 router.route('/takenSeats')
     .post(ticketsController.takenSeats)
@@ -21,6 +19,5 @@ router.route('/:id')
 
 router.route('/admin/movie/:id')
     .get(ticketsController.getMovieTicketsById)
-
 
 module.exports = router;
