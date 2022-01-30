@@ -26,6 +26,20 @@ class FunctionTools {
     const dayName = days[d.getDay()] // Thu
     const formatted = `${dayName}, ${date} ${monthName} ${year}`
     return formatted.toString()
+}
+daysLeft(d1, d2) {
+    // To set two dates to two variables
+    var date1 = new Date(d1);
+    var date2 = new Date(d2);
+      
+    // To calculate the time difference of two dates
+    var Difference_In_Time = date2.getTime() - date1.getTime();
+      
+    // To calculate the no. of days between two dates
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    return Difference_In_Days.toFixed()
 } }
+
+
 
 export default new FunctionTools()
