@@ -29,6 +29,7 @@ exports.addMovie = async (req, res, next) => {
     plot: req.body.plot,
     director: req.body.director,
     actors: req.body.actors,
+    rating: req.body.rating,
     fromDate: req.body.fromDate,
     toDate: req.body.toDate,
     runtime: req.body.runtime,
@@ -54,6 +55,7 @@ exports.updateMovie = async (req, res) => {
     plot: req.body.plot,
     director: req.body.director,
     actors: req.body.actors,
+    rating: req.body.rating,
     fromDate: req.body.fromDate,
     toDate: req.body.toDate,
     runtime: req.body.runtime,
@@ -98,7 +100,7 @@ exports.ComingSoon = async (req, res) => {
   try {
     let date = new Date()
     console.log(date)
-    const movies = await Movie.find({ "fromDate": { $gte: date } })
+    const movies = await Movie.find({ "fromDate": { $gt: date }})
     console.log(movies)
     res.json(movies);
   } catch (error) {

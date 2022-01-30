@@ -153,61 +153,12 @@ const MoviesDetails = props => {
                 </div>
                 <div className="paymentForm"></div>
             </div>
-
-
-        // <div key={movie[0]._id} className="col-lg-4 pb-1">
-        //     <div className="card">
-        //         <div className="card-body">
-        //          
-        //             <div className="card-text">
-        //                 <strong>Release Date: </strong>{movie[0].releasedate}<br />
-        //                 <strong>Plot: </strong>{movie[0].plot}<br />
-        //                 <strong>Actors: </strong>
-        //                 {
-        //                      movie[0].actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)
-        //                }<br></br>
-        //                 <strong>Date Times:</strong>
-        //                 <table className='dateTimeAdminStyle'>
-        //                     <thead><tr><th>Room</th><th>Times</th><th>Day</th></tr></thead>
-        //                     <tbody>
-        //                         {
-        //                            movie[0].dateTime.map((dateTime, i) => {
-        //                                 return <tr key={i}>
-        //                                     <td>{dateTime.room.name}</td>
-        //                                     <td>{
-        //                                         dateTime.times.map((time, i, arr) => { return <span key={i} className="timesMovie">{time} {i !== (arr.length - 1) ? ',' : ''}</span> })
-        //                                     }</td>
-        //                                     <td>{FunctionTools.formatDate(dateTime.day)}</td>
-        //                                 </tr>
-        //                             })
-        //                         }
-        //                     </tbody>
-
-        //                 </table>
-        //             </div>
-        //             <div className="row">
-        //                 <Link to={"/movies/" + movie[0]._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-        //                     View Detail
-        //                 </Link>
-        //                 <Link to={"/movies/" + movie[0]._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-        //                     View tickets
-        //                 </Link>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
     }
 
     return (
         <div>
             <div className="row">
-                {
-
-                    setMoviesData
-
-                }
-
-
+                   {setMoviesData}
             </div>
         </div>
     )
