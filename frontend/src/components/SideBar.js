@@ -18,7 +18,7 @@ function SideBar(props) {
     }
     return (
         <div className="sideclass">
-        <SideNav className="sideclass" style={{ transition: "all 0.7s ease-in-out", marginTop: "70px", backgroundColor: "rgba(0, 0, 0, 0.8)", boxShadow : " 10px 10px 10px red"}}>
+        <SideNav className="sideclass" style={{ transition: "all 0.7s ease-in-out", marginTop: "90px", backgroundColor: "rgba(0, 0, 0, 0.3)", boxShadow : " 12px 10px 10px black"}}>
             <NavItem eventKey="Logo">
                 <NavIcon className="d-none d-md-block bg-dark">
                     <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
@@ -31,7 +31,7 @@ function SideBar(props) {
             <SideNav.Nav defaultSelected="Home">
                 <NavItem eventKey="Home">
                     <NavIcon>
-                        <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                        <img src='./home.png' style={{width: "32px", height: "32px"}}></img> 
                     </NavIcon>
                     <NavText>
                         <Link to={"/"} className="nav-link">
@@ -41,7 +41,7 @@ function SideBar(props) {
                 </NavItem>
                 <NavItem eventKey="ComingSoon">
                     <NavIcon>
-                        <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+                    <img src='./comingsoon.png' style={{width: "32px", height: "32px"}}></img> 
                     </NavIcon>
                     <NavText>
                         <Link to={"/ComingSoon"} className="nav-link">
@@ -52,7 +52,6 @@ function SideBar(props) {
                 {props.user ? (
                     <NavItem eventKey="Profile">
                         <NavIcon>
-                            <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
                         <NavText>
                             <Link to={"/Profile"} className="nav-link">
@@ -63,7 +62,7 @@ function SideBar(props) {
                 ) : null}
                 <NavItem eventKey="Login">
                     <NavIcon>
-                        <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+                    <img src='./login.png' style={{width: "40px", height: "40px"}}></img> 
                     </NavIcon>
                     <NavText>
                         {props.user ? (

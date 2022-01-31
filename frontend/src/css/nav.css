@@ -9,6 +9,12 @@
 }
 
 .theNavbar{
-    background-color: red !important;
-    /* box-shadow: 10px 10px 10px red; */
+    background-color: black !important;
+    box-shadow: 10px 10px 10px black;
 }
+ .moviemania{
+        font-size: 72px;
+        background: -webkit-linear-gradient(#870F06, #c2000d);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+ }
