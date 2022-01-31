@@ -31,9 +31,8 @@ class ComingSoon extends Component{
                 const { navigate } = this.props;
                 this.allMovies = this.state.movies.map((movie) => {
                     return (
-                        <div key={movie._id} className="col-lg-4 pb-1">
-                            
-                            <div className="card cardMovies">
+                        <div key={movie._id} className="col-lg-4 pb-1">            
+                            <div className="card cardMovies" style={{border: "2px solid red"}}>
                                 <div className="card-body">
                                     <div className="card-text">
                                     <Link to = {`Movies/${movie._id}`}>

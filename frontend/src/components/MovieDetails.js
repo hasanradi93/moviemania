@@ -10,9 +10,9 @@ const MoviesDetails = props => {
     const [day, setDay] = useState('')
     const [roomId, setRoom] = useState(null)
     const [time, setTime] = useState(null)
-    const [choosedDayIndex, setChoosedDayIndex] = useState(null)
-    const [choosedRoomIndex, setChoosedRoomIndex] = useState(null)
-    const [choosedTimeIndex, setChoosedTimeIndex] = useState(null)
+    const [choosedDayIndex, setChosenDayIndex] = useState(null)
+    const [choosedRoomIndex, setChosenRoomIndex] = useState(null)
+    const [choosedTimeIndex, setChosenTimeIndex] = useState(null)
     const [days, setDays] = useState([])
     const [rooms, setRooms] = useState([])
     const [times, setTimes] = useState([])
@@ -54,7 +54,7 @@ const MoviesDetails = props => {
                 setDay(daySelected)
             else
                 setDay(dayData)
-            setChoosedDayIndex(index)
+            setChosenDayIndex(index)
             setRooms(roomsData)
         }
     }
@@ -66,14 +66,14 @@ const MoviesDetails = props => {
                     return dateTime.times
             })
             setTimes(timesData[0].times)
-            setChoosedRoomIndex(index)
+            setChosenRoomIndex(index)
             setRoom(roomData)
         }
     }
 
     const setSeatsBox = (timeData, index) => {
         setTime(timeData)
-        setChoosedTimeIndex(index)
+        setChosenTimeIndex(index)
         let data = { "movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
         console.log(data)
         BackendDataServices.getTakenSeats(data)
