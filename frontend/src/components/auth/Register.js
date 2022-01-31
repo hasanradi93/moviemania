@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import BackendDataServices from '../../services/BackendDataServices'
-
+import "../../css/auth.css";
 import UserContext from "../../context/UserContext";
 import ErrorNotice from './ErrorNotice';
 

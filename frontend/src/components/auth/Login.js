@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BackendDataServices from '../../services/BackendDataServices'
 import UserContext from "../../context/UserContext";
 import ErrorNotice from "./ErrorNotice";
-
+import "../../css/auth.css";
 export default function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
