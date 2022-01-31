@@ -6,7 +6,9 @@ import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 
 const MoviesDetails = props => {
+    const [tickets, setTickets] = useState([])
     const [movie, setMovie] = useState([])
+    const [seats, setSeats] = useState([])
     const [day, setDay] = useState('')
     const [roomId, setRoom] = useState(null)
     const [time, setTime] = useState(null)
@@ -74,11 +76,29 @@ const MoviesDetails = props => {
     const setSeatsBox = (timeData, index) => {
         setTime(timeData)
         setChosenTimeIndex(index)
-        let data = { "movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
+        let data = {"movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
         console.log(data)
         BackendDataServices.getTakenSeats(data)
             .then(response => {
+                setTickets(response.data)
                 console.log(response.data)
+                const allTickets =
+                movie[0].dateTime.rooms.map((movieData , i, arr) => { 
+                    if (movieData._id === roomId){
+                      if (tickets){
+                          tickets.map((tickets , i) =>{
+                           console.log(tickets)
+                             })
+                         
+
+                      }
+                       else console.log("no tickets")
+                    }
+                    // tickets.map(ticket , i , arr) => {
+                    //     if (movieData.dateTime.rooms)
+                    // }
+                    
+                })
             })
             .catch(e => {
                 console.log(e)
@@ -137,17 +157,17 @@ const MoviesDetails = props => {
                 <div className="reservation">
                     <div className="dayData">
                         <ul>
-                            {days.map((dayData, i, arr) => { return <li key={i} className={choosedDayIndex === i ? 'active' : ''} onClick={() => getRoomsDay(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
+                            {days.map((dayData, i) => { return <li key={i} className={choosedDayIndex === i ? 'active' : ''} onClick={() => getRoomsDay(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
                         </ul>
                     </div>
                     <div className="roomData">
                         <ul>
-                            {rooms ? rooms.map((roomData, i, arr) => { return <li key={i} className={choosedRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
+                            {rooms ? rooms.map((roomData, i) => { return <li key={i} className={choosedRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
                         </ul>
                     </div>
                     <div className="timeData">
                         <ul>
-                            {times ? times.map((timeData, i, arr) => { return <li key={i} className={choosedTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
+                            {times ? times.map((timeData, i) => { return <li key={i} className={choosedTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                         </ul>
                     </div>
                 </div>
