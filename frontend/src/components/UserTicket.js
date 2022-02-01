@@ -2,11 +2,8 @@ import { useParams } from 'react-router-dom'
 import React, { useState, useEffect } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 
-
-
-
 function UserTicket(props) {
-    const  userId  = useParams().id
+    const userId = useParams().id
     console.log(userId)
     const [user, setUser] = useState('')
 
@@ -26,12 +23,10 @@ function UserTicket(props) {
                 console.log(e)
             })
     }
-
-
     return (
     
         <div>
-            User Ticket
+            okay
         </div>
 
         
