@@ -16,11 +16,11 @@ router.route('/:id')
     .get(ticketsController.getTicketById)
     .put(ticketsController.cancelTicket)
 
+router.route('/user/:id')
+    .get(ticketsController.getUserTicketsById)
 
 router.route('/admin/movie/:id')
     .get(ticketsController.getMovieTicketsById)
 
-router.route('/ticket/:id')
-    .get(ticketsController.getUserTicketById)
 
 module.exports = router;

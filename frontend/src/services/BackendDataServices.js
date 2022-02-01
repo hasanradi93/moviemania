@@ -27,8 +27,8 @@ class BackendDataServices {
         return http.get('movies/get-newest-movies')
     }
 
-    getUserTicketById(id) {
-        return http.get(`/tickets/${id}`);
+    getUserTicketsById(id) {
+        return http.get(`/tickets/user/${id}`);
     }
 
     ComingSoon() {

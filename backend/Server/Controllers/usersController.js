@@ -17,7 +17,7 @@ exports.users = async (req, res) => {
 // Register route
 exports.register = async (req, res) => {
     try {
-        const { email, password, passwordCheck, username } = req.body
+        const { email, password, username } = req.body
 
         // validate
         // status code 400 means bad request

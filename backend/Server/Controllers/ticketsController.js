@@ -96,7 +96,7 @@ exports.takenSeats = async (req, res) => {
   }
 }
 
-exports.getUserTicketById = async (req, res) => {
+exports.getUserTicketsById = async (req, res) => {
   const userId = req.params.id;
   try {
     const data = await Ticket.findById({ _id: userId })
