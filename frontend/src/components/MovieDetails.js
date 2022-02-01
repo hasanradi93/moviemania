@@ -5,16 +5,17 @@ import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 
+
+
 const MoviesDetails = props => {
     const [tickets, setTickets] = useState([])
     const [movie, setMovie] = useState([])
-    const [seats, setSeats] = useState([])
     const [day, setDay] = useState('')
     const [roomId, setRoom] = useState(null)
     const [time, setTime] = useState(null)
-    const [choosedDayIndex, setChosenDayIndex] = useState(null)
-    const [choosedRoomIndex, setChosenRoomIndex] = useState(null)
-    const [choosedTimeIndex, setChosenTimeIndex] = useState(null)
+    const [chosenDayIndex, setChosenDayIndex] = useState(null)
+    const [chosenRoomIndex, setChosenRoomIndex] = useState(null)
+    const [chosenTimeIndex, setChosenTimeIndex] = useState(null)
     const [days, setDays] = useState([])
     const [rooms, setRooms] = useState([])
     const [times, setTimes] = useState([])
@@ -25,6 +26,8 @@ const MoviesDetails = props => {
     useEffect(() => {
         retrieveMovie()
     }, [])
+
+    const countSeats = () =>{}
 
     const retrieveMovie = () => {
         BackendDataServices.get(movieId)
@@ -84,28 +87,32 @@ const MoviesDetails = props => {
         BackendDataServices.getTakenSeats(data)
             .then(response => {
                 setTickets(response.data)
-                let blockSeatNb = ''
-                const allSeatsForm =
-                    dataSelected.room.seats.map((seat, i, arrD) => {
-                        console.log("seat", seat)
-                        if (response.data) {
-                            response.data.map((ticket) => {
-                                if (ticket.seatNumber === seat._id) {
-                                    console.log("here")
-                                    return <li key={i}><input type='checkbox' checked /></li>
-                                }
-                                else {
-                                    console.log("here0")
-                                    return <li key={i}><input type='checkbox' /></li>
-                                }
-                            })
-                        }
-                        else {
-                            console.log("here2")
-                            return <li key={i}><input type='checkbox' /></li>
-                        }
+                let blocks = []
+                const allSeatsForm = dataSelected.room.seats.map((block, i, arrD) => {
+                        console.log("block", block)
+                        let blockSeats = []
+                        block.rowSeats.map((seat) => {
+                            if (response.data) {
+                                let reserved = false
+                                response.data.map((ticket) => {
+                                    if (ticket.seatNumber === seat._id) {
+                                        reserved = true
+                                    }
+                                })
+                                if(reserved)
+                                    blockSeats.push(1)
+                                else
+                                    blockSeats.push(0)
+
+                            }
+                            else {
+                                blockSeats.push(0)
+                            }
+                        })
+                      blocks.push(blockSeats) 
                     })
-                setSeatsForm(allSeatsForm)
+                    console.log(blocks)
+                setSeatsForm(blocks)
 
             })
             .catch(e => {
@@ -165,21 +172,21 @@ const MoviesDetails = props => {
                 <div className="reservation">
                     <div className="dayData">
                         <ul>
-                            {days.map((dayData, i) => { return <li key={i} className={choosedDayIndex === i ? 'active' : ''} onClick={() => getRoomsDay(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
+                            {days.map((dayData, i) => { return <li key={i} className={chosenDayIndex === i ? 'active' : ''} onClick={() => getRoomsDay(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
                         </ul>
                     </div>
                     <div className="roomData">
                         <ul>
-                            {rooms ? rooms.map((roomData, i) => { return <li key={i} className={choosedRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
+                            {rooms ? rooms.map((roomData, i) => { return <li key={i} className={chosenRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
                         </ul>
                     </div>
                     <div className="timeData">
                         <ul>
-                            {times ? times.map((timeData, i) => { return <li key={i} className={choosedTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
+                            {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                         </ul>
                     </div>
                 </div>
-                <div className="seatsForm">{seatsForm ? seatsForm : ''}</div>
+                <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => {return seat? <span key={i}><input type='checkbox' onChange={countSeats()} checked/></span> : <span key={i}><input type='checkbox' onChange={countSeats()} /></span> }) }</div>}) : ''}</div>
                 <div className="paymentForm"></div>
             </div>
     }

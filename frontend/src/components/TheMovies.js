@@ -30,19 +30,19 @@ class TheMovies extends Component{
                 this.allMovies = this.state.movies.map((movie) => {
                     return (
                         <div key={movie._id} className="col-lg-4 pb-1">
-                        <div className="card cardMovies" style={{border: "2px solid red"}}>
+                        <div className="card cardMovies">
                         <div className="card-body">
                             <div className="card-text">
                             <Link to = {`Movies/${movie._id}`}>
                                 <div className="imgMovie">
-                                    <img src={movie.photo} width='100%' height='400px' alt={movie.title} />
+                                    <img className="poster" src={movie.photo} width='100%' height='400px' alt={movie.title} />
                                 </div>
                                 </Link>
                                 <div>
                                     <h3 className="movieTitle">{movie.title}</h3><br />
                                 
                                 <div className="ratingDiv">
-                                    <span className="rating" >8.7</span>
+                                    <span className="rating" >{movie.rating}</span>
                                     <img src="./star.png" className="ratingStar"></img>
                                 </div>  
                                 </div>                             
