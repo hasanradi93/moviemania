@@ -39,11 +39,11 @@ class TheMovies extends Component{
                                 </div>
                                 </Link>
                                 <div>
-                                    <h3 style={{textAlign: "center", float: "left", width: "60%", marginLeft : "60px", fontSize: "40px", color: "whitesmoke"}}>{movie.title}</h3><br />
+                                    <h3 className="movieTitle">{movie.title}</h3><br />
                                 
-                                <div style={{float: "right", width: "20%", marginTop: "-22px"}}>
-                                    <span style={{fontSize: "30px", color: "whitesmoke"}}>8.7</span>
-                                    <img src="./star.png" style={{width: "24px", height: "24px", float: "right", marginTop: "8px"}}></img>
+                                <div className="ratingDiv">
+                                    <span className="rating" >8.7</span>
+                                    <img src="./star.png" className="ratingStar"></img>
                                 </div>  
                                 </div>                             
                 </div>

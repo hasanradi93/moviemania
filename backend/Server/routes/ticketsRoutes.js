@@ -20,4 +20,7 @@ router.route('/:id')
 router.route('/admin/movie/:id')
     .get(ticketsController.getMovieTicketsById)
 
+router.route('/ticket/:id')
+    .get(ticketsController.getUserTicketById)
+
 module.exports = router;
