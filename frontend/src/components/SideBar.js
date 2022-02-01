@@ -19,7 +19,8 @@ function SideBar(props) {
     }
     return (
         <div className="sideclass">
-            <SideNav className="sideclass" style={{ transition: "all 0.7s ease-in-out", marginTop: "90px", backgroundColor: "rgba(0, 0, 0, 0.3)", boxShadow: " 12px 10px 10px black" }}>
+            <SideNav className="sideclass" style={{ transition: "all 0.7s ease-in-out", marginTop: "90px", 
+            backgroundColor: 'black', background: "linear-gradient(to right, black, white) !important", boxShadow: " 12px 10px 10px black" }}>
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">
                         <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />

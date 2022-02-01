@@ -1,6 +1,14 @@
 .cardMovies{
     background-color: transparent !important;
   }
+.cardMovies:hover{
+  transform: scale(1.05);
+  transition: 1s;
+}
+.poster:hover{
+  border: 4px groove whitesmoke;
+  cursor: pointer;
+}
 .movieTitle{
   text-align: center;
   float: left;
