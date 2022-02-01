@@ -26,6 +26,7 @@ function App() {
     user: undefined,
   });
 
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token"); // grabbing JWT token from localStorage
@@ -34,18 +35,11 @@ function App() {
         localStorage.setItem("auth-token", "");
         token = "";
       }
-      else {
-        console.log(token)
-      }
       // Here we are calling to our backend to make sure our JWT Response is valid
-      const tokenRes = await BackendDataServices.checkToken(null, // body is set to null
-        { headers: { "x-auth-token": token } }
-      );
+      const tokenRes = await BackendDataServices.checkToken({ "data": 0 }, { headers: { "x-auth-token": token } })
       // if there is token response data then we will grab that user and then setUserData to hold the token information and the user response data
       if (tokenRes.data) {
-        const userRes = await BackendDataServices.getUserData({
-          headers: { "x-auth-token": token },
-        });
+        const userRes = await BackendDataServices.getUserData({ "id": tokenRes.data.id }, { headers: { "x-auth-token": token } })
         setUserData({
           token,
           user: userRes.data,
@@ -58,11 +52,11 @@ function App() {
 
   return (
     <div>
-      <Navbar />
-      <SideBar />
-      <div className="container mt-3 navclass" id='content' >
-        {/* UserContext.Provider is Context API similiar to Redux. We are wrapping the components that we want to share state with. */}
-        <UserContext.Provider value={{ userData, setUserData }}>
+      {/* UserContext.Provider is Context API similiar to Redux. We are wrapping the components that we want to share state with. */}
+      <UserContext.Provider value={{ userData, setUserData }}>
+        <Navbar />
+        <SideBar />
+        <div className="container mt-3 navclass" id='content' >
           <Routes>
             <Route exact path={"/"} element={<TheMovies />} />
             <Route exact path={"ComingSoon"} element={<ComingSoon />} />
@@ -79,9 +73,8 @@ function App() {
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </UserContext.Provider>
-
-      </div>
+        </div>
+      </UserContext.Provider>
     </div >
   );
 }

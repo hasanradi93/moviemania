@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import BackendDataServices from '../../services/BackendDataServices'
 import UserContext from "../../context/UserContext";
 import ErrorNotice from "./ErrorNotice";
@@ -16,18 +16,25 @@ export default function Login() {
     const submit = async (e) => {
         try {
             e.preventDefault();
-            const loginUser = { email, password };
-            // making request to our backend to login the user in
-            const loginRes = await BackendDataServices.loginUser(loginUser)
-            setError('Login Success')
-            // setting login response data's token and user data this
-            setUserData({
-                token: loginRes.data.token,
-                user: loginRes.data.user,
-            });
-            //save the Token in localstorage
-            localStorage.setItem("auth-token", loginRes.data.token);
-            navigate("/");
+            if (email && password) {
+                const loginUser = { email, password };
+                // making request to our backend to login the user in
+                const loginRes = await BackendDataServices.loginUser(loginUser)
+                setError('Login Success')
+                // setting login response data's token and user data this
+                setUserData({
+                    token: loginRes.data.token,
+                    user: loginRes.data.user,
+                });
+                //save the Token in localstorage
+                localStorage.setItem("auth-token", loginRes.data.token);
+                let intervalNav = setInterval(() => {
+                    navigate("/")
+                    clearInterval(intervalNav)
+                }, 3000)
+            }
+            else
+                setError("Not all fields have been intered!")
         } catch (err) {
             err.response.data.msg && setError(err.response.data.msg);
         }
@@ -53,6 +60,8 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <input type="submit" value="Log in" />
+                <br></br>
+                <Link to={"/Register"}>Create account</Link>
             </form>
         </div>
     );

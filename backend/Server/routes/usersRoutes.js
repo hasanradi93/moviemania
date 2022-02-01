@@ -6,7 +6,7 @@ const usersController = require("../Controllers/usersController")
 const auth = require("../middleware/auth");
 
 router.route('/', auth)
-    .get(usersController.getUserData)
+    .post(usersController.getUserData)
 router.route('/login')
     .post(usersController.login)
 router.route('/register')

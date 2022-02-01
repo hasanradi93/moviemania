@@ -18,6 +18,8 @@ const MoviesDetails = props => {
     const [days, setDays] = useState([])
     const [rooms, setRooms] = useState([])
     const [times, setTimes] = useState([])
+    const [dataSelected, setDataSelected] = useState([])
+    const [seatsForm, setSeatsForm] = useState(null)
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
@@ -70,35 +72,41 @@ const MoviesDetails = props => {
             setTimes(timesData[0].times)
             setChosenRoomIndex(index)
             setRoom(roomData)
+            setDataSelected(timesData[0])
         }
     }
 
     const setSeatsBox = (timeData, index) => {
         setTime(timeData)
         setChosenTimeIndex(index)
-        let data = {"movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
+        let data = { "movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
         console.log(data)
         BackendDataServices.getTakenSeats(data)
             .then(response => {
                 setTickets(response.data)
-                console.log(response.data)
-                const allTickets =
-                movie[0].dateTime.rooms.map((movieData , i, arr) => { 
-                    if (movieData._id === roomId){
-                      if (tickets){
-                          tickets.map((tickets , i) =>{
-                           console.log(tickets)
-                             })
-                         
+                let blockSeatNb = ''
+                const allSeatsForm =
+                    dataSelected.room.seats.map((seat, i, arrD) => {
+                        console.log("seat", seat)
+                        if (response.data) {
+                            response.data.map((ticket) => {
+                                if (ticket.seatNumber === seat._id) {
+                                    console.log("here")
+                                    return <li key={i}><input type='checkbox' checked /></li>
+                                }
+                                else {
+                                    console.log("here0")
+                                    return <li key={i}><input type='checkbox' /></li>
+                                }
+                            })
+                        }
+                        else {
+                            console.log("here2")
+                            return <li key={i}><input type='checkbox' /></li>
+                        }
+                    })
+                setSeatsForm(allSeatsForm)
 
-                      }
-                       else console.log("no tickets")
-                    }
-                    // tickets.map(ticket , i , arr) => {
-                    //     if (movieData.dateTime.rooms)
-                    // }
-                    
-                })
             })
             .catch(e => {
                 console.log(e)
@@ -171,6 +179,7 @@ const MoviesDetails = props => {
                         </ul>
                     </div>
                 </div>
+                <div className="seatsForm">{seatsForm ? seatsForm : ''}</div>
                 <div className="paymentForm"></div>
             </div>
     }
@@ -178,7 +187,7 @@ const MoviesDetails = props => {
     return (
         <div>
             <div className="row">
-                   {setMoviesData}
+                {setMoviesData}
             </div>
         </div>
     )

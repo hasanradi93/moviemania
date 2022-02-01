@@ -11,8 +11,8 @@ const auth = (req, res, next) => {
                 .status(401)
                 .json({ msg: "No authentication token, authorization denied." });
         }
-        // Grabbing out jwt token, passing our JWT_SECRET and checking it cordinates with our user we have selected
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        // Grabbing out jwt token, passing our Token_Secret and checking it cordinates with our user we have selected
+        const verified = jwt.verify(token, process.env.Token_Secret);
         if (!verified) {
             return res
                 .status(401)

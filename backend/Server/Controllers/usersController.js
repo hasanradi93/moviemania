@@ -14,49 +14,26 @@ exports.users = async (req, res) => {
     }
 }
 
-// exports.addUser = async(req, res) => {
-//     const newUser = new User({
-//         username: req.body.username,
-//         email: req.body.email,
-//         password: req.body.password,
-//         profile: req.body.profile,
-//         userType : req.body.userType
-//     })
-// console.log(newUser)
-//     try {
-//         const users = await newUser.save()
-//         res.json(users);
-//     } catch (error) {
-//         res.status(404).json( {message: error })
-//     } 
-// }
-
 // Register route
 exports.register = async (req, res) => {
     try {
-        const { email, password, passwordCheck, username } = req.body;
+        const { email, password, passwordCheck, username } = req.body
 
         // validate
         // status code 400 means bad request
         // status code 500 means internal server error
 
-        if (!email || !password || !passwordCheck || !username) {
+        if (!email || !password || !username) {
             return res.status(400)
-                .json({ msg: "Not all fields have been entered" });
+                .json({ msg: "Not all fields have been entered" })
         }
 
         // Checking to ensure password length is at least 5 characters
         //let's validate the data before we make a user
         const { error } = registerValidation(req.body)
         if (error)
-            return res.status('400').send(error.details[0].message)
-
-        // Checking the password entered vs the password checker
-        if (password !== passwordCheck) {
-            return res
-                .status(400)
-                .json({ msg: "Passwords do not match. Please try again" });
-        }
+            return res.status(400)
+                .json({ msg: error.details[0].message })
 
         // Checking database and running an email check to ensure no duplicate emails upon register 
         const existingEmail = await User.findOne({ email: email });
@@ -75,13 +52,15 @@ exports.register = async (req, res) => {
             email: email,
             password: passwordHash,
             username: username,
+            profile: 'https://banner2.cleanpng.com/20180323/zkw/kisspng-user-profile-computer-icons-avatar-clip-art-profile-cliparts-free-5ab58cd0d25269.4945707915218475048615.jpg',
+            userType: 1
         });
         const savedUser = await newUser.save();
         res.json(savedUser);
 
         // Catching any errors that come through
     } catch (error) {
-        res.status(500).json({ err: error.message });
+        res.status(500).json({ msg: error.message });
     }
 }
 
@@ -104,17 +83,6 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-// exports.signIn = async (req, res) => {
-//     const username = req.body.username;
-//     const password = req.body.password;
-//     try {
-//         const data = await User.find({ $or: [{ username: username }, { email: username }], password: password })
-//         res.json(data);
-//     } catch (error) {
-//         res.status(400).json({ message: error })
-//     }
-// }
-
 // login route setup
 exports.login = async (req, res) => {
     try {
@@ -122,20 +90,20 @@ exports.login = async (req, res) => {
 
         //first validate if data filled
         if (!email || !password) {
-            return res.status(400).json({ msg: "Not all fields have been entered" });
+            return res.status(400).json({ msg: "Not all fields have been entered" })
         }
 
         //let's validate the data before we make a user
         const { error } = loginValidation(req.body)
         if (error)
-            return res.status('400').send(error.details[0].message)
+            return res.status(400).json({ msg: error.details[0].message });
 
         // checking email that was entered and comparing email in our database
         const user = await User.findOne({ email: email });
         if (!user) {
             return res
                 .status(400)
-                .json({ msg: "Invalid credentails" });
+                .json({ msg: "Email not found" });
         }
 
         // Checking password entered and comparing with hashed password in database
@@ -145,7 +113,7 @@ exports.login = async (req, res) => {
         }
 
         // Creating our json web token by passing the user id and our JWT_SECRET
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: user._id }, process.env.Token_Secret);
         res.json({
             token,
             user: {
@@ -154,7 +122,7 @@ exports.login = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ err: error.message });
+        res.status(500).json({ msg: error.message });
     }
 }
 
@@ -171,38 +139,26 @@ exports.deleteUser = async (req, res) => {
 // validating if user is logged in by boolean check most useful for front-end
 exports.checkToken = async (req, res) => {
     try {
-        const token = req.header("x-auth-token");
-        if (!token) return res.json(false);
+        const token = req.header("x-auth-token")
+        if (!token) return res.json(false)
 
-        const verified = jwt.verify(token, process.env.Token_Secret);
-        if (!verified) return res.json(false);
+        const verified = jwt.verify(token, process.env.Token_Secret)
+        if (!verified) return res.json(false)
 
-        const user = await User.findById(verified.id);
-        if (!user) return res.json(false);
+        const user = await User.findById(verified.id)
+        if (!user) return res.json(false)
 
-        return res.json(true);
+        return res.json(verified)
     } catch (error) {
-        res.status(500).json({ err: error.message });
+        res.status(500).json({ msg: error.message })
     }
 }
 
 // This route is grabbing one user
 exports.getUserData = async (req, res) => {
-    const user = await User.findById(req.user)
+    const user = await User.findById(req.body.id)
     res.json({
-        firstName: user.firstName,
-        lastName: user.lastName,
+        username: user.username,
         id: user._id,
     })
 }
-
-// exports.getUserData = async (req, res) => {
-//     const userId = req.params.id
-//     try {
-//         const users = await User.findById({ _id: userId })
-//         res.json(users);
-//     } catch (error) {
-//         res.status(404).json({ message: error })
-//     }
-// }
-

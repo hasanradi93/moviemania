@@ -44,19 +44,19 @@ class BackendDataServices {
     }
 
     registerUser(data) {
-        return http.get('users/register', data)
+        return http.post('users/register', data)
     }
 
     loginUser(data) {
-        return http.get('users/login', data)
+        return http.post('users/login', data)
     }
 
     checkToken(data, headers) {
-        return http.get('users/tokenIsValid', data, headers)
+        return http.post('users/tokenIsValid', data, headers)
     }
 
-    getUserData(headers) {
-        return http.get(`/users/`, headers);
+    getUserData(data, headers) {
+        return http.post(`/users/`, data, headers);
     }
 }
 
