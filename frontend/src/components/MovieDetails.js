@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
+import YoutubeEmbed from "./YoutubeEmbed.js";
 
 
 
@@ -27,7 +28,7 @@ const MoviesDetails = props => {
         retrieveMovie()
     }, [])
 
-    const countSeats = () =>{}
+    const countSeats = () => { }
 
     const retrieveMovie = () => {
         BackendDataServices.get(movieId)
@@ -89,29 +90,29 @@ const MoviesDetails = props => {
                 setTickets(response.data)
                 let blocks = []
                 const allSeatsForm = dataSelected.room.seats.map((block, i, arrD) => {
-                        console.log("block", block)
-                        let blockSeats = []
-                        block.rowSeats.map((seat) => {
-                            if (response.data) {
-                                let reserved = false
-                                response.data.map((ticket) => {
-                                    if (ticket.seatNumber === seat._id) {
-                                        reserved = true
-                                    }
-                                })
-                                if(reserved)
-                                    blockSeats.push(1)
-                                else
-                                    blockSeats.push(0)
-
-                            }
-                            else {
+                    console.log("block", block)
+                    let blockSeats = []
+                    block.rowSeats.map((seat) => {
+                        if (response.data) {
+                            let reserved = false
+                            response.data.map((ticket) => {
+                                if (ticket.seatNumber === seat._id) {
+                                    reserved = true
+                                }
+                            })
+                            if (reserved)
+                                blockSeats.push(1)
+                            else
                                 blockSeats.push(0)
-                            }
-                        })
-                      blocks.push(blockSeats) 
+
+                        }
+                        else {
+                            blockSeats.push(0)
+                        }
                     })
-                    console.log(blocks)
+                    blocks.push(blockSeats)
+                })
+                console.log(blocks)
                 setSeatsForm(blocks)
 
             })
@@ -167,7 +168,7 @@ const MoviesDetails = props => {
                     </div>
                 </div>
 
-                <div className="containerTrailer">   </div>
+                <div className="containerTrailer"> <YoutubeEmbed embedId="rokGy0huYEA" />  </div>
                 <div className="branchs"> </div>
                 <div className="reservation">
                     <div className="dayData">
@@ -186,7 +187,7 @@ const MoviesDetails = props => {
                         </ul>
                     </div>
                 </div>
-                <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => {return seat? <span key={i}><input type='checkbox' onChange={countSeats()} checked/></span> : <span key={i}><input type='checkbox' onChange={countSeats()} /></span> }) }</div>}) : ''}</div>
+                <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><input type='checkbox' onChange={countSeats()} checked /></span> : <span key={i}><input type='checkbox' onChange={countSeats()} /></span> })}</div> }) : ''}</div>
                 <div className="paymentForm"></div>
             </div>
     }

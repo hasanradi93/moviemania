@@ -1,3 +1,6 @@
+body{
+  color: whitesmoke;
+}
 .containerMovie {
   width: 100%;
   text-align: center;
@@ -45,7 +48,7 @@
   margin-top: 7px;
   margin-bottom: 7px;
   width: 100%;
-  border: 1px solid #333;
+  border: 1px solid rgb(255, 255, 255);
   height: 35px;
   list-style-type: none;
   padding-left: 5px;
@@ -53,11 +56,15 @@
 .dayData .active,
 .roomData .active,
 .timeData .active {
-  background-color: rgba(43, 107, 226, 0.747);
+  background-color: #870F06;
 }
 .dayData ul li:hover,
 .roomData ul li:hover,
 .timeData ul li:hover {
   cursor: pointer;
-  background-color: rgba(43, 107, 226, 0.747);
+  background: -webkit-linear-gradient(#870F06, #c2000d);
+  box-shadow: 5px 5px 5px 5px #000000;
+}
+.containerTrailer{
+  margin: 10%;
 }

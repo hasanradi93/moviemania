@@ -47,7 +47,7 @@ function App() {
       }
     };
     // We have to call on our function within a useEffect to make our function async / await
-    checkLoggedIn();
+    // checkLoggedIn();
   }, []);
 
   return (

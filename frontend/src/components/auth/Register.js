@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import BackendDataServices from '../../services/BackendDataServices'
 import "../../css/auth.css";
 import UserContext from "../../context/UserContext";
@@ -85,8 +85,9 @@ export default function Register() {
                     placeholder="Verify Password"
                     onChange={(e) => setPasswordCheck(e.target.value)}
                 />
-
                 <input type="submit" value="Register" />
+                <br></br>
+                <Link to={"/Login"}>Login</Link>
             </form>
         </div>
     );

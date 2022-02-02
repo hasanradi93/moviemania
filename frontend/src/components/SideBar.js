@@ -9,23 +9,24 @@ function SideBar(props) {
     let stateSidebar = false
     const pushItems = () => {
         if (stateSidebar === false) {
-            document.getElementById('content').style.marginLeft = "250px"
+            document.getElementById('content').style.marginLeft = "300px"
             stateSidebar = true
         }
         else {
-            document.getElementById('content').style.marginLeft = "100px"
+            document.getElementById('content').style.marginLeft = "150px"
             stateSidebar = false
         }
     }
     return (
         <div className="sideclass">
-            <SideNav className="sideclass" style={{ transition: "all 0.7s ease-in-out", marginTop: "90px", 
-            backgroundColor: 'black', background: "linear-gradient(to right, black, white) !important", boxShadow: " 12px 10px 10px black" }}>
+            <SideNav className="sideclass" style={{
+                transition: "all 0.7s ease-in-out", marginTop: "6%", padding: "1%",
+                backgroundColor: 'black', boxShadow: " 12px 10px 10px black"
+            }}>
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">
-                        <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
                         <Link to="/">
-                            MovieMania
+                            <img className='logo' src='./Mlogo.png' />
                         </Link>
                     </NavIcon>
                 </NavItem>
@@ -33,11 +34,11 @@ function SideBar(props) {
                 <SideNav.Nav defaultSelected="Home">
                     <NavItem eventKey="Home">
                         <NavIcon>
-                            <img src='./home.png' style={{ width: "32px", height: "32px" }}></img>
+                            <img src='./home.png' style={{ width: "35px", height: "35px" }}></img>
                         </NavIcon>
                         <NavText>
                             <Link to={"/"} className="nav-link">
-                                Home
+                                <span className='pages'>Home</span>
                             </Link>
                         </NavText>
                     </NavItem>
@@ -47,21 +48,10 @@ function SideBar(props) {
                         </NavIcon>
                         <NavText>
                             <Link to={"/ComingSoon"} className="nav-link">
-                                Coming soon
+                                <span className='pages'>Coming soon</span>
                             </Link>
                         </NavText>
                     </NavItem>
-                    {props.user ? (
-                        <NavItem eventKey="Profile">
-                            <NavIcon>
-                            </NavIcon>
-                            <NavText>
-                                <Link to={"/Profile"} className="nav-link">
-                                    Profile
-                                </Link>
-                            </NavText>
-                        </NavItem>
-                    ) : null}
                     <AuthOptionsSideBar />
                 </SideNav.Nav>
             </SideNav>

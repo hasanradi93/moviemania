@@ -1,21 +1,31 @@
+.pages{
+    font-size: 20px;
+}
 .navclass {
     transition: 1s;
-    margin-left: 100px;
+    margin-left: 150px;
     };
 
 .sideclass{
     margin-top: 65px !important;
-    background-color: black;
-    background-image: linear-gradient(to right, black, transparent) !important;
+    background: linear-gradient(to right, black, transparent) fixed !important;
 }
 
 .theNavbar{
     background-color: black !important;
     box-shadow: 10px 10px 10px black;
+    padding-bottom: 1%;
 }
  .moviemania{
         font-size: 72px;
         background: -webkit-linear-gradient(#870F06, #c2000d);
         background-clip: text;
         -webkit-text-fill-color: transparent;
+ }
+
+ .logo{
+    width: 100px;
+    height: auto;
+    text-align: center;
+    margin-left:-18px;
  }
