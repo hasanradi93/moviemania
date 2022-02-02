@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
-import YoutubeEmbed from "./YoutubeEmbed.js";
 
 
 
@@ -17,11 +16,14 @@ const MoviesDetails = props => {
     const [chosenDayIndex, setChosenDayIndex] = useState(null)
     const [chosenRoomIndex, setChosenRoomIndex] = useState(null)
     const [chosenTimeIndex, setChosenTimeIndex] = useState(null)
+    const [chosenTechIndex, setChosenTechIndex] = useState(null)
     const [days, setDays] = useState([])
     const [rooms, setRooms] = useState([])
     const [times, setTimes] = useState([])
     const [dataSelected, setDataSelected] = useState([])
     const [seatsForm, setSeatsForm] = useState(null)
+    const [technology, setTechnology] = useState([])
+    const [technologies, setTechnologies] = useState([])
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
@@ -47,23 +49,32 @@ const MoviesDetails = props => {
             })
     }
 
-    const getRoomsDay = (dayData, index) => {
+    const Technology = (dayData, index) => {
+        console.log(dayData)
+        if (movie[0]) {
+            const techData = movie[0].dateTime.filter((dateTime) => {
+             if (dateTime.day === dayData)
+                    return dateTime
+            })
+            console.log(techData)
+            setDay(dayData)
+            setChosenDayIndex(index)
+            setTechnologies(techData)
+        }
+        
+    }
+    
+
+    const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
             const roomsData = movie[0].dateTime.filter((dateTime) => {
-                if (day === '') {
-                    daySelected = dayData
-                    if (dateTime.day === daySelected)
-                        return dateTime.room
-                }
-                else if (dateTime.day === dayData)
-                    return dateTime.room
+                if (dateTime.day === day && dateTime.technologyId.name === techData)
+                        return dateTime
             })
-            if (day === '')
-                setDay(daySelected)
-            else
-                setDay(dayData)
-            setChosenDayIndex(index)
+            console.log(roomsData)
+            setChosenTechIndex(index)
             setRooms(roomsData)
+            setTechnology(techData)
         }
     }
 
@@ -148,32 +159,19 @@ const MoviesDetails = props => {
                             {FunctionTools.formatDate(movieDetails.toDate)}<br />
                             <strong>Technology: </strong>
                             {movieDetails.technology.map((technology, i, arr) => <span key={i} className="technolgyMovie">{technology.technologyId.name} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
-                            <strong>Date Times:</strong>
-                            <table className='dateTimeAdminStyle'>
-                                <thead><tr><th>Room</th><th>Times</th><th>Day</th></tr></thead>
-                                <tbody>
-                                    {movieDetails.dateTime.map((dateTime, i) => {
-                                        return <tr key={i}>
-                                            <td>{dateTime.room.name}</td>
-                                            <td>{
-                                                dateTime.times.map((time, i, arr) => { return <span key={i} className="timesMovie">{time} {i !== (arr.length - 1) ? ',' : ''}</span> })
-                                            }</td>
-                                            <td>{FunctionTools.formatDate(dateTime.day)}</td>
-                                        </tr>
-                                    })
-                                    }
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-
-                <div className="containerTrailer"> <YoutubeEmbed embedId="rokGy0huYEA" />  </div>
                 <div className="branchs"> </div>
                 <div className="reservation">
                     <div className="dayData">
                         <ul>
-                            {days.map((dayData, i) => { return <li key={i} className={chosenDayIndex === i ? 'active' : ''} onClick={() => getRoomsDay(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
+                            {days.map((dayData, i) => { return <li key={i} className={chosenDayIndex === i ? 'active' : ''} onClick={() => Technology(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
+                        </ul>
+                    </div>
+                    <div className="techData">
+                        <ul>
+                            {technologies ? technologies.map((techData, i) => { return <li key={i} className={chosenTechIndex === i ? 'active' : ''} onClick={() => getRoomsTechs(techData.technologyId.name, i)}>{techData.technologyId.name}</li> }) : ''}
                         </ul>
                     </div>
                     <div className="roomData">
@@ -186,10 +184,12 @@ const MoviesDetails = props => {
                             {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                         </ul>
                     </div>
+                    <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><img src="./red.png" /><input className="seat" type='checkbox' onChange={countSeats()} checked /></span> : <span key={i}><img src="./green.png" /><input className="seat" type='checkbox' onChange={countSeats()} /></span> })}</div> }) : ''}</div>
                 </div>
-                <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><input type='checkbox' onChange={countSeats()} checked /></span> : <span key={i}><input type='checkbox' onChange={countSeats()} /></span> })}</div> }) : ''}</div>
                 <div className="paymentForm"></div>
+                <div className="containerTrailer"><iframe width="100%" height="600px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
+            
     }
 
     return (

@@ -35,7 +35,8 @@ body{
 
 .dayData,
 .roomData,
-.timeData {
+.timeData,
+.techData {
   width: 33%;
   text-align: center;
   float: left;
@@ -43,7 +44,8 @@ body{
 
 .dayData ul li,
 .roomData ul li,
-.timeData ul li {
+.timeData ul li,
+.techData ul li {
   font-size: 22px;
   margin-top: 7px;
   margin-bottom: 7px;
@@ -55,12 +57,14 @@ body{
 }
 .dayData .active,
 .roomData .active,
-.timeData .active {
+.timeData .active,
+.techData .active {
   background-color: #870F06;
 }
 .dayData ul li:hover,
 .roomData ul li:hover,
-.timeData ul li:hover {
+.timeData ul li:hover,
+.techData ul li:hover {
   cursor: pointer;
   background: -webkit-linear-gradient(#870F06, #c2000d);
   box-shadow: 5px 5px 5px 5px #000000;
@@ -68,3 +72,17 @@ body{
 .containerTrailer{
   margin: 10%;
 }
+
+.seatsform{
+  width: 100%;
+}
+.seat{
+  margin: 2%;
+}
+/* 
+input[type=checkbox]:checked + label {
+  background:url('redSeat.png') no-repeat;
+  height: 125px;
+  width: 125px;
+  display:inline-block;
+} */
