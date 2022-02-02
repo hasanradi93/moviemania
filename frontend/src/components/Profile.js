@@ -1,16 +1,18 @@
-import { useParams } from 'react-router-dom'
-import React, { useState, useEffect } from "react"
+import { useParams ,Link } from 'react-router-dom'
+import React, { useState, useEffect , useContext } from "react"
 import BackendDataServices from "../services/BackendDataServices"
-import useHidePageInformation from '../hooks/useHidePageInformation';
-
+import useHidePageInformation from '../hooks/useHidePageInformation'
+import UserContext from "../context/UserContext"
+import "../css/profile.css";
 
 
 function Profile(props) {
-    useHidePageInformation(); // Custom hook
+    //  useHidePageInformation(); // Custom hook
 
     const userId = useParams().id
     console.log(userId)
     const [user, setUser] = useState('')
+//    const { userData } = useContext(UserContext);
 
     useEffect(() => {
         retrieveUser()
@@ -33,29 +35,27 @@ function Profile(props) {
     return (
 
         <div>
-            <form>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src={user.profile} alt="Profile Pic" width='200px' heigth='200px' ></img>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type='text' value={user.username}></input>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type='email' value={user.email}></input>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
-
+            <div className='profileData'> 
+            <div>
+               
+                <img src='./edit.png'></img>
+                
+            </div>
+            <div>
+            <img src={user.profile} alt="Profile Pic" width='300px' heigth='300px' ></img>
+            </div>
+            </div>
+            <div className='profileData'>
+            <div>
+               
+                <img src='./edit.png'></img>
+            
+            </div>
+                <form>
+                    <input type='text' value={user.username} className='input' readOnly></input>         
+                </form>
+            </div>
+       </div>
 
     );
 

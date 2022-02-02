@@ -159,6 +159,18 @@ exports.getUserData = async (req, res) => {
     const user = await User.findById(req.body.id)
     res.json({
         username: user.username,
+        profile: user.profile,
+        role: user.userType,
+        id: user._id,
+    })
+}
+
+exports.getUserDataById = async (req, res) => {
+    const user = await User.findById(req.params.id)
+    res.json({
+        username: user.username,
+        profile: user.profile,
+        role: user.userType,
         id: user._id,
     })
 }

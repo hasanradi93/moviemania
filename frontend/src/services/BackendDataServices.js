@@ -58,6 +58,10 @@ class BackendDataServices {
     getUserData(data, headers) {
         return http.post(`/users/`, data, headers);
     }
+
+    getUserDataById(id){
+        return http.get(`/users/getData/${id}`)
+    }
 }
 
 export default new BackendDataServices();

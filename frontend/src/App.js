@@ -63,7 +63,7 @@ function App() {
             <Route path="Movies/:id" element={<MovieDetails />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
-            <Route path="Profile" element={<Profile />} />
+            <Route path="Profile/:id" element={<Profile />} />
             <Route path="UserTicket/:id" element={<UserTicket />} />
             <Route path="AdminPanel" element={<AdminPanel />} >
               {/* nest these routes inside of the dashboard route */}

@@ -17,7 +17,8 @@ router.route('/delete', auth)
     .post(usersController.login)
 router.route('/:id')
     .put(usersController.updateUser)
-
+router.route('/getData/:id')
+    .get(usersController.getUserDataById)
 
 
 
