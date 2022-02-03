@@ -17,16 +17,16 @@
 .form input[type="email"],
 .form input[type="password"] {
   width: 100%;
-  border: 1px solid #aaa7a7;
-  background-color: #e9e9e9;
+  border: 1px solid #870f06;
+  background-color: whitesmoke;
   border-radius: 8px;
   font-size: 1.1rem;
   padding: 0.3rem;
 }
 
 .form input:focus {
-  border: 1px solid dodgerblue;
-  box-shadow: inset 0px 0px 3px rgba(31, 143, 255, 0.5);
+  border: 1px solid whitesmoke;
+  box-shadow: inset 0px 0px 3px whitesmoke(31, 143, 255, 0.5);
   outline: none;
 }
 
@@ -48,13 +48,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffd4d4;
+  background-color: whitesmoke;
+  color: #e92626;
+  font-size: 1.1rem;
 }
 
 .error-notice button {
   width: 22px;
-  height: 22px;
+  height: 28px;
   border-radius: 50%;
-  background-color: #d84b4b;
+  background-color: #e92626;
   color: #ffffff;
 }

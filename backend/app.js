@@ -42,7 +42,7 @@ app.use('/tickets', ticketsRoutes)
 app.use('/rooms', roomsRoutes)
 app.use('/genres', genresRoutes)
 app.use('/branches', branchesRoutes)
-app.use('/technology', technologiesRoutes)
+app.use('/technologies', technologiesRoutes)
 app.use('/admin/movies', movieRoutes)
 app.use('/admin/tickets', ticketsRoutes)
 

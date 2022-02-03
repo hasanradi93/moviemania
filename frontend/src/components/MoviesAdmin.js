@@ -38,62 +38,44 @@ const MoviesAdmin = props => {
         setMoviesData = movies.map((movie) => {
             return (
                 <div key={movie._id} className="col-lg-4 pb-1">
-                    <div className="card">
+                    <div className="card cardMovies">
                         <div className="card-body">
-                            <h5 className="card-title">{movie.name}</h5>
                             <div className="card-text">
-                                <h2>{movie.title}</h2><br />
-                                <div className="imgMovie">
-                                    <img src={movie.photo} width='100%' height='400px' alt={movie.title} />
+                                <Link to={`/Movies/${movie._id}`}>
+                                    <div className="imgMovie">
+                                        <img className="poster" src={movie.photo} width='100%' height='400px' alt={movie.title} />
+                                    </div>
+                                </Link>
+                                <div className="row">
+                                    <h3 className="movieTitle">{movie.title}</h3><br />
+                                    <div className="ratingDiv">
+                                        <span className="rating" >{movie.rating}</span>
+                                        <img src="./star.png" className="ratingStar"></img>
+                                    </div>
                                 </div>
-                                <strong>Release Date: </strong>{FunctionTools.formatDate(movie.releasedate)}<br />
-                                <strong>Plot: </strong>{movie.plot}<br />
-                                <strong>Genre: </strong>{movie.genre.name}<br />
-                                <strong>Available: </strong>
-                                {FunctionTools.formatDate(movie.fromDate)} to
-                                {FunctionTools.formatDate(movie.toDate)}<br />
-                                <strong>Status: </strong> {(movie.Availability === 1) ? 'Available' : (movie.Availability === 0) ? 'Coming soon' : 'Ended'}<br />
-                                <strong>Actors: </strong>
-                                {
-                                    movie.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)
-                                }<br></br>
-                                <strong>Date Times:</strong>
-                                <table className='dateTimeAdminStyle'>
-                                    <thead><tr><th>Room</th><th>Times</th><th>Day</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            movie.dateTime.map((dateTime, i) => {
-                                                return <tr key={i}>
-                                                    <td>{dateTime.room.name}</td>
-                                                    <td>{
-                                                        dateTime.times.map((time, i, arr) => { return <span key={i} className="timesMovie">{time} {i !== (arr.length - 1) ? ',' : ''}</span> })
-                                                    }</td>
-                                                    <td>{FunctionTools.formatDate(dateTime.day)}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-
-                                </table>
                             </div>
                             <div className="row">
-                                <Link to={"/movies/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-                                    View Detail
+                                <Link to={"edit/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                                    Edit Detail
                                 </Link>
-                                <Link to={"/movies/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                                <Link to={"tickets/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
                                     View tickets
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
+
             )
         })
     }
 
     return (
         <div>
-            <div className="row pb-1">
+            <div className="row pb-1" style={{ textAlign: 'center', marginBottom: '10px' }}>
+                <Link to={"add"}><img src='../add.png' width='32px' height='32px' alt='Add Movie'></img></Link>
+            </div>
+            <div className="row pb-1" style={{ marginBottom: '20px' }}>
                 <div className="input-group col-lg-4">
                     <input
                         type="text"
@@ -114,13 +96,7 @@ const MoviesAdmin = props => {
                 </div>
             </div>
             <div className="row">
-                {
-
-                    setMoviesData
-
-                }
-
-
+                {setMoviesData}
             </div>
         </div>
     )

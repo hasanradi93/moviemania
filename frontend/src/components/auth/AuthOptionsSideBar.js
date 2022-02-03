@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import UserContext from "../../context/UserContext"
-import { Link } from 'react-router-dom'
 import { nav } from "react-bootstrap"
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
@@ -34,8 +33,8 @@ export default function AuthOptionsSideBar() {
                     <NavIcon>
                         <img src='./logout.png' style={{ width: "32px", height: "32px" }}></img>
                     </NavIcon>
-                    <NavText>
-                        <Link onClick={logout} className="nav-link">
+                    <NavText onClick={logout}>
+                        <Link to={""} className="nav-link">
                             <span className='pages'>Logout</span>
                         </Link>
                     </NavText>

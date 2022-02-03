@@ -6,10 +6,21 @@ class BackendDataServices {
         return http.get(`admin/movies`);
     }
 
+    getMovies() {
+        return http.get('movies/get-newest-movies')
+    }
+
+    ComingSoon() {
+        return http.get('movies/ComingSoon')
+    }
+
     get(id) {
         return http.get(`/movies/${id}`);
     }
 
+    getTakenSeats(data) {
+        return http.post('tickets/takenSeats', data)
+    }
 
     createMovie(data) {
         return http.post("/admin/movies", data);
@@ -17,30 +28,6 @@ class BackendDataServices {
 
     updateMovie(data) {
         return http.put("/movies/${id}", data);
-    }
-
-    deleteMovie(id, userId) {
-        return http.delete(`/movies/?id=${id}`);
-    }
-
-    getMovies() {
-        return http.get('movies/get-newest-movies')
-    }
-
-    getUserTicketsById(id) {
-        return http.get(`/tickets/user/${id}`);
-    }
-
-    ComingSoon() {
-        return http.get('movies/ComingSoon')
-    }
-
-    getTakenSeats(data) {
-        return http.post('tickets/takenSeats', data)
-    }
-
-    getTickets() {
-        return http.get('admin/tickets')
     }
 
     registerUser(data) {
@@ -59,8 +46,24 @@ class BackendDataServices {
         return http.post(`/users/`, data, headers);
     }
 
-    getUserDataById(id){
+    getGenres() {
+        return http.get('genres/')
+    }
+
+    getRooms() {
+        return http.get('rooms/')
+    }
+
+    getTechnologies() {
+        return http.get('technologies/')
+    }
+
+    getUserDataById(id) {
         return http.get(`/users/getData/${id}`)
+    }
+
+    getUserTicketsById(id) {
+        return http.get(`/tickets/user/${id}`);
     }
 }
 

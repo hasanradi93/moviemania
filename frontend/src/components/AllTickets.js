@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { renderMatches } from 'react-router-dom';
 import BackendDataServices from "../services/BackendDataServices"
 
-function TicketsAdmin() {
+function AllTickets() {
     const [tickets, setTickets] = useState([])
     const [error, setError] = useState(null)
     const errorStyle = {
@@ -34,4 +34,4 @@ function TicketsAdmin() {
     </div>;
 }
 
-export default TicketsAdmin;
+export default AllTickets;

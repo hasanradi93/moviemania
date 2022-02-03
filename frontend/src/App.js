@@ -6,6 +6,7 @@ import './App.css'
 import TheMovies from './components/TheMovies'
 import MovieDetails from './components/MovieDetails'
 import AdminPanel from './components/AdminPanel'
+import TicketsMovie from './components/TicketsMovie'
 import Login from './components/auth/Login'
 import NotFound from './components/NotFound'
 import ComingSoon from './components/ComingSoon'
@@ -13,11 +14,12 @@ import SideBar from './components/SideBar'
 import Profile from './components/Profile'
 import Register from './components/auth/Register'
 import UserTicket from './components/UserTicket'
-import TicketsAdmin from './components/TicketsAdmin'
+import AllTickets from './components/AllTickets'
 import MoviesAdmin from './components/MoviesAdmin'
 import Navbar from './components/Navbar'
 import UserContext from "./context/UserContext";
 import BackendDataServices from './services/BackendDataServices'
+import AddMovie from './components/AddMovie'
 function App() {
 
   // State variable to send to multiple components
@@ -47,7 +49,7 @@ function App() {
       }
     };
     // We have to call on our function within a useEffect to make our function async / await
-    // checkLoggedIn();
+    checkLoggedIn();
   }, []);
 
   return (
@@ -67,9 +69,11 @@ function App() {
             <Route path="UserTicket/:id" element={<UserTicket />} />
             <Route path="AdminPanel" element={<AdminPanel />} >
               {/* nest these routes inside of the dashboard route */}
-              <Route index element={<TicketsAdmin />} />
-              <Route path="Tickets" element={<TicketsAdmin />} />
+              <Route index element={<AllTickets />} />
+              <Route path="Tickets" element={<AllTickets />} />
               <Route path="Movies" element={<MoviesAdmin />} />
+              <Route path="Movies/add" element={<AddMovie />} />
+              <Route path="Movies/Tickets/:id" element={<TicketsMovie />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
