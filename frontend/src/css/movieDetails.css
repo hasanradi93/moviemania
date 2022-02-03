@@ -87,7 +87,7 @@ body{
 .seat{
   margin: 2%;
   height: auto;
-  width: 10%;
+  width: 5%;
 }
 /* 
 input[type=checkbox]:checked + label {

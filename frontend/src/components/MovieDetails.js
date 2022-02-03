@@ -24,19 +24,35 @@ const MoviesDetails = props => {
     const [seatsForm, setSeatsForm] = useState(null)
     const [technology, setTechnology] = useState([])
     const [technologies, setTechnologies] = useState([])
+    const [chosenSeat, setChosenSeat] = useState([])
+    const chosenSeatArr = []
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
         retrieveMovie()
     }, [])
 
-    const countSeats = () => { }
+    const countSeats = (seat, id) => {
+        if(chosenSeatArr.length === 0)
+        chosenSeatArr.push(seat)
+        else{
+            for(let i=0; i<=chosenSeatArr.length; i++){
+                if(chosenSeatArr[i] !== seat)
+                chosenSeatArr.push(seat)
+            }
+        }
+        document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
+
+
+        console.log(seat)
+        console.log(chosenSeatArr)
+        setChosenSeat(chosenSeatArr)
+    }
 
     const retrieveMovie = () => {
         BackendDataServices.get(movieId)
             .then(response => {
                 setMovie(response.data)
-                console.log(response.data)
                 //get days from the movie
                 let arrDays = response.data[0].dateTime.map((dateTime) => dateTime.day)
                 //get grouped days
@@ -50,15 +66,32 @@ const MoviesDetails = props => {
     }
 
     const Technology = (dayData, index) => {
-        console.log(dayData)
+        const techs = []
         if (movie[0]) {
             const techData = movie[0].dateTime.filter((dateTime) => {
-                if (dateTime.day === dayData)
-                    return dateTime
+                if (dateTime.day === dayData){
+
+                return dateTime
+                }
             })
-            console.log(techData)
+        //     for (let y = 0; y <= movie[0].dateTime.length; y++) {
+        //         console.log(movie[0].dateTime[y])
+        //         if (techs.length === 0)
+        //             techs.push(movie[0].dateTime[y].technologyId.name)
+        //         else{
+        //         for (let i = 0; i <= techs.length; i++) {
+        //             if (movie[0].dateTime[y].technologyId.name != techs[i]) {
+        //                 techs.push(movie[0].dateTime[y].technologyId.name)
+        //             }
+        //         }
+        //     }
+        // }
+            console.log(techs)
             setDay(dayData)
             setChosenDayIndex(index)
+            // let arrTech = techData.map((dateTime) => dateTime.technologyId.name)
+            // console.log(arrTech)
+            // let groupedTech = Array.from(new Set(arrTech.map(JSON.stringify))).map(JSON.parse);
             setTechnologies(techData)
         }
 
@@ -112,16 +145,17 @@ const MoviesDetails = props => {
                                 }
                             })
                             if (reserved)
-                                blockSeats.push(1)
+                                blockSeats.push({'status': 1, "seatId": seat._id})
                             else
-                                blockSeats.push(0)
+                                blockSeats.push({'status': 0, "seatId": seat._id})
 
                         }
                         else {
-                            blockSeats.push(0)
+                            blockSeats.push({'status': 0, "seatId": seat._id})
                         }
                     })
                     blocks.push(blockSeats)
+                    console.log(blocks)
                 })
                 console.log(blocks)
                 setSeatsForm(blocks)
@@ -144,7 +178,7 @@ const MoviesDetails = props => {
                         <img src={movieDetails.photo} width='380px' height='auto' alt={movieDetails.title} />
                     </div>
                     <div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}>
-                        
+
                         <div className="containerDetails">
                             <h1 className="card-title">{movieDetails.title}</h1>
                             <div className="card-text">
@@ -185,7 +219,7 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
-                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><img src="../redSeat.png" className="seat" onChange={countSeats()} /></span> : <span key={i}><img src="../greenSeat.png" className="seat" onChange={countSeats()} /></span> })}</div> }) : ''}</div>
+                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => countSeats(seat.seatId, i)} /></span> })}</div> }) : ''}</div>
                     </div>
                 </div>
                 <div className="paymentForm"></div>
