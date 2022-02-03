@@ -53,7 +53,7 @@ const MoviesDetails = props => {
         console.log(dayData)
         if (movie[0]) {
             const techData = movie[0].dateTime.filter((dateTime) => {
-             if (dateTime.day === dayData)
+                if (dateTime.day === dayData)
                     return dateTime
             })
             console.log(techData)
@@ -61,15 +61,15 @@ const MoviesDetails = props => {
             setChosenDayIndex(index)
             setTechnologies(techData)
         }
-        
+
     }
-    
+
 
     const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
             const roomsData = movie[0].dateTime.filter((dateTime) => {
                 if (dateTime.day === day && dateTime.technologyId.name === techData)
-                        return dateTime
+                    return dateTime
             })
             console.log(roomsData)
             setChosenTechIndex(index)
@@ -140,56 +140,58 @@ const MoviesDetails = props => {
         setMoviesData =
             <div className="containerMovie">
                 <div className="containerImageDetails">
-                    <div className="conatinerImage">
-                        <img src={movieDetails.photo} height='500px' alt={movieDetails.title} />
+                    <div className="containerImage">
+                        <img src={movieDetails.photo} width='380px' height='auto' alt={movieDetails.title} />
                     </div>
-
-                    <div className="conatinerDetails">
-                        <h1 className="card-title">{movieDetails.title}</h1>
-                        <div className="card-text">
-                            <strong>Release Date: </strong>{movieDetails.releasedate}<br />
-                            <strong>Run Time: </strong>{movieDetails.runtime}<br />
-                            <strong>Plot: </strong>{movieDetails.plot}<br />
-                            <strong>Director: </strong>{movieDetails.director}<br />
-                            <strong>Actors: </strong>
-                            {movieDetails.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
-                            <strong>Genre: </strong>{movieDetails.genre.name}<br />
-                            <strong>Available: </strong>
-                            {FunctionTools.formatDate(movieDetails.fromDate)} to
-                            {FunctionTools.formatDate(movieDetails.toDate)}<br />
-                            <strong>Technology: </strong>
-                            {movieDetails.technology.map((technology, i, arr) => <span key={i} className="technolgyMovie">{technology.technologyId.name} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
+                    <div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}>
+                        
+                        <div className="containerDetails">
+                            <h1 className="card-title">{movieDetails.title}</h1>
+                            <div className="card-text">
+                                <strong className="strong">Release Date: </strong>{movieDetails.releasedate}<br />
+                                <strong className="strong">Run Time: </strong>{movieDetails.runtime}<br />
+                                <strong className="strong">Plot: </strong>{movieDetails.plot}<br />
+                                <strong className="strong">Director: </strong>{movieDetails.director}<br />
+                                <strong className="strong">Actors: </strong>
+                                {movieDetails.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
+                                <strong className="strong">Genre: </strong>{movieDetails.genre.name}<br />
+                                <strong className="strong">Available: </strong>
+                                {FunctionTools.formatDate(movieDetails.fromDate)} to
+                                {FunctionTools.formatDate(movieDetails.toDate)}<br />
+                                <strong className="strong">Technology: </strong>
+                                {movieDetails.technology.map((technology, i, arr) => <span key={i} className="technolgyMovie">{technology.technologyId.name} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="branchs"> </div>
-                <div className="reservation">
-                    <div className="dayData">
-                        <ul>
-                            {days.map((dayData, i) => { return <li key={i} className={chosenDayIndex === i ? 'active' : ''} onClick={() => Technology(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
-                        </ul>
+                    {/* <div className="branchs"> </div> */}
+                    <div className="reservation">
+                        <div className="dayData">
+                            <ul>
+                                {days.map((dayData, i) => { return <li key={i} className={chosenDayIndex === i ? 'active' : ''} onClick={() => Technology(dayData, i)}>{FunctionTools.formatDate(dayData)}</li> })}
+                            </ul>
+                        </div>
+                        <div className="techData">
+                            <ul>
+                                {technologies ? technologies.map((techData, i) => { return <li key={i} className={chosenTechIndex === i ? 'active' : ''} onClick={() => getRoomsTechs(techData.technologyId.name, i)}>{techData.technologyId.name}</li> }) : ''}
+                            </ul>
+                        </div>
+                        <div className="roomData">
+                            <ul>
+                                {rooms ? rooms.map((roomData, i) => { return <li key={i} className={chosenRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
+                            </ul>
+                        </div>
+                        <div className="timeData">
+                            <ul>
+                                {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
+                            </ul>
+                        </div>
+                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><img src="../redSeat.png" className="seat" onChange={countSeats()} /></span> : <span key={i}><img src="../greenSeat.png" className="seat" onChange={countSeats()} /></span> })}</div> }) : ''}</div>
                     </div>
-                    <div className="techData">
-                        <ul>
-                            {technologies ? technologies.map((techData, i) => { return <li key={i} className={chosenTechIndex === i ? 'active' : ''} onClick={() => getRoomsTechs(techData.technologyId.name, i)}>{techData.technologyId.name}</li> }) : ''}
-                        </ul>
-                    </div>
-                    <div className="roomData">
-                        <ul>
-                            {rooms ? rooms.map((roomData, i) => { return <li key={i} className={chosenRoomIndex === i ? 'active' : ''} onClick={() => getTimeRooms(roomData.room._id, i)}>{roomData.room.name}</li> }) : ''}
-                        </ul>
-                    </div>
-                    <div className="timeData">
-                        <ul>
-                            {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
-                        </ul>
-                    </div>
-                    <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat ? <span key={i}><img src="./red.png" /><input className="seat" type='checkbox' onChange={countSeats()} checked /></span> : <span key={i}><img src="./green.png" /><input className="seat" type='checkbox' onChange={countSeats()} /></span> })}</div> }) : ''}</div>
                 </div>
                 <div className="paymentForm"></div>
-                <div className="containerTrailer"><iframe width="100%" height="600px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div className="containerTrailer"><iframe width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
-            
+
     }
 
     return (
