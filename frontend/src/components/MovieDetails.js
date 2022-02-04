@@ -24,30 +24,63 @@ const MoviesDetails = props => {
     const [seatsForm, setSeatsForm] = useState(null)
     const [technology, setTechnology] = useState([])
     const [technologies, setTechnologies] = useState([])
-    const [chosenSeat, setChosenSeat] = useState([])
-    const chosenSeatArr = []
+    const [countSeats, setCountSeats] = useState(0)
+    const [chosenSeatArr, setChosenSeatArr] = useState([])
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
         retrieveMovie()
     }, [])
 
-    const countSeats = (seat, id) => {
-        if(chosenSeatArr.length === 0)
-        chosenSeatArr.push(seat)
-        else{
-            for(let i=0; i<=chosenSeatArr.length; i++){
-                if(chosenSeatArr[i] !== seat)
+    const addSeat = (seat, id) => {
+        if (chosenSeatArr.length === 0)
+            chosenSeatArr.push(seat)
+        else {
+            let add = true
+            for (let i = 0; i < chosenSeatArr.length; i++) {
+                if (chosenSeatArr[i] === seat) {
+                    add = false
+                    break
+                }
+            }
+            if (add)
                 chosenSeatArr.push(seat)
+        }
+        for (let y = 0; y < seatsForm.length; y++) {
+            console.log(seatsForm[y])
+            for (let x = 0; x < seatsForm[y].length; x++) {
+                if (seatsForm[y][x].seatId === seat)
+                    seatsForm[y][x].taken = 1
             }
         }
-        document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
+        // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
+        setChosenSeatArr(chosenSeatArr)
+        setCountSeats(chosenSeatArr.length)
+        console.log(chosenSeatArr)
+    }
+
+    const removeSeat = (seat, id) => {
+        for (let i = 0; i < chosenSeatArr.length; i++) {
+            if (chosenSeatArr[i] === seat)
+
+                chosenSeatArr.splice(i)
+        }
+        for (let y = 0; y < seatsForm.length; y++) {
+            for (let x = 0; x < seatsForm[y].length; x++) {
+                if (seatsForm[y][x].seatId === seat)
+                    seatsForm[y][x].taken = 0
+            }
+        }
+        // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
 
 
         console.log(seat)
+        setCountSeats(chosenSeatArr.length)
         console.log(chosenSeatArr)
-        setChosenSeat(chosenSeatArr)
+        setChosenSeatArr(chosenSeatArr)
     }
+
+    const pay = () => { }
 
     const retrieveMovie = () => {
         BackendDataServices.get(movieId)
@@ -66,32 +99,31 @@ const MoviesDetails = props => {
     }
 
     const Technology = (dayData, index) => {
-        const techs = []
+        const techData = []
         if (movie[0]) {
-            const techData = movie[0].dateTime.filter((dateTime) => {
-                if (dateTime.day === dayData){
-
-                return dateTime
+            for (let y = 0; y < movie[0].technology.length; y++) {
+                for (let i = 0; i < movie[0].dateTime.length; i++) {
+                    console.log(movie[0].technology[y])
+                    if (movie[0].dateTime[i].day === dayData && movie[0].dateTime[i].technologyId._id === movie[0].technology[y].technologyId._id) {
+                        if (techData.length === 0)
+                            techData.push(movie[0].dateTime[i].technologyId)
+                        else {
+                            let add = true
+                            for (let x = 0; x < techData.length; x++) {            
+                                if (techData[x].technologyId === movie[0].technology[y].technologyId._id) {
+                                    add = false
+                                    break
+                                }
+                            }
+                            if (add)
+                                techData.push(movie[0].dateTime[i].technologyId)
+                        }
+                    }
                 }
-            })
-        //     for (let y = 0; y <= movie[0].dateTime.length; y++) {
-        //         console.log(movie[0].dateTime[y])
-        //         if (techs.length === 0)
-        //             techs.push(movie[0].dateTime[y].technologyId.name)
-        //         else{
-        //         for (let i = 0; i <= techs.length; i++) {
-        //             if (movie[0].dateTime[y].technologyId.name != techs[i]) {
-        //                 techs.push(movie[0].dateTime[y].technologyId.name)
-        //             }
-        //         }
-        //     }
-        // }
-            console.log(techs)
+            }
+            console.log(techData)
             setDay(dayData)
             setChosenDayIndex(index)
-            // let arrTech = techData.map((dateTime) => dateTime.technologyId.name)
-            // console.log(arrTech)
-            // let groupedTech = Array.from(new Set(arrTech.map(JSON.stringify))).map(JSON.parse);
             setTechnologies(techData)
         }
 
@@ -145,13 +177,13 @@ const MoviesDetails = props => {
                                 }
                             })
                             if (reserved)
-                                blockSeats.push({'status': 1, "seatId": seat._id})
+                                blockSeats.push({ 'status': 1, "seatId": seat._id, 'taken': 0 })
                             else
-                                blockSeats.push({'status': 0, "seatId": seat._id})
+                                blockSeats.push({ 'status': 0, "seatId": seat._id, 'taken': 0 })
 
                         }
                         else {
-                            blockSeats.push({'status': 0, "seatId": seat._id})
+                            blockSeats.push({ 'status': 0, "seatId": seat._id, 'taken': 0 })
                         }
                     })
                     blocks.push(blockSeats)
@@ -206,7 +238,7 @@ const MoviesDetails = props => {
                         </div>
                         <div className="techData">
                             <ul>
-                                {technologies ? technologies.map((techData, i) => { return <li key={i} className={chosenTechIndex === i ? 'active' : ''} onClick={() => getRoomsTechs(techData.technologyId.name, i)}>{techData.technologyId.name}</li> }) : ''}
+                                {technologies ? technologies.map((techData, i) => { return <li key={i} className={chosenTechIndex === i ? 'active' : ''} onClick={() => getRoomsTechs(techData.name, i)}>{techData.name}</li> }) : ''}
                             </ul>
                         </div>
                         <div className="roomData">
@@ -219,7 +251,8 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
-                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => countSeats(seat.seatId, i)} /></span> })}</div> }) : ''}</div>
+                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+                        <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
                     </div>
                 </div>
                 <div className="paymentForm"></div>
