@@ -21,11 +21,13 @@ export default function Login() {
                 // making request to our backend to login the user in
                 const loginRes = await BackendDataServices.loginUser(loginUser)
                 setError('Login Success')
+                console.log("loginRes", loginRes)
                 // setting login response data's token and user data this
                 setUserData({
                     token: loginRes.data.token,
                     user: loginRes.data.user,
                 });
+                console.log("setUserData", setUserData)
                 //save the Token in localstorage
                 localStorage.setItem("auth-token", loginRes.data.token);
                 let intervalNav = setInterval(() => {

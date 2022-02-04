@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 //To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
-app.use(express.static('build'))
+app.use('/public', express.static('public'));
 //like bodyparser for the requests
 app.use(express.json())
 //This is a built-in middleware function in Express. It parses incoming requests with urlencoded payloads and is based on

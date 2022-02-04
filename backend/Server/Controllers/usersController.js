@@ -3,7 +3,34 @@ const User = require('../models/User')
 const { registerValidation, loginValidation } = require('../middleware/validationUser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const auth = require("../middleware/auth");
+const auth = require("../middleware/auth")
+const { v4: uuidv4 } = require('uuid')
+const multer = require('multer')
+
+const DIR = './public/';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        console.log("file", file)
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+})
 
 exports.users = async (req, res) => {
     try {
@@ -52,7 +79,7 @@ exports.register = async (req, res) => {
             email: email,
             password: passwordHash,
             username: username,
-            profile: 'https://banner2.cleanpng.com/20180323/zkw/kisspng-user-profile-computer-icons-avatar-clip-art-profile-cliparts-free-5ab58cd0d25269.4945707915218475048615.jpg',
+            profile: '../avatar.png',
             userType: 1
         });
         const savedUser = await newUser.save();
@@ -163,6 +190,27 @@ exports.getUserData = async (req, res) => {
         role: user.userType,
         id: user._id,
     })
+}
+
+//upload phpto
+exports.uploadProfile = upload.single('profileImg')
+exports.savePicture = async (req, res, next) => {
+    const userId = req.params.id
+    console.log("req.bodyr", req.body)
+    console.log("userId", userId)
+    console.log("req.file", req.file)
+    const url = req.protocol + '://' + req.get('host')
+    console.log("url", url)
+    const newProfile = ({
+        profile: url + '/public/' + req.file.filename
+    })
+    console.log(newProfile)
+    try {
+        const users = await User.findByIdAndUpdate({ _id: userId }, newProfile)
+        res.json(users.profile);
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
 }
 
 exports.getUserDataById = async (req, res) => {

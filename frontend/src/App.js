@@ -43,7 +43,7 @@ function App() {
       if (tokenRes.data) {
         const userRes = await BackendDataServices.getUserData({ "id": tokenRes.data.id }, { headers: { "x-auth-token": token } })
         setUserData({
-          token,
+          token: token,
           user: userRes.data,
         });
       }
@@ -65,7 +65,7 @@ function App() {
             <Route path="Movies/:id" element={<MovieDetails />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
-            <Route path="Profile/:id" element={<Profile />} />
+            <Route path="Profile" element={<Profile />} />
             <Route path="UserTicket/:id" element={<UserTicket />} />
             <Route path="AdminPanel" element={<AdminPanel />} >
               {/* nest these routes inside of the dashboard route */}

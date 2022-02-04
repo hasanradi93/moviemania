@@ -103,8 +103,8 @@ exports.getUserTicketsById = async (req, res) => {
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
-      .populate({ path: 'technology.technologyId', model: 'Technology' })
-      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
+    // .populate({ path: 'technology.technologyId', model: 'Technology' })
+    // .populate({ path: 'dateTime.technologyId', model: 'Technology' })
     res.json(data)
   } catch (error) {
     res.status(400).json({ message: error })

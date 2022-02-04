@@ -7,6 +7,8 @@ export default function useHidePageInformation() {
     const { userData } = useContext(UserContext);
     const navigate = useNavigate();
 
+    // console.log("userData", userData)
+
     useEffect(() => {
         if (!userData.user) {
             navigate("/login");
