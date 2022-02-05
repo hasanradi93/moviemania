@@ -15,7 +15,8 @@
   width: 60%;
   margin-left : 60px;
   font-size: 40px;
-  color: whitesmoke 
+  color: whitesmoke;
+  
 }
 .ratingStar{
   width: 24px;
@@ -31,4 +32,11 @@
   float: right;
   width: 20%;
   margin-top: -22px
+}
+
+.movieInfo{
+  background: linear-gradient(to right, rgb(8, 8, 8), rgb(192, 0, 0));
+  height: auto;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px 5px rgb(8, 8, 8);
 }
