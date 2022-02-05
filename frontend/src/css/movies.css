@@ -32,3 +32,9 @@
   width: 20%;
   margin-top: -22px
 }
+.movieInfo{
+  background: linear-gradient(to right, rgb(8, 8, 8), rgb(192, 0, 0));
+  height: auto;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px 5px rgb(8, 8, 8);
+}

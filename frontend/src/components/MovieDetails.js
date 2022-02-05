@@ -4,10 +4,14 @@ import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
+import Modal from 'react-bootstrap/Modal'
+import Payment from "./payment"
+
 
 
 
 const MoviesDetails = props => {
+    const [modalShow, setModalShow] = useState(false);
     const [tickets, setTickets] = useState([])
     const [movie, setMovie] = useState([])
     const [day, setDay] = useState('')
@@ -31,6 +35,34 @@ const MoviesDetails = props => {
     useEffect(() => {
         retrieveMovie()
     }, [])
+
+    //MODAL
+// function SeatModal(props) {
+//     return (
+//         <Modal
+//             {...props}
+//             size="lg"
+//             aria-labelledby="contained-modal-title-vcenter"
+//             centered
+//         >
+//             <Modal.Header closeButton>
+//                 <Modal.Title id="contained-modal-title-vcenter">
+//                     Modal heading
+//                 </Modal.Title>
+//             </Modal.Header>
+//             <Modal.Body>
+//             <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+//             </Modal.Body>
+//             <Modal.Footer>
+//                 <button onClick={props.onHide}>Close</button>
+//             </Modal.Footer>
+//         </Modal>
+//     );
+// }
+const buyTicket = (e) =>{
+    e.preventDefault()
+    alert('okay')
+}
 
     const addSeat = (seat, id) => {
         if (chosenSeatArr.length === 0)
@@ -79,7 +111,9 @@ const MoviesDetails = props => {
         setChosenSeatArr(chosenSeatArr)
     }
 
-    const pay = () => { }
+    const pay = () => { 
+        document.getElementById('paymentForm').style.display = "block"
+    }
 
     const retrieveMovie = () => {
         BackendDataServices.get(movieId)
@@ -257,12 +291,18 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
+                        {/* <div> */}
+                            {/* <SeatModal
+                                show={modalShow} data = {seatsForm}
+                                onHide={() => setModalShow(false)}
+                            /></div> */}
                         <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
                         <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
+                        
                     </div>
                 </div>
-                <div className="paymentForm"></div>
-                <div className="containerTrailer"><iframe width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
+                <div className="containerTrailer"><h1>Trailer</h1><iframe width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
 
     }
