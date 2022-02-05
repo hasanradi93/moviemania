@@ -4,10 +4,39 @@ import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
+import Modal from 'react-bootstrap/Modal'
 
-
+//MODAL
+function SeatModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+            consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={props.onHide}>Close</button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
 const MoviesDetails = props => {
+    const [modalShow, setModalShow] = React.useState(false);
     const [tickets, setTickets] = useState([])
     const [movie, setMovie] = useState([])
     const [day, setDay] = useState('')
@@ -109,7 +138,7 @@ const MoviesDetails = props => {
                             techData.push(movie[0].dateTime[i].technologyId)
                         else {
                             let add = true
-                            for (let x = 0; x < techData.length; x++) {            
+                            for (let x = 0; x < techData.length; x++) {
                                 if (techData[x].technologyId === movie[0].technology[y].technologyId._id) {
                                     add = false
                                     break
@@ -251,6 +280,14 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
+                        <div><button variant="primary" onClick={() => setModalShow(true)}>
+                            Choose Seats
+                        </button>
+
+                            <SeatModal
+                                show={modalShow}
+                                onHide={() => setModalShow(false)}
+                            /></div>
                         <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
                         <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
                     </div>
