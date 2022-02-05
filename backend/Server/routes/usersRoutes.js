@@ -47,9 +47,7 @@ router.route('/delete', auth)
     .post(usersController.login)
 router.route('/:id')
     .put(usersController.updateUser)
-router.route('/getData/:id')
-    .get(usersController.getUserDataById)
-router.route('/uploadPhoto/:id')
+router.route('/uploadPhoto')
     .post(usersController.uploadProfile, usersController.savePicture)
 // router.post('/uploadPhoto/:id', upload.single('profileImg'), async (req, res, next) => {
 //     const userId = req.params.id

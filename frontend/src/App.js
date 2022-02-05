@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
@@ -21,7 +21,7 @@ import UserContext from "./context/UserContext";
 import BackendDataServices from './services/BackendDataServices'
 import AddMovie from './components/AddMovie'
 function App() {
-
+  //const { userDataCheck } = useContext(UserContext);
   // State variable to send to multiple components
   const [userData, setUserData] = useState({
     token: undefined,
@@ -42,13 +42,13 @@ function App() {
       // if there is token response data then we will grab that user and then setUserData to hold the token information and the user response data
       if (tokenRes.data) {
         const userRes = await BackendDataServices.getUserData({ "id": tokenRes.data.id }, { headers: { "x-auth-token": token } })
+        console.log("userRes", userRes)
         setUserData({
           token: token,
           user: userRes.data,
         });
       }
     };
-    // We have to call on our function within a useEffect to make our function async / await
     checkLoggedIn();
   }, []);
 
@@ -61,7 +61,7 @@ function App() {
         <div className="container mt-3 navclass" id='content' >
           <Routes>
             <Route exact path={"/"} element={<TheMovies />} />
-            <Route exact path={"ComingSoon"} element={<ComingSoon />} />
+            <Route path={"ComingSoon"} element={<ComingSoon />} />
             <Route path="Movies/:id" element={<MovieDetails />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />

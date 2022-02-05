@@ -7,11 +7,10 @@ export default function useHidePageInformation() {
     const { userData } = useContext(UserContext);
     const navigate = useNavigate();
 
-    // console.log("userData", userData)
-
     useEffect(() => {
-        if (!userData.user) {
+        let token = localStorage.getItem("auth-token"); // grabbing JWT token from localStorage
+        if (token === null) {
             navigate("/login");
         }
-    });
+    }, []);
 }

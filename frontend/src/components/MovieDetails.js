@@ -62,8 +62,7 @@ const MoviesDetails = props => {
     const removeSeat = (seat, id) => {
         for (let i = 0; i < chosenSeatArr.length; i++) {
             if (chosenSeatArr[i] === seat)
-
-                chosenSeatArr.splice(i)
+                chosenSeatArr.splice(i, 1)
         }
         for (let y = 0; y < seatsForm.length; y++) {
             for (let x = 0; x < seatsForm[y].length; x++) {
@@ -101,22 +100,29 @@ const MoviesDetails = props => {
     const Technology = (dayData, index) => {
         const techData = []
         if (movie[0]) {
-            for (let y = 0; y < movie[0].technology.length; y++) {
-                for (let i = 0; i < movie[0].dateTime.length; i++) {
-                    console.log(movie[0].technology[y])
-                    if (movie[0].dateTime[i].day === dayData && movie[0].dateTime[i].technologyId._id === movie[0].technology[y].technologyId._id) {
-                        if (techData.length === 0)
-                            techData.push(movie[0].dateTime[i].technologyId)
-                        else {
-                            let add = true
-                            for (let x = 0; x < techData.length; x++) {            
-                                if (techData[x].technologyId === movie[0].technology[y].technologyId._id) {
-                                    add = false
-                                    break
+            for (let i = 0; i < movie[0].dateTime.length; i++) {
+                if (movie[0].dateTime[i].day === dayData) {
+                    for (let y = 0; y < movie[0].technology.length; y++) {
+                        if (movie[0].dateTime[i].technologyId._id === movie[0].technology[y].technologyId._id) {
+                            if (techData.length === 0) {
+                                console.log("ddd")
+                                techData.push(movie[0].dateTime[i].technologyId)
+                            }
+                            else {
+                                let add = true
+                                for (let x = 0; x < techData.length; x++) {
+                                    console.log(techData[x])
+                                    console.log(movie[0].technology[y].technologyId._id)
+                                    if (techData[x]._id === movie[0].technology[y].technologyId._id) {
+                                        add = false
+                                        break
+                                    }
+                                }
+                                if (add) {
+                                    techData.push(movie[0].dateTime[i].technologyId)
+                                    console.log(techData)
                                 }
                             }
-                            if (add)
-                                techData.push(movie[0].dateTime[i].technologyId)
                         }
                     }
                 }

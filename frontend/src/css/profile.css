@@ -1,16 +1,33 @@
-.profileData{
-    width:50%;
-    margin-left: auto;
-    margin-right: auto;
-   border:1px solid red ;
-   text-align: center;
-   margin-bottom: 30px;
-   margin-top: 30px;
+.profileSection {
+  width: 60%;
+  border-bottom: 3px groove red;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.profileData {
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+#imgEditPhoto {
+  margin-bottom: 10px;
+}
+
+#imgEditPhoto img:hover,
+#formEditPhoto input:hover,
+#input button:hover {
+  cursor: pointer;
+}
+
+#formEditPhoto {
+  margin-top: 5px;
 }
 
 .input {
-    width: 50%;
-    height:50px;
-    color:red;
-    text-align:center;
+  width: 50%;
+  height: 50px;
+  color: red;
+  text-align: center;
 }

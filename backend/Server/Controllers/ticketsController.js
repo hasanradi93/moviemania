@@ -89,22 +89,25 @@ exports.takenSeats = async (req, res) => {
   let time = req.body.time
   try {
     const data = await Ticket.find({ movieId: movieId, roomId: roomId, date: date, time: time });
-    console.log(data)
     res.json(data);
   } catch (error) {
     res.status(400).json({ message: error })
   }
 }
 
-exports.getUserTicketsById = async (req, res) => {
-  const userId = req.params.id;
+exports.getUserTickets = async (req, res) => {
+  console.log("DDD")
+  const userId = req.body.userId
+  console.log("req.body", req.body)
+  console.log(userId)
   try {
-    const data = await Ticket.findById({ _id: userId })
+    console.log(userId)
+    const data = await Ticket.find({ userId: userId })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
-    // .populate({ path: 'technology.technologyId', model: 'Technology' })
-    // .populate({ path: 'dateTime.technologyId', model: 'Technology' })
+      .populate({ path: 'technologyId', model: 'Technology' })
+    console.log(data)
     res.json(data)
   } catch (error) {
     res.status(400).json({ message: error })

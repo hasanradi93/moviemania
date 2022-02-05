@@ -145,7 +145,9 @@ exports.login = async (req, res) => {
             token,
             user: {
                 id: user._id,
-                username: user.username
+                username: user.username,
+                profile: user.profile,
+                role: user.userType
             },
         });
     } catch (error) {
@@ -185,17 +187,17 @@ exports.checkToken = async (req, res) => {
 exports.getUserData = async (req, res) => {
     const user = await User.findById(req.body.id)
     res.json({
+        id: user._id,
         username: user.username,
         profile: user.profile,
-        role: user.userType,
-        id: user._id,
+        role: user.userType
     })
 }
 
 //upload phpto
 exports.uploadProfile = upload.single('profileImg')
 exports.savePicture = async (req, res, next) => {
-    const userId = req.params.id
+    const userId = req.body.userId
     console.log("req.bodyr", req.body)
     console.log("userId", userId)
     console.log("req.file", req.file)
@@ -211,14 +213,4 @@ exports.savePicture = async (req, res, next) => {
     } catch (error) {
         res.status(404).json({ message: error })
     }
-}
-
-exports.getUserDataById = async (req, res) => {
-    const user = await User.findById(req.params.id)
-    res.json({
-        username: user.username,
-        profile: user.profile,
-        role: user.userType,
-        id: user._id,
-    })
 }

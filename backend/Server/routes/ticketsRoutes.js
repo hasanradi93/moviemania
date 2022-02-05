@@ -1,6 +1,4 @@
 const express = require('express')
-const { rooms } = require('../Controllers/roomsController')
-
 const router = express.Router()
 
 const ticketsController = require('../Controllers/ticketsController')
@@ -12,12 +10,12 @@ router.route('/')
 router.route('/takenSeats')
     .post(ticketsController.takenSeats)
 
+router.route('/userTickets')
+    .post(ticketsController.getUserTickets)
+
 router.route('/:id')
     .get(ticketsController.getTicketById)
     .put(ticketsController.cancelTicket)
-
-router.route('/user/:id')
-    .get(ticketsController.getUserTicketsById)
 
 router.route('/admin/movie/:id')
     .get(ticketsController.getMovieTicketsById)

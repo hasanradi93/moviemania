@@ -58,21 +58,12 @@ class BackendDataServices {
         return http.get('technologies/')
     }
 
-    uploadPhoto(formData, id) {
-        return http.post(`users/uploadPhoto/${id}`, formData, {})
+    uploadPhoto(formData, data) {
+        return http.post(`users/uploadPhoto`, formData, data)
     }
 
-
-
-
-
-
-    getUserDataById(id) {
-        return http.get(`/users/getData/${id}`)
-    }
-
-    getUserTicketsById(id) {
-        return http.get(`/tickets/user/${id}`);
+    getUserTickets(data) {
+        return http.post('/tickets/userTickets', data)
     }
 }
 
