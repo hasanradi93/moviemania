@@ -96,3 +96,8 @@ input[type=checkbox]:checked + label {
   width: 125px;
   display:inline-block;
 } */
+
+.paymentForm{
+  display: none;
+  background: transparent !important;
+}

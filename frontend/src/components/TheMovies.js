@@ -35,7 +35,7 @@ class TheMovies extends Component {
                                             <img className="poster" src={movie.photo} width='100%' height='400px' alt={movie.title} />
                                         </div>
                                     </Link>
-                                    <div>
+                                    <div className="movieInfo">
                                         <h3 className="movieTitle">{movie.title}</h3><br />
 
                                         <div className="ratingDiv">
