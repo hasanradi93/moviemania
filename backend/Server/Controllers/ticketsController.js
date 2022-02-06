@@ -10,11 +10,6 @@ exports.tickets = async (req, res, next) => {
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
       .populate({ path: 'technologyId', model: 'Technology' })
-    // if (!tickets.length > 0) {
-    //   console.log("ffffffff")
-    //   return res.status(404).json({ message: "No Tickets Today" })
-    // }
-
     res.json(tickets);
   } catch (error) {
     next(error)

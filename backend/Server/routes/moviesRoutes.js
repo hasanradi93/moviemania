@@ -6,7 +6,7 @@ const moviesController = require('../Controllers/moviesController');
 //get all movies for admin
 router.route('/')
     .get(moviesController.movies)
-    .post(moviesController.addMovie)
+    .post(moviesController.uploadPhoto, moviesController.addMovie)
 //get available
 router.route('/get-newest-movies')
     .get(moviesController.theMovies)

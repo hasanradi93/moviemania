@@ -1,4 +1,4 @@
-body{
+body {
   color: whitesmoke;
 }
 .containerMovie {
@@ -12,7 +12,7 @@ body{
 }
 
 .containerImage {
-  width: 34.%;
+  width: 34%;
   height: 550px;
   float: left;
 }
@@ -25,9 +25,9 @@ body{
   font-size: 25px;
 }
 
-.strong{
+.strong {
   font-size: 20px;
-  background: -webkit-linear-gradient(#870F06, #c2000d);
+  background: -webkit-linear-gradient(#870f06, #c2000d);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -67,24 +67,24 @@ body{
 .roomData .active,
 .timeData .active,
 .techData .active {
-  background-color: #870F06;
+  background-color: #870f06;
 }
 .dayData ul li:hover,
 .roomData ul li:hover,
 .timeData ul li:hover,
 .techData ul li:hover {
   cursor: pointer;
-  background: -webkit-linear-gradient(#870F06, #c2000d);
+  background: -webkit-linear-gradient(#870f06, #c2000d);
   box-shadow: 5px 5px 5px 5px #000000;
 }
-.containerTrailer{
+.containerTrailer {
   margin: 10%;
 }
 
-.seatsform{
+.seatsform {
   width: 100%;
 }
-.seat{
+.seat {
   margin: 2%;
   height: auto;
   width: 5%;
@@ -97,7 +97,28 @@ input[type=checkbox]:checked + label {
   display:inline-block;
 } */
 
-.paymentForm{
+.paymentForm {
   display: none;
   background: transparent !important;
+}
+
+#seatsForm {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Hide Popup*/
+.setDataSeats {
+  z-index: 9;
+  max-width: 60%;
+  max-height: 60%;
+  margin: 0 auto;
 }

@@ -10,6 +10,10 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    videoUrl: {
+        type: String,
+        required: true
+    },
     releasedate: {
         type: Date,
         required: Date
@@ -26,7 +30,10 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     }],
-    rating : Number,
+    rating: {
+        type: String,
+        required: true
+    },
     fromDate: {
         type: Date,
         required: true
@@ -41,7 +48,7 @@ const movieSchema = new mongoose.Schema({
     },
     technology: [{
         technologyId: {
-            type: mongoose.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Technology",
             required: true
         },
@@ -55,13 +62,13 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
     genre: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Genre",
         required: true
     },
     dateTime: [{
         room: {
-            type: mongoose.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Room",
             required: true
         },
@@ -70,7 +77,7 @@ const movieSchema = new mongoose.Schema({
             required: true
         },
         technologyId: {
-            type: mongoose.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Technology",
             required: true
         },

@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import BackendDataServices from '../services/BackendDataServices';
 
 class AddMovie extends Component {
+    times = [{ value: "01:00 PM", status: 0 }, { value: "01:30 PM", status: 0 }, { value: "02:00 PM", status: 0 }, { value: "02:30 PM", status: 0 }, { value: "03:00 PM", status: 0 }, { value: "03:30 PM", status: 0 },
+    { value: "04:00 PM", status: 0 }, { value: "04:30 PM", status: 0 }, { value: "05:00 PM", status: 0 }, { value: "05:30 PM", status: 0 }, { value: "06:00 PM", status: 0 }, { value: "06:30 PM", status: 0 }, { value: "07:00 PM", status: 0 },
+    { value: "07:30 PM", status: 0 }, { value: "08:00 PM", status: 0 }, { value: "08:30 PM", status: 0 }, { value: "09:00 PM", status: 0 }, { value: "09:30 PM", status: 0 }, { value: "10:00 PM", status: 0 }, { value: "10:30 PM", status: 0 }]
     constructor(props) {
         super(props);
-
         this.state = {
             title: "",
             plot: "",
@@ -24,7 +26,14 @@ class AddMovie extends Component {
             technologyId: 0,
             price: 0,
             rooms: [],
-            dateTime: []
+            dateTime: [],
+            roomId: 0,
+            roomDate: '',
+            technologyIdDT: 0,
+            countTimes: 0,
+            timesArr: this.times,
+            photo: '',
+            videoUrl: ''
         }
     }
 
@@ -73,21 +82,65 @@ class AddMovie extends Component {
 
     saveTechPrice = () => {
         if (this.state.price && this.state.technologyId) {
-            let exist = false
-            for (let i = 0; i < this.state.technologiesChoosed.length; i++) {
-                if (this.state.technologiesChoosed[i].technologyId === this.state.technologyId) {
-                    exist = true
-                    break
-                }
-            }
-            if (!exist)
+            if (this.state.dateTime.length === 0) {
                 this.state.technologiesChoosed.push({ "technologyId": this.state.technologyId, "price": this.state.price })
-            else
-                alert("Existed before")
+                this.setState({ price: 0 })
+            }
+
+            else {
+                let exist = false
+                for (let i = 0; i < this.state.technologiesChoosed.length; i++) {
+                    if (this.state.technologiesChoosed[i].technologyId === this.state.technologyId) {
+                        exist = true
+                        break
+                    }
+                }
+                if (!exist) {
+                    this.state.technologiesChoosed.push({ "technologyId": this.state.technologyId, "price": this.state.price })
+                    this.setState({ price: 0 })
+                }
+                else
+                    alert("Existed before")
+            }
         }
         else
             alert("Check data")
+    }
 
+    saveDateTimeRoomData = () => {
+        if (this.state.roomId && this.state.roomDate && this.state.countTimes > 0 && this.state.technologyIdDT) {
+            let exist = false
+            if (this.state.dateTime.length === 0) {
+                let theTimes = this.state.timesArr.filter(time => {
+                    if (time.status === 1)
+                        return time
+                }).map(time => { return time.value })
+                this.state.dateTime.push({ "room": this.state.roomId, "day": this.state.roomDate, "technologyId": this.state.technologyIdDT, "times": theTimes })
+                this.setState({ countTimes: 0 })
+                this.setState({ timesArr: this.times })
+            }
+            else {
+                for (let i = 0; i < this.state.dateTime.length; i++) {
+                    if (this.state.dateTime[i].roomId === this.state.roomId && this.state.dateTime[i].day === this.state.roomDate && this.state.dateTime[i].technologyId == this.state.technologyIdDT) {
+                        exist = true
+                        break
+                    }
+                }
+                if (!exist) {
+                    let theTimes = this.state.timesArr.filter(time => {
+                        if (time.status === 1)
+                            return time
+                    }).map(time => { return time.value })
+                    this.state.dateTime.push({ "room": this.state.roomId, "day": this.state.roomDate, "technologyId": this.state.technologyIdDT, "times": theTimes })
+                    this.setState({ countTimes: 0 })
+                    this.setState({ timesArr: this.times })
+                }
+                else
+                    alert("Existed before")
+            }
+        }
+        else
+            alert("Check data")
     }
 
     getTechName = (techId) => {
@@ -97,43 +150,141 @@ class AddMovie extends Component {
         }
     }
 
+    getRoomName = (roomId) => {
+        for (let i = 0; i < this.state.rooms.length; i++) {
+            if (roomId === this.state.rooms[i]._id)
+                return this.state.rooms[i].name
+        }
+    }
+
+    changeStatusTime = (e) => {
+        console.log(e.value)
+        console.log(e.checked)
+        for (let i = 0; i < this.state.timesArr.length; i++) {
+            if (this.state.timesArr[i].value === e.value) {
+                if (e.checked) {
+                    this.setState(prev => ({ countTimes: prev.countTimes + 1 }))
+                    let timesCopy = [...this.state.timesArr]
+                    let timeNew = { ...timesCopy[i] }
+                    timeNew.status = 1
+                    timesCopy[i] = timeNew
+                    this.setState({ timesArr: timesCopy })
+                }
+                else {
+                    this.setState(prev => ({ countTimes: prev.countTimes - 1 }))
+                    let timesCopy = [...this.state.timesArr]
+                    let timeNew = { ...timesCopy[i] }
+                    timeNew.status = 0
+                    timesCopy[i] = timeNew
+                    console.log(" timesCopy[i]", timesCopy[i])
+                    this.setState({ timesArr: timesCopy })
+                }
+                break
+            }
+        }
+    }
+
+    checkDate = (e, filed) => {
+        let date = new Date(e)
+        if (date < new Date())
+            alert("Check the " + filed + " value")
+        else
+            this.setState({ [filed]: e })
+        if (filed === "todate") {
+            if (date < new Date(this.state.fromdate))
+                alert("To date must be greater than from date")
+        }
+    }
+
+    setPhoto = (photo) => {
+        this.setState({ photo: photo })
+    }
+
+    setVideo = (url) => {
+        this.setState({ videoUrl: url })
+    }
+
+    checkRating = (e) => {
+        if (Number(e) > 10)
+            alert("Please check the rating")
+        else
+            this.setState({ rating: e })
+    }
+
     saveMovie = (e) => {
         e.preventDefault()
-        // console.log(this.state.title)
-        // console.log(this.state.plot)
+        console.log("this.state.title", this.state.title, "&&", "this.state.plot", this.state.plot, "&&", "this.state.director", this.state.director, "&&", "this.state.releasedate", this.state.releasedate, "&&", "this.state.runtime", this.state.runtime
+            , "&&", "this.state.rating", this.state.rating, "&&", "this.state.fromdate", this.state.fromdate, "&&", "this.state.todate", this.state.todate, "&&", "this.state.actors.length", this.state.actors.length, "&&", "this.state.genres.length", this.state.genres.length
+            , "&&", " this.state.technologiesChoosed.length", this.state.technologiesChoosed.length, "&&", "this.state.photo", this.state.photo, "&&", "this.state.videoUrl", this.state.videoUrl, "&&", "this.state.dateTime.length", this.state.dateTime.length)
+        if (this.state.title && this.state.plot && this.state.director && this.state.releasedate && this.state.runtime
+            && this.state.rating && this.state.fromdate && this.state.todate && this.state.actors.length > 0 && this.state.genres.length > 0
+            && this.state.technologiesChoosed.length > 0 && this.state.photo && this.state.videoUrl && this.state.dateTime.length > 0) {
+            const movieData = new FormData()
+            movieData.append('title', this.state.title)
+            movieData.append('plot', this.state.plot)
+            movieData.append('director', this.state.director)
+            movieData.append('actors', JSON.stringify(this.state.actors))
+            movieData.append('videoUrl', this.state.videoUrl)
+            movieData.append('photo', this.state.photo)
+            movieData.append('releasedate', this.state.releasedate)
+            movieData.append('rating', this.state.rating)
+            movieData.append('fromDate', this.state.fromdate)
+            movieData.append('toDate', this.state.todate)
+            movieData.append('runtime', this.state.runtime)
+            movieData.append('technology', JSON.stringify(this.state.technologiesChoosed))
+            movieData.append('Availability', this.state.availability)
+            movieData.append('genre', this.state.genreId)
+            movieData.append('dateTime', JSON.stringify(this.state.dateTime))
+            console.log(this.state.technologiesChoosed)
+            console.log(this.state.dateTime)
+            BackendDataServices.addMovie(movieData)
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+        }
+        else {
+            alert("Check all data please")
+        }
     }
 
     render() {
         return (
-            <div className='moveiDataForm'>
+            <div className='moveiDataForm' style={{ width: "100%", textAlign: "center" }}>
                 <form onSubmit={this.saveMovie}>
                     <strong>Title:</strong> <input type="text" placeholder='Movie Title' value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} /><br></br>
                     <strong>Plot:</strong><input type="text" placeholder='Movie Plot' value={this.state.plot} onChange={(e) => this.setState({ plot: e.target.value })} /><br></br>
                     <strong>Director:</strong><input type="text" placeholder='Movie Director' value={this.state.director} onChange={(e) => this.setState({ director: e.target.value })} /><br></br>
                     <strong>Release date:</strong><input type="date" placeholder='Release date' value={this.state.releasedate} onChange={(e) => this.setState({ releasedate: e.target.value })} /><br></br>
-                    <strong>Run time:</strong><input type="date" placeholder='Release date' value={this.state.runtime} onChange={(e) => this.setState({ runtime: e.target.value })} /><br></br>
-                    <strong>Rating:</strong><input type="text" placeholder='Rating IMDB' value={this.state.rating} onChange={(e) => this.setState({ rating: e.target.value })} /><br></br>
-                    <strong>From date:</strong><input type="date" value={this.state.fromdate} onChange={(e) => this.setState({ fromdate: e.target.value })} /><br></br>
-                    <strong>To Date:</strong><input type="date" value={this.state.todate} onChange={(e) => this.setState({ todate: e.target.value })} /><br></br>
+                    <strong>Run time:</strong><input type="number" placeholder='Release date' value={this.state.runtime} onChange={(e) => this.setState({ runtime: e.target.value })} /><br></br>
+                    <strong>Rating:</strong><input type="text" placeholder='Rating IMDB' value={this.state.rating} onChange={(e) => this.checkRating(e.target.value)} /><br></br>
+                    <strong>From date:</strong><input type="date" value={this.state.fromdate} onChange={(e) => this.checkDate(e.target.value, 'fromdate')} /><br></br>
+                    <strong>To Date:</strong><input type="date" value={this.state.todate} onChange={(e) => this.checkDate(e.target.value, 'todate')} /><br></br>
                     <strong>Availability</strong><input type="checkbox" value={this.state.availability} onChange={(e) => this.setState({ availability: e.target.checked ? 1 : 0 })} /><br></br>
                     <strong>Actors</strong><input type="text" placeholder='Movie Actors [use comma]' value={this.state.actors} onChange={(e) => this.setState({ actors: (e.target.value).split(",") })} /><br></br>
                     <strong>Genre:</strong>{this.state.genres ? this.state.genres.map((genre, i) => { return <span key={i}><input type='radio' value={genre._id} onChange={(e) => this.setState({ genreId: e.target.value })} />{genre.name}</span> }) : ""}<br></br>
+                    <strong>Photo:</strong><input type="file" onChange={(e) => this.setPhoto(e.target.files[0])} /><br></br>
+                    <strong>Video:</strong><input type="text" placeholder='Set the IFrame URL Video here' onChange={(e) => this.setVideo(e.target.value)} /><br></br>
                     <strong>Technologies & Prices:</strong>
                     <div>
                         <select onChange={(e) => this.setState({ technologyId: e.target.value })}><option value='0'>Choose Technolgy</option>{this.state.technologies ? this.state.technologies.map((technology, i) => { return <option key={i} value={technology._id}>{technology.name}</option> }) : ""}</select><br></br>
                         <input type="number" placeholder='Price Technolgy' value={this.state.price} onChange={(e) => this.setState({ price: (e.target.value) })} />
                         <button type='button' onClick={this.saveTechPrice}>Add</button>
                         <div id='dataTech'>
-                            {this.state.technologiesChoosed ? this.state.technologiesChoosed.map((techPrice, i) => { return (<li key={i}>{this.getTechName(techPrice.technologyId)}, {techPrice.price}</li>) }) : ""}
+                            {this.state.technologiesChoosed ? this.state.technologiesChoosed.map((techPrice, i) => { return (<li key={i}><strong>Technology :</strong> {this.getTechName(techPrice.technologyId)} | <strong>Price :</strong> {techPrice.price}$</li>) }) : ""}
                         </div>
                     </div><br></br>
                     <strong>Data Rooms:</strong>
                     <div>
-                        <select onChange={(e) => this.setState({ technologyId: e.target.value })}><option value='0'>Choose Technolgy</option>{this.state.technologies ? this.state.technologies.map((technology, i) => { return <option key={i} value={technology._id}>{technology.name}</option> }) : ""}</select><br></br>
-                        <input type="number" placeholder='Price Technolgy' value={this.state.price} onChange={(e) => this.setState({ price: (e.target.value) })} />
-                        <button type='button' onClick={this.saveTechPrice}>Add</button>
-                        <div id='dataTech'>
-                            {this.state.technologiesChoosed ? this.state.technologiesChoosed.map((techPrice, i) => { return (<li key={i}>{this.getTechName(techPrice.technologyId)}, {techPrice.price}</li>) }) : ""}
+                        <strong>Room:</strong><select onChange={(e) => this.setState({ roomId: e.target.value })}><option value='0'>Choose Room</option>{this.state.rooms ? this.state.rooms.map((room, i) => { return <option key={i} value={room._id}>{room.name}</option> }) : ""}</select><br></br>
+                        <strong>Date:</strong><input type="date" value={this.state.roomDate} onChange={(e) => this.checkDate(e.target.value, 'roomDate')} /><br></br>
+                        <strong>Times:</strong><br></br>{this.state.timesArr.map((time, i) => { return (<span key={i}><input type="checkbox" checked={time.status ? 'checked' : ''} value={time.value} onChange={(e) => this.changeStatusTime(e.target)} />{time.value}{((i + 1) % 6 === 0) ? <br></br> : <span>&nbsp;&nbsp;&nbsp;</span>}</span>) })}<br></br>
+                        <select onChange={(e) => this.setState({ technologyIdDT: e.target.value })}><option value='0'>Choose Technolgy</option>{this.state.technologies ? this.state.technologies.map((technology, i) => { return <option key={i} value={technology._id}>{technology.name}</option> }) : ""}</select><br></br>
+                        <button type='button' onClick={this.saveDateTimeRoomData}>Add</button>
+                        <div id='dataDateTime'>
+                            {this.state.dateTime ? this.state.dateTime.map((dateTime, i) => { return (<li key={i}><strong>Room :</strong> {this.getRoomName(dateTime.roomId)} | <strong>Date :</strong>  {dateTime.day} | <strong>Technology :</strong>  {this.getTechName(dateTime.technologyId)} | <strong>Times :</strong>  {dateTime.times.map((time, i) => { return <span key={i}><span>{time}</span>, </span> })}</li>) }) : ""}
                         </div>
                     </div><br></br>
                     <button type='submit'>Save</button>
