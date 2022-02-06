@@ -64,8 +64,22 @@ const MoviesDetails = props => {
     // }
     const buyTicket = () => {
         //e.preventDefault()
-        alert('okay')
-        console.log("DDDD")
+       
+        for(let i=0; i<chosenSeatArr.length; i++){
+            console.log(day)
+            console.log(technology)
+            console.log(roomId)
+            console.log(time)
+            console.log(chosenSeatArr[i])
+            console.log(userData.id)
+            BackendDataServices.buyTicket({"userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seat": chosenSeatArr[i]})
+            .then(response => {
+               console.log(response.data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+        }
     }
 
     const isLogincheck = async () => {
@@ -275,7 +289,7 @@ const MoviesDetails = props => {
                     <div className="containerImage">
                         <img src={movieDetails.photo} width='380px' height='auto' alt={movieDetails.title} />
                     </div>
-                    <div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}>
+                    <div className="movieDetails">
 
                         <div className="containerDetails">
                             <h1 className="card-title">{movieDetails.title}</h1>
@@ -329,7 +343,7 @@ const MoviesDetails = props => {
                         </div>
                     </div>
                 </div>
-                <div className="containerTrailer"><h1>Trailer</h1><iframe width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
 
     }

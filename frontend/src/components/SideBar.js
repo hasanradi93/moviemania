@@ -20,8 +20,8 @@ function SideBar(props) {
     return (
         <div className="sideclass">
             <SideNav className="sideclass" style={{
-                transition: "all 0.7s ease-in-out", paddingTop: "9%", padding: "1%",
-                backgroundColor: 'black', boxShadow: " 12px 10px 10px black", position: "fixed", zIndex: "10"
+                transition: "all 0.7s ease-in-out", padding: "120px 20px 50px 20px",
+                background: 'linear-gradient( to right, rgb(8, 8, 8), rgb(0, 0, 0))', boxShadow: "4px 4px 6px rgba(0, 0, 0), 4px 4px 4px rgba(0, 0, 0)", position: "fixed", zIndex: "10"
             }}>
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">

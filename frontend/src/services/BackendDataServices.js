@@ -75,9 +75,15 @@ class BackendDataServices {
         return http.post('/tickets/userTickets', data)
     }
 
+
+    buyTicket(data) {
+        return http.post('/tickets/', data)
+    }
+
     cancelTicket(data) {
         return http.post('/tickets/cancelTicket', data)
     }
+
 
 
 }

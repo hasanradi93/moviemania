@@ -19,10 +19,12 @@ exports.tickets = async (req, res, next) => {
 exports.addTicket = async (req, res) => {
   const newTicket = new Ticket({
     userId: req.body.userId,
-    cancelTicket: req.body.cancelTicket,
+    cancelTicket: false,
     movieId: req.body.movieId,
     roomId: req.body.roomId,
-    seat: req.body.seat
+    seatNumber: req.body.seat,
+    technologyId: req.body.technology,
+    date: req.body.day
   });
 
   try {

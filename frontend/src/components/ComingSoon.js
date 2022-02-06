@@ -34,15 +34,13 @@ class ComingSoon extends Component {
                     <div key={movie._id} className="col-lg-4 pb-1">
                         <div className="card cardMovies">
                             <div className="card-body">
-                                <div className="card-text">
-                                    <Link to={`Movies/${movie._id}`}>
+                                <div className="card-text">                    
                                         <div className="imgMovie">
                                             <img className="poster" src={movie.photo} width='100%' height='auto' alt={movie.title} />
                                         </div>
-                                    </Link>
-                                    <div className="aboutMovie">
+                                    <div className="movieInfo">
                                         <h3 className="movieTitle">{movie.title}</h3><br />
-                                        <h3 className="movieTitle">{FunctionTools.daysLeft(new Date(), movie.fromDate)} Days Left</h3>
+                                        <h3 className="comingSoonTitle">{FunctionTools.daysLeft(new Date(), movie.fromDate)} Days Left</h3>
                                     </div>
                                 </div>
                             </div>
