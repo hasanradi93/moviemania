@@ -36,7 +36,7 @@ exports.addTicket = async (req, res) => {
 }
 
 exports.cancelTicket = async (req, res) => {
-  const ticketId = req.params.id
+  const ticketId = req.body.id
   try {
     const data = await Ticket.findByIdAndUpdate({ _id: ticketId }, { cancelTicket: true })
     res.json(data)
@@ -97,9 +97,10 @@ exports.getUserTickets = async (req, res) => {
   const userId = req.body.userId
   console.log("req.body", req.body)
   console.log(userId)
+  let dateNow = new Date()
   try {
     console.log(userId)
-    const data = await Ticket.find({ userId: userId })
+    const data = await Ticket.find({ userId: userId, cancelTicket: false, date: { $gte: dateNow } })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })

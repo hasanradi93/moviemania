@@ -91,25 +91,6 @@ exports.register = async (req, res) => {
     }
 }
 
-
-exports.updateUser = async (req, res) => {
-    const userId = req.params.id;
-    const newUser = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        profile: req.body.profile,
-        userType: req.body.userType
-    }
-
-    try {
-        const users = await User.findByIdAndUpdate({ _id: userId }, newUser)
-        res.json(users);
-    } catch (error) {
-        res.status(404).json({ message: error })
-    }
-}
-
 // login route setup
 exports.login = async (req, res) => {
     try {
@@ -152,16 +133,6 @@ exports.login = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ msg: error.message });
-    }
-}
-
-// delete user account route
-exports.deleteUser = async (req, res) => {
-    try {
-        const deletedUser = await User.findByIdAndDelete(req.user);
-        res.json(deletedUser);
-    } catch (error) {
-        res.status(500).json({ err: error.message });
     }
 }
 
@@ -210,6 +181,21 @@ exports.savePicture = async (req, res, next) => {
     try {
         const users = await User.findByIdAndUpdate({ _id: userId }, newProfile)
         res.json(users.profile);
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
+//update UserName
+exports.updateUserName = async (req, res, next) => {
+    console.log(req.body)
+    const userId = req.body.userId;
+    const newUserName = {
+        username: req.body.userName
+    }
+    try {
+        const users = await User.findByIdAndUpdate({ _id: userId }, newUserName)
+        res.json(users);
     } catch (error) {
         res.status(404).json({ message: error })
     }

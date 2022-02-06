@@ -10,6 +10,9 @@ router.route('/')
 router.route('/takenSeats')
     .post(ticketsController.takenSeats)
 
+router.route('/cancelTicket')
+    .post(ticketsController.cancelTicket)
+
 router.route('/userTickets')
     .post(ticketsController.getUserTickets)
 
