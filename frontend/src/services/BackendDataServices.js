@@ -62,8 +62,13 @@ class BackendDataServices {
         return http.get('technologies/')
     }
 
-    uploadPhoto(formData, data) {
-        return http.post(`users/uploadPhoto`, formData, data)
+    uploadPhoto(formData) {
+        return http.post(`users/uploadPhoto`, formData)
+    }
+
+    updateUsername(formData) {
+        console.log(formData)
+        return http.post(`users/updateUsername`, formData)
     }
 
     getUserTickets(data) {
@@ -73,6 +78,8 @@ class BackendDataServices {
     cancelTicket(data) {
         return http.post('/tickets/cancelTicket', data)
     }
+
+
 }
 
 export default new BackendDataServices();

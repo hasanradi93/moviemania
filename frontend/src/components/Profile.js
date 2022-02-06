@@ -13,9 +13,10 @@ function Profile(props) {
     const [profilePhoto, setProfilePhoto] = useState('../avatar.png')
     const [uploadProfile, setUploadProfile] = useState('')
     const [editProfileStatus, setEditProfileStatus] = useState(false)
+    const [editUserNameStatus, setEditUserNameStatus] = useState(false)
+    const [userName, setUserName] = useState('')
     //Tickets Section
     const [tickets, setTickets] = useState('')
-    const [blocksAndSeats, setBlocksAndSeats] = useState([])
     // const { userData } = useContext(UserContext);
     useEffect(() => {
         retrieveUser()
@@ -34,6 +35,7 @@ function Profile(props) {
         if (tokenRes.data) {
             const userRes = await BackendDataServices.getUserData({ "id": tokenRes.data.id }, { headers: { "x-auth-token": token } })
             setUserData(userRes.data)
+            setUserName(userRes.data.username)
             setProfilePhoto(userRes.data.profile)
             retrieveTickets(userRes.data)
         }
@@ -42,7 +44,6 @@ function Profile(props) {
     const retrieveTickets = (data) => {
         BackendDataServices.getUserTickets({ "userId": data.id })
             .then(response => {
-                console.log("dataatickets", response.data)
                 setTickets(response.data)
             })
             .catch(e => {
@@ -76,7 +77,7 @@ function Profile(props) {
         const formData = new FormData()
         formData.append('profileImg', uploadProfile)
         formData.append('userId', userData.id)
-        BackendDataServices.uploadPhoto(formData, { "_id": userData.id })
+        BackendDataServices.uploadPhoto(formData)
             .then(response => {
                 setProfilePhoto(uploadProfile)
                 setEditProfileStatus(!editProfileStatus)
@@ -90,24 +91,43 @@ function Profile(props) {
         setEditProfileStatus(!editProfileStatus)
     }
 
+    const changeEditUsernameStatus = () => {
+        setEditUserNameStatus(!editUserNameStatus)
+    }
+
     const onFileChange = (photo) => {
         setUploadProfile(photo)
     }
 
     const cancelTicket = (ticketId) => {
-        console.log(ticketId)
         if (window.confirm("Do you want to cancel this Ticket?")) {
-
             BackendDataServices.cancelTicket({ "id": ticketId })
                 .then(response => {
-                    console.log(response.data)
-
+                    alert("Ticket canceled successfully")
                 })
                 .catch(error => {
                     console.log(error.message)
                 })
-
         }
+    }
+
+    const setUserNameValue = (e) => {
+        setUserName(e)
+    }
+
+    const updateUserName = (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('userName', userName)
+        formData.append('userId', userData.id)
+        BackendDataServices.updateUsername({ "userName": userName, "userId": userData.id })
+            .then(response => {
+                setUserName(userName)
+                setEditUserNameStatus(!editUserNameStatus)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
     return (
@@ -130,16 +150,19 @@ function Profile(props) {
                 </div>
                 <div className='profileData'>
                     <div id='imgEditPhoto'>
-                        <img src='./edit.png' width="24px" height="24px"></img>
+                        {editUserNameStatus ? <img src='../cancel.png' onClick={changeEditUsernameStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditUsernameStatus} width="24px" height="24px"></img>}
                     </div>
-                    <form>
-                        <input type='text' value={userData.username} className='input' readOnly></input>
-                    </form>
+                    {editUserNameStatus ?
+                        <form onSubmit={updateUserName}>
+                            <input type='text' value={userName} onChange={(e) => setUserNameValue(e.target.value)}></input><br></br><br></br>
+                            <button className="btn btn-primary" type="submit">Update UserName</button>
+                        </form> : <h2>{userName}</h2>
+                    }
                 </div>
             </div>
             <div className="ticketsSection">
                 {tickets ? tickets.map((ticket, i) => {
-                    return (<div key={i} className="containerMovie" style={{ marginTop: "10px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}><div className="containerDetails"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strong"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strong"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strong"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strong"> Time: </strong>{ticket.time}<br></br><strong className="strong"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strong"> Seat : </strong>{getBlockNameAndSeatNb(ticket.seatNumber, ticket.roomId._id)}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button onClick={() => cancelTicket(ticket._id)}>Cancel</button> : ''}<br></br></div></div></div></div></div>)
+                    return (<div key={i} className="containerMovie" style={{ marginTop: "10px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}><div className="containerDetailsTicket"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strong"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strong"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strong"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strong"> Time: </strong>{ticket.time}<br></br><strong className="strong"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strong"> Seat : </strong>{getBlockNameAndSeatNb(ticket.seatNumber, ticket.roomId._id)}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button onClick={() => cancelTicket(ticket._id)}>Cancel</button> : ''}<br></br></div></div></div></div></div>)
                 }) : ""}
             </div>
         </div>

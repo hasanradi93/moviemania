@@ -43,30 +43,11 @@ router.route('/register')
     .post(usersController.register)
 router.route('/tokenIsValid')
     .post(usersController.checkToken)
-router.route('/delete', auth)
-    .post(usersController.login)
-router.route('/:id')
-    .put(usersController.updateUser)
+router.route('/updateUsername')
+    .post(usersController.updateUserName)
 router.route('/uploadPhoto')
     .post(usersController.uploadProfile, usersController.savePicture)
-// router.post('/uploadPhoto/:id', upload.single('profileImg'), async (req, res, next) => {
-//     const userId = req.params.id
-//     console.log("req.bodyr", req.body)
-//     console.log("userId", userId)
-//     console.log("req.file", req.file)
-//     const url = req.protocol + '://' + req.get('host')
-//     console.log("url", url)
-//     const newProfile = ({
-//         profile: url + '/public/' + req.file.filename
-//     })
-//     console.log(newProfile)
-//     try {
-//         const users = await User.findByIdAndUpdate({ _id: userId }, newProfile)
-//         res.json(users.profile);
-//     } catch (error) {
-//         res.status(404).json({ message: error })
-//     }
-// })
+
 
 
 module.exports = router
