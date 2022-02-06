@@ -69,6 +69,10 @@ class BackendDataServices {
     getUserTickets(data) {
         return http.post('/tickets/userTickets', data)
     }
+
+    buyTicket(data) {
+        return http.post('/tickets/', data)
+    }
 }
 
 export default new BackendDataServices();

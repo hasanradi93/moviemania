@@ -18,15 +18,15 @@
 .form input[type="password"] {
   width: 100%;
   border: 1px solid #870f06;
-  background-color: whitesmoke;
+  background-color: wheat;
   border-radius: 8px;
   font-size: 1.1rem;
   padding: 0.3rem;
 }
 
 .form input:focus {
-  border: 1px solid whitesmoke;
-  box-shadow: inset 0px 0px 3px whitesmoke(31, 143, 255, 0.5);
+  border: 1px solid wheat;
+  box-shadow: inset 0px 0px 3px wheat(31, 143, 255, 0.5);
   outline: none;
 }
 
@@ -48,7 +48,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: whitesmoke;
+  background-color: wheat;
   color: #e92626;
   font-size: 1.1rem;
 }
