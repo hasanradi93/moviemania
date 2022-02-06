@@ -94,9 +94,19 @@ function Profile(props) {
         setUploadProfile(photo)
     }
 
-    const cancelTicket = () => {
+    const cancelTicket = (ticketId) => {
+        console.log(ticketId)
         if (window.confirm("Do you want to cancel this Ticket?")) {
-            alert("oki")
+
+            BackendDataServices.cancelTicket({ "id": ticketId })
+                .then(response => {
+                    console.log(response.data)
+
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+
         }
     }
 
@@ -129,7 +139,7 @@ function Profile(props) {
             </div>
             <div className="ticketsSection">
                 {tickets ? tickets.map((ticket, i) => {
-                    return (<div key={i} className="containerMovie" style={{ marginTop: "10px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}><div className="containerDetails"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strong"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strong"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strong"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strong"> Time: </strong>{ticket.time}<br></br><strong className="strong"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strong"> Seat : </strong>{getBlockNameAndSeatNb(ticket.seatNumber, ticket.roomId._id)}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button onclick={cancelTicket}>Cancel</button> : ''}<br></br></div></div></div></div></div>)
+                    return (<div key={i} className="containerMovie" style={{ marginTop: "10px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}><div className="containerDetails"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strong"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strong"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strong"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strong"> Time: </strong>{ticket.time}<br></br><strong className="strong"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strong"> Seat : </strong>{getBlockNameAndSeatNb(ticket.seatNumber, ticket.roomId._id)}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button onClick={() => cancelTicket(ticket._id)}>Cancel</button> : ''}<br></br></div></div></div></div></div>)
                 }) : ""}
             </div>
         </div>
