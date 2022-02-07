@@ -194,7 +194,7 @@ exports.getUserData = async (req, res) => {
     })
 }
 
-//upload phpto
+//upload photo
 exports.uploadProfile = upload.single('profileImg')
 exports.savePicture = async (req, res, next) => {
     const userId = req.body.userId
@@ -210,6 +210,20 @@ exports.savePicture = async (req, res, next) => {
     try {
         const users = await User.findByIdAndUpdate({ _id: userId }, newProfile)
         res.json(users.profile);
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
+//update UserName
+exports.updateUserName = (req, res,next) => { 
+    const userId = req.params.id;
+    const newUserName = {
+        username: req.body.username
+    }
+    try {
+        const users = await User.findByIdAndUpdate({ _id: userId }, newUserName)
+        res.json(users);
     } catch (error) {
         res.status(404).json({ message: error })
     }

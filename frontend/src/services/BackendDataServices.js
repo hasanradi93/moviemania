@@ -35,7 +35,7 @@ class BackendDataServices {
     }
 
     loginUser(data) {
-        return http.post('users/login', data)
+        return http.post('users/login/', data)
     }
 
     checkToken(data, headers) {
@@ -60,6 +60,10 @@ class BackendDataServices {
 
     uploadPhoto(formData, data) {
         return http.post(`users/uploadPhoto`, formData, data)
+    }
+
+    updateName(formData, id) {
+        return http.post(`users/updateName/`,formData,id)
     }
 
     getUserTickets(data) {

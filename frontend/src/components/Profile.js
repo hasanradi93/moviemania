@@ -13,6 +13,8 @@ function Profile(props) {
     const [profilePhoto, setProfilePhoto] = useState('../avatar.png')
     const [uploadProfile, setUploadProfile] = useState('')
     const [editProfileStatus, setEditProfileStatus] = useState(false)
+    const [userName, setUserName] = useState('')
+    const [editUserName, setEditUserName] = useState(false)
     //Tickets Section
     const [tickets, setTickets] = useState('')
     const [blocksAndSeats, setBlocksAndSeats] = useState([])
@@ -94,6 +96,12 @@ function Profile(props) {
         setEditProfileStatus(!editProfileStatus)
     }
 
+    ////////////////////////////
+   const changeToEdit = () => {
+        setEditUserName(!editUserName)}
+
+//////////////////////////////////////////
+
     const onFileChange = (photo) => {
         setUploadProfile(photo)
     }
@@ -104,32 +112,70 @@ function Profile(props) {
         }
     }
 
+     {/* ///////////////////////////////////////////// */}
+
+    const changeUserName = (e) => {
+       setUserName(e.target.value)
+       console.log(userName)
+    }
+    const updateName = (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('userName',userName)
+        BackendDataServices.updateName(formData.userId)
+        .then(response => {
+            setUserName(userName)
+            setEditUserName(!editUserName)
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.log("il y a error", error.msg)
+        })
+    }
+
+     {/* ///////////////////////////////////////////// */}
+
     return (
         <div>
             <div className="profileSection">
                 <h1>Profile</h1>
                 <div className='profileData'>
                     <div id='imgEditPhoto'>
-                        {editProfileStatus ? <img src='../cancel.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img>}
+                        {editProfileStatus ? <img src='../cancel.png'  onClick={changeEditPhotoStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img>}
                     </div>
                     <div>
                         <img src={profilePhoto} alt="Profile Pic" width='300px' heigth='300px' ></img>
                         {editProfileStatus ?
                             <form onSubmit={uploadPhoto} id='formEditPhoto'>
-                                <input type="file" onChange={(e) => onFileChange(e.target.files[0])} />
-                                <button className="btn btn-primary" type="submit">Upload</button>
+                                <input type="file" onChange={(e) => onFileChange(e.target.files[0])} /> 
+                               <button className="btn btn-primary" type="submit">Upload</button>
                             </form> : ""
                         }
                     </div>
                 </div>
                 <div className='profileData'>
-                    <div id='imgEditPhoto'>
+                    {/* <div id='imgEditPhoto'>
                         <img src='./edit.png' width="24px" height="24px"></img>
+                    </div> */}
+
+                {/* ///////////////////////////////////////////// */}
+                  
+                <div className="userName">
+                    <div id='imgEditPhoto'>
+                            {editUserName ? <img src='../cancel.png'  onClick={changeToEdit} width="24px" height="24px"></img> : <img src='../edit.png'  width="24px" height="24px"></img>}
                     </div>
-                    <form>
-                        <input type='text' value={userData.username} className='input' readOnly></input>
-                    </form>
+                    {editUserName ? 
+                    <form onSubmit={updateName}>
+                        <input type='text'  className='input' value={userData.username} onChange={changeUserName}></input>
+                        <button className="btn btn-primary" type="submit">Update Name</button>
+                    </form> : ""
+                    }
                 </div>
+                    
+                </div>
+
+               {/* ///////////////////////////////////////////// */}
+
             </div>
             <div className="ticketsSection">
                 {tickets ? tickets.map((ticket, i) => {
