@@ -26,7 +26,7 @@ function SideBar(props) {
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">
                         <Link to="/">
-                            <img className='logo' src='./Mlogo.png' />
+                            <img className='logo' src={window.location.origin + '/Mlogo.png'} />
                         </Link>
                     </NavIcon>
                 </NavItem>
@@ -34,7 +34,7 @@ function SideBar(props) {
                 <SideNav.Nav defaultSelected="Home">
                     <NavItem eventKey="Home">
                         <NavIcon>
-                            <img src='./home.png' style={{ width: "35px", height: "35px" }}></img>
+                            <img src={window.location.origin + '/home.png'} style={{ width: "35px", height: "35px" }}></img>
                         </NavIcon>
                         <NavText>
                             <Link to={"/"} className="nav-link">
@@ -44,7 +44,7 @@ function SideBar(props) {
                     </NavItem>
                     <NavItem eventKey="ComingSoon">
                         <NavIcon>
-                            <img src='./comingsoon.png' style={{ width: "32px", height: "32px" }}></img>
+                            <img src={window.location.origin + '/comingsoon.png'} style={{ width: "32px", height: "32px" }}></img>
                         </NavIcon>
                         <NavText>
                             <Link to={"/ComingSoon"} className="nav-link">

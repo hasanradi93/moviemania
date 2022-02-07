@@ -21,7 +21,7 @@ export default function AuthOptionsSideBar() {
             <>
                 <NavItem eventKey="Profile">
                     <NavIcon>
-                        <img src='./login.png' style={{ width: "42px", height: "42px" }}></img>
+                        <img src={window.location.origin + '/login.png'} style={{ width: "42px", height: "42px" }}></img>
                     </NavIcon>
                     <NavText>
                         <Link to={"/Profile"} className="nav-link">
@@ -31,7 +31,7 @@ export default function AuthOptionsSideBar() {
                 </NavItem>
                 <NavItem eventKey="Logout">
                     <NavIcon>
-                        <img src='./logout.png' style={{ width: "32px", height: "35px"}}></img>
+                        <img src={window.location.origin + '/logout.png'} style={{ width: "32px", height: "35px"}}></img>
                     </NavIcon>
                     <NavText onClick={logout}>
                         <Link to={""} className="nav-link">
@@ -44,7 +44,7 @@ export default function AuthOptionsSideBar() {
             <>
                 <NavItem eventKey="Login">
                     <NavIcon>
-                        <img src='./login.png' style={{ width: "32px", height: "32px" }}></img>
+                        <img src={window.location.origin + '/login.png'}style={{ width: "42px", height: "42px" }}></img>
                     </NavIcon>
                     <NavText>
                         <Link to={"/Login"} className="nav-link">

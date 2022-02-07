@@ -3,9 +3,8 @@ const Ticket = require('../models/Ticket')
 const { ObjectId } = require('mongodb')
 exports.tickets = async (req, res, next) => {
   try {
-    const date = new Date()
-    console.log(date)
-    const tickets = await Ticket.find({ date: date })
+    const dateNow = new Date()
+    const tickets = await Ticket.find({ date: { $gte: dateNow } })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
@@ -26,9 +25,12 @@ exports.addTicket = async (req, res) => {
     cancelTicket: false,
     movieId: req.body.movieId,
     roomId: req.body.roomId,
-    seatNumber: req.body.seat,
+    seatNumber: req.body.seatNumber,
+    blockName: req.body.blockName,
     technologyId: req.body.technology,
-    date: req.body.day
+    date: req.body.day,
+    price: req.body.price,
+    time: req.body.time
   });
   console.log(newTicket)
   try {

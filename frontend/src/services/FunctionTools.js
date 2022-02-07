@@ -50,7 +50,7 @@ class FunctionTools {
     }
 
     password_validate(passowrd) {
-        const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})");
+        const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#\$%\^&\*])(?=.{6,})");
         if (strongRegex.test(passowrd))
             return true;
         return false;

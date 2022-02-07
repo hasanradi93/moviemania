@@ -6,6 +6,7 @@ import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 import Modal from 'react-bootstrap/Modal'
 import Payment from "./Payment"
+import '../css/screencss.css'
 
 
 
@@ -17,6 +18,7 @@ const MoviesDetails = props => {
     const [day, setDay] = useState('')
     const [roomId, setRoom] = useState(null)
     const [time, setTime] = useState(null)
+    const [blockName, setBlockName] = useState([])
     const [chosenDayIndex, setChosenDayIndex] = useState(null)
     const [chosenRoomIndex, setChosenRoomIndex] = useState(null)
     const [chosenTimeIndex, setChosenTimeIndex] = useState(null)
@@ -31,8 +33,11 @@ const MoviesDetails = props => {
     const [technologies, setTechnologies] = useState([])
     const [countSeats, setCountSeats] = useState(0)
     const [chosenSeatArr, setChosenSeatArr] = useState([])
+    const [blocksName, setBlocksName] = useState([])
+    const [seatsNumber, setSeatsNumber] = useState([])
     const [userData, setUserData] = useState('')
     const [isLogin, setIsLogin] = useState(false)
+    const [isPaid, setPaid] = useState(false)
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
@@ -48,9 +53,10 @@ const MoviesDetails = props => {
             console.log(time)
             console.log(chosenSeatArr[i])
             console.log(userData.id)
-            BackendDataServices.buyTicket({ "userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seat": chosenSeatArr[i] })
+            BackendDataServices.buyTicket({ "userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seatNumber": chosenSeatArr[i].seatNumber, "blockName": chosenSeatArr[i].blockName, "price": price })
                 .then(response => {
                     console.log(response.data)
+                    setPaid(true)
                 })
                 .catch(e => {
                     console.log(e)
@@ -76,25 +82,25 @@ const MoviesDetails = props => {
         }
     }
 
-    const addSeat = (seat, id) => {
+    const addSeat = (seatNb, blockName, id) => {
         if (isLogin) {
             if (chosenSeatArr.length === 0)
-                chosenSeatArr.push(seat)
+                chosenSeatArr.push({ 'seatNumber': seatNb, 'blockName': blockName })
             else {
                 let add = true
                 for (let i = 0; i < chosenSeatArr.length; i++) {
-                    if (chosenSeatArr[i] === seat) {
+                    if (chosenSeatArr[i].seatNumber === seatNb && chosenSeatArr[i].blockName === blockName) {
                         add = false
                         break
                     }
                 }
                 if (add)
-                    chosenSeatArr.push(seat)
+                    chosenSeatArr.push({ 'seatNumber': seatNb, 'blockName': blockName })
             }
             for (let y = 0; y < seatsForm.length; y++) {
                 console.log(seatsForm[y])
                 for (let x = 0; x < seatsForm[y].length; x++) {
-                    if (seatsForm[y][x].seatId === seat)
+                    if (seatsForm[y][x].seatNb === seatNb && seatsForm[y][x].blockName === blockName)
                         seatsForm[y][x].taken = 1
                 }
             }
@@ -105,18 +111,18 @@ const MoviesDetails = props => {
         console.log(chosenSeatArr)
     }
 
-    const removeSeat = (seat, id) => {
+    const removeSeat = (seatNb, blockName, id) => {
         for (let i = 0; i < chosenSeatArr.length; i++) {
-            if (chosenSeatArr[i] === seat)
+            if (chosenSeatArr[i].seatNb === seatNb && chosenSeatArr[i].blockName === blockName)
                 chosenSeatArr.splice(i, 1)
         }
         for (let y = 0; y < seatsForm.length; y++) {
             for (let x = 0; x < seatsForm[y].length; x++) {
-                if (seatsForm[y][x].seatId === seat)
+                if (seatsForm[y][x].seatNb === seatNb && seatsForm[y][x].blockName === blockName)
                     seatsForm[y][x].taken = 0
             }
         }
-        console.log(seat)
+        console.log(seatNb)
         setCountSeats(chosenSeatArr.length)
         console.log(chosenSeatArr)
         setChosenSeatArr(chosenSeatArr)
@@ -126,6 +132,11 @@ const MoviesDetails = props => {
         document.getElementById('paymentForm').style.display = "block"
     }
 
+    function dateToEpoch(thedate) {
+        var time = thedate.getTime();
+        return time - (time % 86400000);
+    }
+
     const retrieveMovie = () => {
         BackendDataServices.getMovieData(movieId)
             .then(response => {
@@ -133,13 +144,29 @@ const MoviesDetails = props => {
                 //get days from the movie
                 let arrDays = response.data[0].dateTime.map((dateTime) => dateTime.day)
                 //get grouped days
-                let groupedDays = Array.from(new Set(arrDays.map(JSON.stringify))).map(JSON.parse);
-                // daySelected = groupedDays[0]
+                let groupDays = Array.from(new Set(arrDays.map(JSON.stringify))).map(JSON.parse);
+                let groupedDays = []
+                let nowDate = new Date();
+                for (let i = 0; i < groupDays.length; i++) {
+                    let dayT = groupDays[i].split('T')[0]
+                    if (new Date(dayT) > nowDate)
+                        groupedDays.push(groupDays[i])
+                    if (checkToday(new Date(dayT)))
+                        groupedDays.push(groupDays[i])
+                }
+                daySelected = groupedDays[0]
                 setDays(groupedDays)
             })
             .catch(e => {
                 console.log(e)
             })
+    }
+
+    const checkToday = (someDate) => {
+        const today = new Date()
+        return someDate.getDate() == today.getDate() &&
+            someDate.getMonth() == today.getMonth() &&
+            someDate.getFullYear() == today.getFullYear()
     }
 
     const Technology = (dayData, index) => {
@@ -183,6 +210,9 @@ const MoviesDetails = props => {
         }
     }
 
+    const closeSeat = () => {
+        document.getElementById('seatsForm').style.display = "none"
+    }
 
     const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
@@ -201,13 +231,38 @@ const MoviesDetails = props => {
         }
     }
 
+    function formatAMPM() {
+        let date = new Date();
+        var hours = date.getHours();
+        // var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        // minutes = minutes < 10 ? '0'+minutes : minutes;
+        //var strTime = hours + ':' + minutes + ' ' + ampm;
+        var strTime = hours
+        return strTime;
+    }
+
     const getTimeRooms = (roomData, index) => {
+
+        console.log("timmeeee", formatAMPM())
         if (movie[0]) {
             const timesData = movie[0].dateTime.filter((dateTime) => {
                 if ((dateTime.room._id === roomData) && (dateTime.day === day))
                     return dateTime.times
             })
-            setTimes(timesData[0].times)
+            let alltimes = timesData[0].times
+            let theTimes = []
+            for (let i = 0; i < alltimes.length; i++) {
+                let sTime = alltimes[i].split(':')[0]
+                console.log("all times", sTime)
+                if (Number(sTime) > Number(formatAMPM())) {
+                    theTimes.push(alltimes[i])
+                    console.log("yess", alltimes[i])
+                }
+            }
+            setTimes(theTimes)
             setChosenRoomIndex(index)
             setRoom(roomData)
             setDataSelected(timesData[0])
@@ -223,26 +278,36 @@ const MoviesDetails = props => {
         BackendDataServices.getTakenSeats(data)
             .then(response => {
                 setTickets(response.data)
+                console.log("response.dataresponse.dataresponse.dataresponse.data", response.data)
                 let blocks = []
+                let blocksName = []
+                let seatsNumberArr = []
                 const allSeatsForm = dataSelected.room.seats.map((block, i, arrD) => {
                     console.log("block", block)
+                    let blockName = block.block
+                    blocksName.push(blockName)
                     let blockSeats = []
+                    seatsNumberArr = []
+                    let cSeats = 0
                     block.rowSeats.map((seat) => {
+                        cSeats++
+                        seatsNumberArr.push(cSeats)
                         if (response.data) {
                             let reserved = false
                             response.data.map((ticket) => {
-                                if (ticket.seatNumber === seat._id) {
+                                console.log(ticket.seatNumber, "T===T", seat.number)
+                                if (ticket.seatNumber === seat.number && ticket.blockName === blockName) {
                                     reserved = true
                                 }
                             })
                             if (reserved)
-                                blockSeats.push({ 'status': 1, "seatId": seat._id, 'taken': 0 })
+                                blockSeats.push({ 'status': 1, "seatNb": seat.number, 'blockName': blockName, 'taken': 0 })
                             else
-                                blockSeats.push({ 'status': 0, "seatId": seat._id, 'taken': 0 })
+                                blockSeats.push({ 'status': 0, "seatNb": seat.number, 'blockName': blockName, 'taken': 0 })
 
                         }
                         else {
-                            blockSeats.push({ 'status': 0, "seatId": seat._id, 'taken': 0 })
+                            blockSeats.push({ 'status': 0, "seatNb": seat.number, 'blockName': blockName, 'taken': 0 })
                         }
                     })
                     blocks.push(blockSeats)
@@ -250,6 +315,8 @@ const MoviesDetails = props => {
                 })
                 console.log(blocks)
                 setSeatsForm(blocks)
+                setBlocksName(blocksName)
+                setSeatsNumber(seatsNumberArr)
 
             })
             .catch(e => {
@@ -263,7 +330,6 @@ const MoviesDetails = props => {
     if (movie[0]) {
         let movieDetails = movie[0]
         // let arrRoom = movieDetails.dateTime.map((dateTime) => dateTime.room)
-
         setMoviesData =
             <div className="containerMovie">
                 <div className="containerImageDetails">
@@ -312,24 +378,22 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
-                        {/* <div> */}
-                        {/* <SeatModal
-                                show={modalShow} data = {seatsForm}
-                                onHide={() => setModalShow(false)}
-                            /></div> */}
                         <div className="seatsForm" id="seatsForm">
-                            <div className="setDataSeats">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+                            <div><span style={{ marginTop: "-90px", float: "right", cursor: "pointer" }} onClick={closeSeat}><img alt='' style={{ width: "32px", height: "32px" }} src="../close.png"></img></span></div>
+                            <div class="box  left-skew "><div class="box right-skew"></div></div>
+                            <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '50px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
                             <div className="SeatsNumber">Number of Seats: {countSeats}</div>
                             <div className="SeatsNumber">{countSeats ? <span><span>{price}$ * {countSeats}=</span><span>{totalTicekts(price, countSeats)} $</span></span> : ''}</div>
                             <div className="SeatsNumber">{countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
-                            <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
+                            <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} finished={isPaid} /></div>
                         </div>
                     </div>
                 </div>
-                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src={movie[0].videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
 
     }
+
 
     return (
         <div>

@@ -55,18 +55,19 @@ function Payment(props) {
                                                     </label> <input type="text" required class="form-control" /> </div>
                                                 </div>
                                             </div>
-                                            <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm" onClick={() => props.data()}> Confirm Payment </button>
+                                            <div class="card-footer">
+                                                {props.finished ? <span style={{ fontSize: '14px', color: 'red' }}>Susccessfully payment done, check your profile for the Ticket</span> : <button type="button" class="subscribe btn btn-primary btn-block shadow-sm" onClick={() => props.data()}> Confirm Payment </button>}
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <div id="paypal" class="tab-pane fade pt-3">
+                                {/* <div id="paypal" class="tab-pane fade pt-3">
                                     <h6 class="pb-2">Select your paypal account type</h6>
                                     <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked /> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5" />International </label></div>
                                     <p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p>
                                     <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
-                                </div>
-                                <div id="net-banking" class="tab-pane fade pt-3">
+                                </div> */}
+                                {/* <div id="net-banking" class="tab-pane fade pt-3">
                                     <div class="form-group "> <label for="Select Your Bank">
                                         <h6>Select your Bank</h6>
                                     </label> <select class="form-control" id="ccmonth">
@@ -86,7 +87,7 @@ function Payment(props) {
                                         <p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Proceed Payment</button> </p>
                                     </div>
                                     <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
