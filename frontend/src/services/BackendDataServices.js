@@ -14,7 +14,7 @@ class BackendDataServices {
         return http.get('movies/ComingSoon')
     }
 
-    get(id) {
+    getMovieData(id) {
         return http.get(`/movies/${id}`);
     }
 
@@ -26,8 +26,8 @@ class BackendDataServices {
         return http.post("/admin/movies", data);
     }
 
-    updateMovie(data) {
-        return http.put("/movies/${id}", data);
+    updateMovie(id, data) {
+        return http.put(`/admin/movies/${id}`, data);
     }
 
     registerUser(data) {
