@@ -1,0 +1,52 @@
+body {
+  color: white;
+}
+
+.container {
+  display: table;
+  margin: auto;
+}
+
+.box {
+  width: 250px;
+  height: 120px;
+  background: #fff;
+  margin: 50px;
+}
+
+.right-skew {
+  position: relative;
+}
+.right-skew:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -27px;
+  display: block;
+  width: 60px;
+  background: white;
+/* change background color to same as box   */
+  -webkit-transform: skew(10deg);
+  -ms-transform: skew(10deg);
+  transform: skew(-20deg);
+}
+
+.left-skew {
+  position: relative;
+}
+.left-skew:before {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -28px;
+  display: block;
+  width: 55px;
+  background: #fff;
+  /* change background color to same as box   */
+  -webkit-transform: skew(20deg);
+  -ms-transform: skew(20deg);
+  transform: skew(20deg);
+}

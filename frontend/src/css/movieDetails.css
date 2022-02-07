@@ -171,3 +171,22 @@ body {
   max-height: 60%;
   margin: 0 auto;
 }
+
+.screen {
+ background-color: wheat;
+ height: 250px;
+ width: 40%;
+ margin: auto;
+ transform: rotate3d(0, 1, 0.5, 3.142rad);
+
+ box-shadow: 0 3px 10px rgba(0, 0, 0), 0 3px 10px wheat;
+ }
+
+ /* .screen{
+  background-color: #fff;
+  height: 120px;
+  width: 50%;
+  margin: 15px 0;
+  transform: rotateX(-48deg);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+ } */

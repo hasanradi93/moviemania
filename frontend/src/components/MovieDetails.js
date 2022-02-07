@@ -6,6 +6,7 @@ import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 import Modal from 'react-bootstrap/Modal'
 import Payment from "./Payment"
+import '../css/screencss.css'
 
 
 
@@ -30,6 +31,8 @@ const MoviesDetails = props => {
     const [technologies, setTechnologies] = useState([])
     const [countSeats, setCountSeats] = useState(0)
     const [chosenSeatArr, setChosenSeatArr] = useState([])
+    const [blocksName, setBlocksName] = useState([])
+    const [seatsNumber, setSeatsNumber] = useState(null)
     const [userData, setUserData] = useState('')
     const [isLogin, setIsLogin] = useState(false)
     const movieId = useParams().id
@@ -207,7 +210,19 @@ const MoviesDetails = props => {
         }
 
     }
+    // const numberOfSeats = (nbseats) => {
+    //     let nseats = '';
+    //     for (let i = 1; i <= nbseats.length; i++) { 
+    //      nseats += "<span>"+i+"</span>";
+    // }
+    // alert(nseats)
+    // alert(nbseats)
+    //     document.getElementById('nseats').innerHTML = nseats;
+    // }
 
+    const closeSeat = () => {
+        document.getElementById('seatsForm').style.display = "none"
+    }
 
     const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
@@ -249,10 +264,16 @@ const MoviesDetails = props => {
             .then(response => {
                 setTickets(response.data)
                 let blocks = []
+                let blocksName = []
+                let seatsNumber = 0
                 const allSeatsForm = dataSelected.room.seats.map((block, i, arrD) => {
                     console.log("block", block)
+                    let blockName = block.block
+                    blocksName.push(blockName)
                     let blockSeats = []
+                    seatsNumber = 0
                     block.rowSeats.map((seat) => {
+                        seatsNumber++
                         if (response.data) {
                             let reserved = false
                             response.data.map((ticket) => {
@@ -275,6 +296,8 @@ const MoviesDetails = props => {
                 })
                 console.log(blocks)
                 setSeatsForm(blocks)
+                setBlocksName(blocksName)
+                setSeatsNumber(seatsNumber)
 
             })
             .catch(e => {
@@ -335,22 +358,20 @@ const MoviesDetails = props => {
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
-                        {/* <div> */}
-                        {/* <SeatModal
-                                show={modalShow} data = {seatsForm}
-                                onHide={() => setModalShow(false)}
-                            /></div> */}
                         <div className="seatsForm" id="seatsForm">
-                            <div className="setDataSeats">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+                            <div><span style={{marginTop: "-90px", float: "right", cursor: "pointer"}} onClick={closeSeat}><img style={{width: "32px", height: "32px"}} src="../close.png"></img></span></div>
+                            <div class="box  left-skew "><div class="box right-skew"></div></div>
+                            <div className="setDataSeats"><span id="nseats">{seatsNumber ? '' : ''}</span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
                             <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
                             <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
                         </div>
                     </div>
                 </div>
-                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src={movie[0].videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
 
     }
+
 
     return (
         <div>
