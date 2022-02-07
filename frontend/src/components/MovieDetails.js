@@ -27,6 +27,7 @@ const MoviesDetails = props => {
     const [dataSelected, setDataSelected] = useState([])
     const [seatsForm, setSeatsForm] = useState(null)
     const [technology, setTechnology] = useState([])
+    const [price, setPrice] = useState(0)
     const [technologies, setTechnologies] = useState([])
     const [countSeats, setCountSeats] = useState(0)
     const [chosenSeatArr, setChosenSeatArr] = useState([])
@@ -39,32 +40,7 @@ const MoviesDetails = props => {
         isLogincheck()
     }, [])
 
-    //MODAL
-    // function SeatModal(props) {
-    //     return (
-    //         <Modal
-    //             {...props}
-    //             size="lg"
-    //             aria-labelledby="contained-modal-title-vcenter"
-    //             centered
-    //         >
-    //             <Modal.Header closeButton>
-    //                 <Modal.Title id="contained-modal-title-vcenter">
-    //                     Modal heading
-    //                 </Modal.Title>
-    //             </Modal.Header>
-    //             <Modal.Body>
-    //             <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
-    //             </Modal.Body>
-    //             <Modal.Footer>
-    //                 <button onClick={props.onHide}>Close</button>
-    //             </Modal.Footer>
-    //         </Modal>
-    //     );
-    // }
     const buyTicket = () => {
-        //e.preventDefault()
-
         for (let i = 0; i < chosenSeatArr.length; i++) {
             console.log(day)
             console.log(technology)
@@ -122,7 +98,6 @@ const MoviesDetails = props => {
                         seatsForm[y][x].taken = 1
                 }
             }
-            // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
             setChosenSeatArr(chosenSeatArr)
             setCountSeats(chosenSeatArr.length)
         }
@@ -141,9 +116,6 @@ const MoviesDetails = props => {
                     seatsForm[y][x].taken = 0
             }
         }
-        // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
-
-
         console.log(seat)
         setCountSeats(chosenSeatArr.length)
         console.log(chosenSeatArr)
@@ -172,11 +144,13 @@ const MoviesDetails = props => {
 
     const Technology = (dayData, index) => {
         const techData = []
+        let priceTicket = 0
         if (movie[0]) {
             for (let i = 0; i < movie[0].dateTime.length; i++) {
                 if (movie[0].dateTime[i].day === dayData) {
                     for (let y = 0; y < movie[0].technology.length; y++) {
                         if (movie[0].dateTime[i].technologyId._id === movie[0].technology[y].technologyId._id) {
+                            priceTicket = movie[0].technology[y].price
                             if (techData.length === 0) {
                                 console.log("ddd")
                                 techData.push(movie[0].dateTime[i].technologyId)
@@ -204,8 +178,9 @@ const MoviesDetails = props => {
             setDay(dayData)
             setChosenDayIndex(index)
             setTechnologies(techData)
+            console.log(priceTicket)
+            setPrice(priceTicket)
         }
-
     }
 
 
@@ -282,6 +257,8 @@ const MoviesDetails = props => {
             })
     }
 
+    const totalTicekts = (p, c) => { return p * c }
+
     let setMoviesData = ``
     if (movie[0]) {
         let movieDetails = movie[0]
@@ -342,7 +319,9 @@ const MoviesDetails = props => {
                             /></div> */}
                         <div className="seatsForm" id="seatsForm">
                             <div className="setDataSeats">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
-                            <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
+                            <div className="SeatsNumber">Number of Seats: {countSeats}</div>
+                            <div className="SeatsNumber">{countSeats ? <span><span>{price}$ * {countSeats}=</span><span>{totalTicekts(price, countSeats)} $</span></span> : ''}</div>
+                            <div className="SeatsNumber">{countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
                             <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
                         </div>
                     </div>
