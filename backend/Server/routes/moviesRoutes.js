@@ -16,8 +16,7 @@ router.route('/ComingSoon')
 //get movie by id
 router.route('/:id')
     .get(moviesController.movie)
-    .put(moviesController.updateMovie)
-    .delete(moviesController.deleteMovie)
+    .put(moviesController.uploadPhoto, moviesController.updateMovie)
 
 
 

@@ -16,6 +16,7 @@ import Register from './components/auth/Register'
 import UserTicket from './components/UserTicket'
 import AllTickets from './components/AllTickets'
 import MoviesAdmin from './components/MoviesAdmin'
+import EditMovie from './components/EditMovie'
 import Navbar from './components/Navbar'
 import UserContext from "./context/UserContext";
 import BackendDataServices from './services/BackendDataServices'
@@ -73,6 +74,7 @@ function App() {
               <Route path="Tickets" element={<AllTickets />} />
               <Route path="Movies" element={<MoviesAdmin />} />
               <Route path="Movies/add" element={<AddMovie />} />
+              <Route path="Movies/edit/:id" element={<EditMovie />} />
               <Route path="Movies/Tickets/:id" element={<TicketsMovie />} />
             </Route>
             <Route path="*" element={<NotFound />} />

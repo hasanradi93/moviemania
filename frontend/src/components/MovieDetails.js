@@ -64,21 +64,21 @@ const MoviesDetails = props => {
     // }
     const buyTicket = () => {
         //e.preventDefault()
-       
-        for(let i=0; i<chosenSeatArr.length; i++){
+
+        for (let i = 0; i < chosenSeatArr.length; i++) {
             console.log(day)
             console.log(technology)
             console.log(roomId)
             console.log(time)
             console.log(chosenSeatArr[i])
             console.log(userData.id)
-            BackendDataServices.buyTicket({"userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seat": chosenSeatArr[i]})
-            .then(response => {
-               console.log(response.data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
+            BackendDataServices.buyTicket({ "userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seat": chosenSeatArr[i] })
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
         }
     }
 
@@ -155,7 +155,7 @@ const MoviesDetails = props => {
     }
 
     const retrieveMovie = () => {
-        BackendDataServices.get(movieId)
+        BackendDataServices.getMovieData(movieId)
             .then(response => {
                 setMovie(response.data)
                 //get days from the movie
@@ -211,14 +211,18 @@ const MoviesDetails = props => {
 
     const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
+            let techId = 0
             const roomsData = movie[0].dateTime.filter((dateTime) => {
-                if (dateTime.day === day && dateTime.technologyId.name === techData)
+                if (dateTime.day === day && dateTime.technologyId.name === techData) {
+                    techId = dateTime.technologyId._id
                     return dateTime
+                }
             })
             console.log(roomsData)
             setChosenTechIndex(index)
             setRooms(roomsData)
-            setTechnology(techData)
+            console.log("techData", techData, "techId", techId)
+            setTechnology(techId)
         }
     }
 

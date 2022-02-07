@@ -1,6 +1,6 @@
 require('../models/connectDB')
 const Ticket = require('../models/Ticket')
-
+const { ObjectId } = require('mongodb')
 exports.tickets = async (req, res, next) => {
   try {
     const date = new Date()
@@ -17,6 +17,10 @@ exports.tickets = async (req, res, next) => {
 }
 
 exports.addTicket = async (req, res) => {
+  req.body.userId = ObjectId(req.body.userId)
+  req.body.movieId = ObjectId(req.body.movieId)
+  req.body.roomId = ObjectId(req.body.roomId)
+  req.body.technology = ObjectId(req.body.technology)
   const newTicket = new Ticket({
     userId: req.body.userId,
     cancelTicket: false,
@@ -26,7 +30,7 @@ exports.addTicket = async (req, res) => {
     technologyId: req.body.technology,
     date: req.body.day
   });
-
+  console.log(newTicket)
   try {
     await newTicket.save();
     res.json(newTicket);
