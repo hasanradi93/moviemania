@@ -32,7 +32,7 @@ class TheMovies extends Component {
                                 <div className="card-text">
                                     <Link to={`Movies/${movie._id}`}>
                                         <div className="imgMovie">
-                                            <img className="poster" src={movie.photo} width='100%' height='auto' alt={movie.title} />
+                                            <img className="poster" src={movie.photo} width='100%' height='550px' alt={movie.title} />
                                         </div>
                                     </Link>
                                     <div className="movieInfo">

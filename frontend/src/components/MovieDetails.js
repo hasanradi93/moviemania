@@ -349,7 +349,7 @@ const MoviesDetails = props => {
             <div className="containerMovie">
                 <div className="containerImageDetails">
                     <div className="containerImage">
-                        <img src={movieDetails.photo} width='100%' height='520px' alt={movieDetails.title} />
+                        <img src={movieDetails.photo} style={{ width: "400px", height: "600px" }} alt={movieDetails.title} />
                     </div>
                     <div className="movieDetails">
 
