@@ -334,23 +334,23 @@ const MoviesDetails = props => {
             <div className="containerMovie">
                 <div className="containerImageDetails">
                     <div className="containerImage">
-                        <img src={movieDetails.photo} width='380px' height='auto' alt={movieDetails.title} />
+                        <img src={movieDetails.photo} width='100%' height='520px' alt={movieDetails.title} />
                     </div>
                     <div className="movieDetails">
 
                         <div className="containerDetails">
                             <h1 className="card-title">{movieDetails.title}</h1>
                             <div className="card-text">
-                                <strong className="strong">Release Date: </strong>{movieDetails.releasedate}<br />
-                                <strong className="strong">Run Time: </strong>{movieDetails.runtime}<br />
+                                <strong className="strong">Release Date: </strong>{FunctionTools.formatDate(movieDetails.releasedate)}<br />
+                                <strong className="strong">Run Time: </strong>{movieDetails.runtime} min<br />
                                 <strong className="strong">Plot: </strong>{movieDetails.plot}<br />
                                 <strong className="strong">Director: </strong>{movieDetails.director}<br />
-                                <strong className="strong">Actors: </strong>
-                                {movieDetails.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
+                                <strong className="strong">Starring: </strong>
+                                {movieDetails.actors.map((actor, i, arr) => <span key={i} className="actorMovie">{actor} {i !== (arr.length - 1) ? '-' : ''}</span>)}<br></br>
                                 <strong className="strong">Genre: </strong>{movieDetails.genre.name}<br />
                                 <strong className="strong">Available: </strong>
-                                {FunctionTools.formatDate(movieDetails.fromDate)} to
-                                {FunctionTools.formatDate(movieDetails.toDate)}<br />
+                                From {FunctionTools.formatDate(movieDetails.fromDate)}  to -
+                                { FunctionTools.formatDate(movieDetails.toDate)}<br />
                                 <strong className="strong">Technology: </strong>
                                 {movieDetails.technology.map((technology, i, arr) => <span key={i} className="technolgyMovie">{technology.technologyId.name} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
                             </div>
@@ -380,8 +380,9 @@ const MoviesDetails = props => {
                         </div>
                         <div className="seatsForm" id="seatsForm">
                             <div><span style={{ marginTop: "-90px", float: "right", cursor: "pointer" }} onClick={closeSeat}><img alt='' style={{ width: "32px", height: "32px" }} src="../close.png"></img></span></div>
+                            
+                            <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '55px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
                             <div class="box  left-skew "><div class="box right-skew"></div></div>
-                            <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '50px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
                             <div className="SeatsNumber">Number of Seats: {countSeats}</div>
                             <div className="SeatsNumber">{countSeats ? <span><span>{price}$ * {countSeats}=</span><span>{totalTicekts(price, countSeats)} $</span></span> : ''}</div>
                             <div className="SeatsNumber">{countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
