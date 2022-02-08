@@ -51,27 +51,6 @@ function Profile(props) {
             })
     }
 
-    const getBlockNameAndSeatNb = (seatNumber, roomId) => {
-        let blocknName = ''
-        let seatNb = 0
-        for (let j = 0; j < tickets.length; j++) {
-            if (tickets[j].roomId._id === roomId) {
-                let seats = tickets[j].roomId.seats
-                for (let i = 0; i < seats.length; i++) {
-                    let blockSeats = seats[i]
-                    for (let x = 0; x < blockSeats.rowSeats.length; x++) {
-                        if (blockSeats.rowSeats[x]._id === seatNumber) {
-                            blocknName = blockSeats.block
-                            seatNb = blockSeats.rowSeats[x].number
-                            return "Block: " + blocknName + " - " + seatNb
-                            break
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     const uploadPhoto = (e) => {
         e.preventDefault()
         const formData = new FormData()
@@ -79,7 +58,7 @@ function Profile(props) {
         formData.append('userId', userData.id)
         BackendDataServices.uploadPhoto(formData)
             .then(response => {
-                setProfilePhoto(uploadProfile)
+                retrieveUser()
                 setEditProfileStatus(!editProfileStatus)
             })
             .catch(error => {
@@ -103,7 +82,9 @@ function Profile(props) {
         if (window.confirm("Do you want to cancel this Ticket?")) {
             BackendDataServices.cancelTicket({ "id": ticketId })
                 .then(response => {
+                    retrieveTickets(userData)
                     alert("Ticket canceled successfully")
+
                 })
                 .catch(error => {
                     console.log(error.message)
@@ -136,7 +117,7 @@ function Profile(props) {
                 <h1>Profile</h1>
                 <div className='profileData'>
                     <div id='imgEditPhoto'>
-                        {editProfileStatus ? <img src='../cancel.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img>}
+                        {editProfileStatus ? <img alt='' src={window.location.origin + '/cancel.png'} onClick={changeEditPhotoStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditPhotoStatus} width="24px" height="24px"></img>}
                     </div>
                     <div>
                         <img src={profilePhoto} alt="Profile Pic" width='300px' heigth='300px' ></img>
@@ -150,7 +131,7 @@ function Profile(props) {
                 </div>
                 <div className='profileData'>
                     <div id='imgEditPhoto'>
-                        {editUserNameStatus ? <img src='../cancel.png' onClick={changeEditUsernameStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditUsernameStatus} width="24px" height="24px"></img>}
+                        {editUserNameStatus ? <img alt='' src={window.location.origin + '/cancel.png'} onClick={changeEditUsernameStatus} width="24px" height="24px"></img> : <img src='../edit.png' onClick={changeEditUsernameStatus} width="24px" height="24px"></img>}
                     </div>
                     {editUserNameStatus ?
                         <form onSubmit={updateUserName}>
@@ -161,9 +142,10 @@ function Profile(props) {
                 </div>
             </div>
             <div className="ticketsSection">
+                <h1>Tickets</h1>
                 {tickets ? tickets.map((ticket, i) => {
-                    return (<div key={i} className="containerMovie" style={{ marginTop: "10px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div className="dataTicket" style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", backgroundColor: "rgba(8, 8, 8, 0.5)" }}><div className="containerDetailsTicket"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strongTicket"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strongTicket"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strongTicket"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strongTicket"> Time: </strong>{ticket.time}<br></br><strong className="strongTicket"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strongTicket"> Seat : </strong>{ticket.blockName} - {ticket.seatNumber}<br></br><strong className="strongTicket"> Time : </strong>{ticket.time}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button className="btnTicketCancel" onClick={() => cancelTicket(ticket._id)}>Cancel Ticket</button> : ''}<br></br></div></div></div></div></div>)
-                }) : ""}
+                    return (<div key={i} className="containerMovie" style={{ marginTop: "30px" }}><div className="containerImageDetails"><div className="containerImage"><img src={ticket.movieId.photo} width='180px' height='auto' alt={ticket.movieId.title} /></div><div className="dataTicket"><div className="containerDetailsTicket"><h1 className="card-title">{ticket.movieId.title}</h1><div className="card-text"><strong className="strongTicket"> Ticket Numer: </strong>{ticket._id}<br></br><strong className="strongTicket"> Date: </strong>{FunctionTools.formatDate(ticket.date)}<br></br><strong className="strongTicket"> Time: </strong>{ticket.time}<br></br><strong className="strongTicket"> Days: </strong>{FunctionTools.daysLeft(new Date(), ticket.date)} Left<br></br><strong className="strongTicket"> Room: </strong>{ticket.roomId.name}<br></br><strong className="strongTicket"> Seat : </strong>{ticket.blockName} - {ticket.seatNumber}<br></br><strong className="strongTicket"> Technology : </strong>{ticket.technologyId.name}<br></br>{FunctionTools.daysLeft(new Date(), ticket.date) > 1 ? <button className="btnTicketCancel" onClick={() => cancelTicket(ticket._id)}>Cancel Ticket</button> : ''}<br></br></div></div></div></div></div>)
+                }) : "No Tickets"}
             </div>
         </div>
     );

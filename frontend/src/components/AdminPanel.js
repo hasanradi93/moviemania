@@ -23,7 +23,7 @@ class AdminPanel extends Component {
     render() {
         return (
             <div id='contentAdmin' >
-                <SideBarAdmin />
+
                 Admin Panel
                 <Outlet />
             </div>

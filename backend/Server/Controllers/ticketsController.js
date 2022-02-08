@@ -73,7 +73,7 @@ exports.getMovieTicketsById = async (req, res) => {
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
-      .populate({ path: 'technology.technologyId', model: 'Technology' })
+      .populate({ path: 'technologyId', model: 'Technology' })
     res.json(data)
   } catch (error) {
     res.status(400).json({ message: error })
@@ -90,7 +90,7 @@ exports.takenSeats = async (req, res) => {
   let date = req.body.date
   let time = req.body.time
   try {
-    const data = await Ticket.find({ movieId: movieId, roomId: roomId, date: date, time: time });
+    const data = await Ticket.find({ movieId: movieId, roomId: roomId, date: date, time: time, cancelTicket: false });
     res.json(data);
   } catch (error) {
     res.status(400).json({ message: error })

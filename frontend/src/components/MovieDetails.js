@@ -113,7 +113,7 @@ const MoviesDetails = props => {
 
     const removeSeat = (seatNb, blockName, id) => {
         for (let i = 0; i < chosenSeatArr.length; i++) {
-            if (chosenSeatArr[i].seatNb === seatNb && chosenSeatArr[i].blockName === blockName)
+            if (chosenSeatArr[i].seatNumber === seatNb && chosenSeatArr[i].blockName === blockName)
                 chosenSeatArr.splice(i, 1)
         }
         for (let y = 0; y < seatsForm.length; y++) {
@@ -130,11 +130,6 @@ const MoviesDetails = props => {
 
     const pay = () => {
         document.getElementById('paymentForm').style.display = "block"
-    }
-
-    function dateToEpoch(thedate) {
-        var time = thedate.getTime();
-        return time - (time % 86400000);
     }
 
     const retrieveMovie = () => {
@@ -171,6 +166,8 @@ const MoviesDetails = props => {
 
     const Technology = (dayData, index) => {
         const techData = []
+        setRooms([])
+        setTimes([])
         let priceTicket = 0
         if (movie[0]) {
             for (let i = 0; i < movie[0].dateTime.length; i++) {
@@ -215,6 +212,7 @@ const MoviesDetails = props => {
     }
 
     const getRoomsTechs = (techData, index) => {
+        setTimes([])
         if (movie[0]) {
             let techId = 0
             const roomsData = movie[0].dateTime.filter((dateTime) => {
@@ -244,6 +242,13 @@ const MoviesDetails = props => {
         return strTime;
     }
 
+    function checkAmPM() {
+        let date = new Date();
+        var hours = date.getHours();
+        var ampm = hours >= 12 ? 1 : 0;
+        return ampm;
+    }
+
     const getTimeRooms = (roomData, index) => {
 
         console.log("timmeeee", formatAMPM())
@@ -253,16 +258,26 @@ const MoviesDetails = props => {
                     return dateTime.times
             })
             let alltimes = timesData[0].times
-            let theTimes = []
-            for (let i = 0; i < alltimes.length; i++) {
-                let sTime = alltimes[i].split(':')[0]
-                console.log("all times", sTime)
-                if (Number(sTime) > Number(formatAMPM())) {
-                    theTimes.push(alltimes[i])
-                    console.log("yess", alltimes[i])
+            let dayT = day.split('T')[0]
+            if (checkToday(new Date(dayT))) {
+                let theTimes = []
+                for (let i = 0; i < alltimes.length; i++) {
+                    let sTime = alltimes[i].split(':')[0]
+                    console.log("all times", sTime)
+                    //check am or pm
+                    if (checkAmPM()) {
+                        if (Number(sTime) > Number(formatAMPM())) {
+                            theTimes.push(alltimes[i])
+                            console.log("yess", alltimes[i])
+                        }
+                    }
+                    else
+                        theTimes.push(alltimes[i])
                 }
+                setTimes(theTimes)
             }
-            setTimes(theTimes)
+            else
+                setTimes(alltimes)
             setChosenRoomIndex(index)
             setRoom(roomData)
             setDataSelected(timesData[0])
@@ -350,7 +365,7 @@ const MoviesDetails = props => {
                                 <strong className="strong">Genre: </strong>{movieDetails.genre.name}<br />
                                 <strong className="strong">Available: </strong>
                                 From {FunctionTools.formatDate(movieDetails.fromDate)}  to -
-                                { FunctionTools.formatDate(movieDetails.toDate)}<br />
+                                {FunctionTools.formatDate(movieDetails.toDate)}<br />
                                 <strong className="strong">Technology: </strong>
                                 {movieDetails.technology.map((technology, i, arr) => <span key={i} className="technolgyMovie">{technology.technologyId.name} {i !== (arr.length - 1) ? ',' : ''}</span>)}<br></br>
                             </div>
@@ -380,9 +395,9 @@ const MoviesDetails = props => {
                         </div>
                         <div className="seatsForm" id="seatsForm">
                             <div><span style={{ marginTop: "-90px", float: "right", cursor: "pointer" }} onClick={closeSeat}><img alt='' style={{ width: "32px", height: "32px" }} src="../close.png"></img></span></div>
-                            
+
                             <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '55px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
-                            <div class="box  left-skew "><div class="box right-skew"></div></div>
+                            <div className="box  left-skew "><div className="box right-skew"></div></div>
                             <div className="SeatsNumber">Number of Seats: {countSeats}</div>
                             <div className="SeatsNumber">{countSeats ? <span><span>{price}$ * {countSeats}=</span><span>{totalTicekts(price, countSeats)} $</span></span> : ''}</div>
                             <div className="SeatsNumber">{countSeats ? <button onClick={pay}>Pay</button> : ''}</div>

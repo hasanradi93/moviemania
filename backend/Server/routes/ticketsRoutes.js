@@ -17,11 +17,10 @@ router.route('/userTickets')
     .post(ticketsController.getUserTickets)
 
 router.route('/:id')
-    .get(ticketsController.getTicketById)
     .put(ticketsController.cancelTicket)
 
-router.route('/admin/movie/:id')
-    .get(ticketsController.getMovieTicketsById)
+router.route('/movie/:id')
+    .post(ticketsController.getMovieTicketsById)
 
 
 module.exports = router;

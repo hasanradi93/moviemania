@@ -75,6 +75,9 @@ class BackendDataServices {
         return http.post('/tickets/userTickets', data)
     }
 
+    getMovieTickets(id) {
+        return http.post(`/admin/tickets/movie/${id}`);
+    }
 
     buyTicket(data) {
         return http.post('/tickets/', data)

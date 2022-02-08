@@ -182,22 +182,21 @@ exports.ComingSoon = async (req, res) => {
 //MOVIE DETAILS
 
 exports.movie = async (req, res) => {
-  let dateNow = new Date().toString()
-  dateNow = dateNow.split("T")[0]
-  dateNow = dateNow + "00:00:00.000+00:00"
-  console.log(dateNow)
+  // let dateNow = new Date().toString()
+  // dateNow = dateNow.split("T")[0]
+  // dateNow = dateNow + "00:00:00.000+00:00"
+  // console.log(dateNow)
   try {
+    // console.log(movieId);
+    // var start = new Date();
+    // start.setHours(0, 0, 0, 0);
+    // var end = new Date();
+    // end.setHours(23, 59, 59, 999);
+    // console.log(start)
+    // console.log(end)
+    //, "dateTime.day": { $gte: start, $lt: end }
     let movieId = req.params.id
-    console.log(movieId);
-    var start = new Date();
-    start.setHours(0, 0, 0, 0);
-
-    var end = new Date();
-    end.setHours(23, 59, 59, 999);
-    console.log(start)
-    console.log(end)
-
-    const movie = await Movie.find({ _id: movieId, "dateTime.day": { $gte: start, $lt: end } })
+    const movie = await Movie.find({ _id: movieId })
       .populate({ path: 'dateTime.room', model: 'Room' })
       .populate({ path: 'genre', model: 'Genre' })
       .populate({ path: 'technology.technologyId', model: 'Technology' })
