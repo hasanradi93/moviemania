@@ -51,20 +51,20 @@ exports.cancelTicket = async (req, res) => {
   }
 }
 
-exports.getTicketById = async (req, res) => {
-  const ticketId = req.params.id;
-  try {
-    const data = await Ticket.findById({ _id: ticketId })
-      .populate({ path: 'roomId', model: 'Room' })
-      .populate({ path: 'movieId', model: 'Movie' })
-      .populate({ path: 'userId', model: 'User' })
-      .populate({ path: 'technology.technologyId', model: 'Technology' })
-      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
-    res.json(data)
-  } catch (error) {
-    res.status(400).json({ message: error })
-  }
-}
+// exports.getTicketById = async (req, res) => {
+//   const ticketId = req.params.id;
+//   try {
+//     const data = await Ticket.findById({ _id: ticketId })
+//       .populate({ path: 'roomId', model: 'Room' })
+//       .populate({ path: 'movieId', model: 'Movie' })
+//       .populate({ path: 'userId', model: 'User' })
+//       .populate({ path: 'technology.technologyId', model: 'Technology' })
+//       .populate({ path: 'dateTime.technologyId', model: 'Technology' })
+//     res.json(data)
+//   } catch (error) {
+//     res.status(400).json({ message: error })
+//   }
+// }
 
 exports.getMovieTicketsById = async (req, res) => {
   const movieId = req.params.id
@@ -74,7 +74,6 @@ exports.getMovieTicketsById = async (req, res) => {
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
       .populate({ path: 'technology.technologyId', model: 'Technology' })
-      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
     res.json(data)
   } catch (error) {
     res.status(400).json({ message: error })
