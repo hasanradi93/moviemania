@@ -5,6 +5,7 @@ import "../../css/auth.css";
 import UserContext from "../../context/UserContext";
 import ErrorNotice from './ErrorNotice';
 import FunctionTools from "../../services/FunctionTools";
+import "../../css/auth.css";
 
 export default function Register() {
     const [username, setUsername] = useState()
@@ -80,14 +81,14 @@ export default function Register() {
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <label htmlFor="register-password">Confirm Password</label>
                 <input
                     type="password"
-                    placeholder="Verify Password"
                     onChange={(e) => setPasswordCheck(e.target.value)}
                 />
-                <input type="submit" value="Register" />
+                <input className="loginBtn" type="submit" value="Register" />
                 <br></br>
-                <Link to={"/Login"}>Login</Link>
+                <Link className="createAccount" to={"/Login"}>Login</Link>
             </form>
         </div>
     );

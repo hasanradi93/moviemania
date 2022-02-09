@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import './css/preloader.css'
 
 import TheMovies from './components/TheMovies'
 import MovieDetails from './components/MovieDetails'
@@ -52,12 +53,25 @@ function App() {
       }
     };
     checkLoggedIn();
+    const preloader = () => {
+      let interval = setInterval(() => {
+        document.getElementById('preloader').style.display = 'none';
+        document.getElementById('allWebsite').style.display = 'block';
+        clearInterval(interval)
+      }, 3000)
+    }
+    preloader();
   }, []);
+
 
   return (
     <div>
       {/* UserContext.Provider is Context API similiar to Redux. We are wrapping the components that we want to share state with. */}
       <UserContext.Provider value={{ userData, setUserData }}>
+      <div id="preloader"> 
+      <div id="loader" class="nfLoader">   <img className='moviemania' style={{ color: "wheat", textAlign: "center", marginTop: "-200px", marginLeft: "-200px", width: '500px'}} src='../moviemaniaTitlepng.png'></img> </div>
+      </div> 
+      <div id='allWebsite' style={{display: "none"}}>
         <Navbar />
         <SideBar />
         <div className="container mt-3 navclass" id='content' >
@@ -81,6 +95,7 @@ function App() {
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </div>
         </div>
       </UserContext.Provider>
     </div >

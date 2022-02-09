@@ -1,4 +1,6 @@
+
 /* form */
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 .form label,
 .form input {
@@ -16,12 +18,14 @@
 .form input[type="text"],
 .form input[type="email"],
 .form input[type="password"] {
-  width: 100%;
+  width: 30%;
   border: 1px solid #870f06;
   background-color: wheat;
   border-radius: 8px;
   font-size: 1.1rem;
   padding: 0.3rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
 }
 
 .form input:focus {
@@ -36,6 +40,30 @@
   border-radius: 8px;
   border: 1px solid rgb(19, 124, 19);
   background-color: rgb(173, 230, 173);
+}
+
+.loginBtn{
+  width: 100px;
+  height: 35px;
+  background: linear-gradient(#870f06, #c2000d);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0) 2px 4px 4px rgba(0, 0, 0);
+  font-size: 20px;
+  border: none;
+  color: wheat;
+  border-radius: 10px;
+  margin-bottom: 5%;
+  border: none !important;
+}
+.loginBtn:hover{
+  transform: scale(1.1);
+  transition: 0.5s;
+  background: linear-gradient(#be0d00, #c2000d);
+}
+.createAccount{
+  background: -webkit-linear-gradient(#870F06, #c2000d);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
 }
 
 /* error notice */

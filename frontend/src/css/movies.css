@@ -1,7 +1,8 @@
 .cardMovies{
     background-color: transparent !important;
     border: none;
-    outline: none
+    outline: none;
+    
   }
 .cardMovies:hover{
   transform: scale(1.05);
