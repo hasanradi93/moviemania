@@ -27,7 +27,7 @@ body {
   height: auto;
   float: left;
   box-shadow: 2px 4px 6px rgba(0, 0, 0), 2px 4px 4px rgba(0, 0, 0);
-  margin-left: 5%; 
+  margin-left: 5%;
 }
 
 .containerDetails {
@@ -140,12 +140,30 @@ body {
 .seat {
   margin: 2%;
   height: auto;
-  width: 5%;
+  width: 4%;
+}
+.seat:hover{
+  transform: scale(1.1);
+  scale: 0.5;
+  cursor: pointer;
 }
 
 .paymentForm {
   display: none;
   background: transparent !important;
+}
+
+.screenWord{
+  background: -webkit-linear-gradient(#870F06, #c2000d);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding:12%
+}
+
+.wordColor{
+  background: -webkit-linear-gradient(#870F06, #c2000d);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #seatsForm {
@@ -154,11 +172,11 @@ body {
   z-index: 1;
   padding-top: 100px;
   margin-right: auto;
-  margin-left: 8%;
+  margin-left: 5%;
   margin-top: 1%;
   top: 0;
-  width: 65%;
-  height: 90%;
+  width: 70%;
+  height: 100%;
   overflow: auto;
   background: linear-gradient(rgba(34, 0, 0, 0.95), rgba(8, 8, 8, 0.98));
 }
@@ -173,6 +191,23 @@ body {
   margin-bottom: 5%;
 }
 
+.payBtn {
+  width: 100px;
+  height: 35px;
+  background: linear-gradient(#870f06, #c2000d);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0) 2px 4px 4px rgba(0, 0, 0);
+  font-size: 20px;
+  border: none;
+  color: wheat;
+  border-radius: 10px;
+  margin-bottom: 5%;
+}
+.payBtn:hover{
+  transform: scale(1.1);
+  transition: 0.5s;
+  background: linear-gradient(#be0d00, #c2000d);
+}
+
 /* .screen {
  background-color: wheat;
  height: 250px;
@@ -183,7 +218,7 @@ body {
  box-shadow: 0 3px 10px rgba(0, 0, 0), 0 3px 10px wheat;
  } */
 
- /* .screen{
+/* .screen{
   background-color: #fff;
   height: 120px;
   width: 50%;

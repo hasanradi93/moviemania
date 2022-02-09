@@ -26,7 +26,7 @@ function SideBar(props) {
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">
                         <Link to="/">
-                            <img className='logo' src={window.location.origin + '/Mlogo.png'} />
+                            <img className='logo' src={window.location.origin + '/logoMoviemania.png'} />
                         </Link>
                     </NavIcon>
                 </NavItem>

@@ -8,12 +8,11 @@ body {
 }
 
 .box {
-  width: 250px;
-  height: 120px;
+  width: 300px;
+  height: 140px;
   background: #fff;
   margin: auto;
   margin-bottom: 2%;
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 }
 
 .right-skew {
@@ -32,7 +31,7 @@ body {
   -webkit-transform: skew(10deg);
   -ms-transform: skew(10deg);
   transform: skew(-10deg);
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.7);
 }
 
 .left-skew {
@@ -52,5 +51,5 @@ body {
   -webkit-transform: skew(20deg);
   -ms-transform: skew(20deg);
   transform: skew(10deg);
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.7);
 }

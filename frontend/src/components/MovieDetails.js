@@ -339,7 +339,7 @@ const MoviesDetails = props => {
             })
     }
 
-    const totalTicekts = (p, c) => { return p * c }
+    const totalTickets = (p, c) => { return p * c }
 
     let setMoviesData = ``
     if (movie[0]) {
@@ -396,11 +396,11 @@ const MoviesDetails = props => {
                         <div className="seatsForm" id="seatsForm">
                             <div><span style={{ marginTop: "-90px", float: "right", cursor: "pointer" }} onClick={closeSeat}><img alt='' style={{ width: "32px", height: "32px" }} src="../close.png"></img></span></div>
 
-                            <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '55px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
-                            <div className="box  left-skew "><div className="box right-skew"></div></div>
-                            <div className="SeatsNumber">Number of Seats: {countSeats}</div>
-                            <div className="SeatsNumber">{countSeats ? <span><span>{price}$ * {countSeats}=</span><span>{totalTicekts(price, countSeats)} $</span></span> : ''}</div>
-                            <div className="SeatsNumber">{countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
+                            <div className="setDataSeats">{seatsNumber ? seatsNumber.map((sn, i) => { return <span key={i} style={{ width: '52px', display: 'inline-block' }}>{sn}</span> }) : ''}<span id="nseats"></span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" alt='' /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" alt='' className="seat" onClick={() => removeSeat(seat.seatNb, seat.blockName, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatNb, seat.blockName, i)} alt='' /></span>) })}</div> }) : ''}</div>
+                            <div className="box  left-skew "><div className="box right-skew"><h1  className='screenWord' >Screen</h1></div></div>
+                            <div className="SeatsNumber" style={{fontSize: "20px", marginLeft: "-18%"}}><span className="wordColor" >Number of Seats:</span> {countSeats}</div>
+                            <div className="SeatsNumber">{countSeats ? <span style={{fontSize: "20px", float:"right" , marginRight: "33%", marginTop: "-3.3%"}}><span className="wordColor">Price of {countSeats} {(countSeats===1)? 'Ticket' : 'Tickets'} :   </span><span>{totalTickets(price, countSeats)} $</span></span> : ''}</div><br></br>
+                            <div className="SeatsNumber">{countSeats ? <button className="payBtn" onClick={pay}>Pay</button> : ''}</div>
                             <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} finished={isPaid} /></div>
                         </div>
                     </div>
