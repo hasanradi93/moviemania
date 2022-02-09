@@ -28,6 +28,7 @@
   padding-top: 15px !important;
   width: 50%;
   margin-top: 20px;
+  margin-bottom: 20px;
   height: auto !important;
 }
 
@@ -37,6 +38,7 @@
   background-color: rgba(8, 8, 8, 0.5);
   float: left;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .morePadding {

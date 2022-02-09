@@ -16,6 +16,21 @@ function SideBar(props) {
             document.getElementById('content').style.marginLeft = "150px"
             stateSidebar = false
         }
+
+        // if (stateSidebar === false) {
+        //     document.getElementById('content').style.paddingLeft = "200px"
+        //     for (let i = 0; i < document.getElementById("content").childNodes[0].childElementCount; i++) {
+        //         document.getElementById('content').childNodes[0].children[i].setAttribute('class', 'col-lg-6 pb-1');
+        //     }
+        //     stateSidebar = true
+        // }
+        // else {
+        //     document.getElementById('content').style.paddingLeft = "10px"
+        //     for (let i = 0; i < document.getElementById("content").childNodes[0].childElementCount; i++) {
+        //         document.getElementById('content').childNodes[0].children[i].setAttribute('class', 'col-lg-4 pb-1');
+        //     }
+        //     stateSidebar = false
+        // }
     }
     return (
         <div className="sideclass">

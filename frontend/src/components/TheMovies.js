@@ -52,10 +52,8 @@ class TheMovies extends Component {
             })
         }
         return (
-            <div>
-                <div className="row">
-                    {this.allMovies}
-                </div>
+            <div className="row">
+                {this.allMovies}
             </div>
         )
     }

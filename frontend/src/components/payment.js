@@ -17,14 +17,14 @@ function Payment(props) {
                 </div>
                 <div class="row" >
                     <div class="col-lg-6 mx-auto">
-                        <div class="card" style={{background: "transparent"}}>
+                        <div class="card" style={{ background: "transparent" }}>
                             <div class="card-header">
                                 <div class="bg shadow-sm pt-4 pl-2 pr-2 pb-2">
 
                                     <ul role="tablist" class="nav nav-pills rounded nav-fill mb-3">
-                                        <li style={{background: "linear-gradient(#870f06, #c2000d)"}} class="nav-item" > <a style={{background: "linear-gradient(#870f06, #c2000d)"}} data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2" style={{background: "linear-gradient(#870f06, #c2000d)"}}></i> Credit Card </a> </li>
-                                        <li style={{background: "linear-gradient(#870f06, #c2000d)"}} class="nav-item"> <a style={{background: "linear-gradient(#870f06, #c2000d)", color: "wheat"}} data-toggle="pill" href="#paypal" class="nav-link "> <i style={{background: "linear-gradient(#870f06, #c2000d)"}} class="fab fa-paypal mr-2"></i> Paypal </a> </li>
-                                        <li style={{background: "linear-gradient(#870f06, #c2000d)", color: "wheat"}} class="nav-item"> <a style={{background: "linear-gradient(#870f06, #c2000d)", color: "wheat"}} data-toggle="pill" href="#net-banking" class="nav-link "> <i style={{background: "linear-gradient(#870f06, #c2000d)"}} class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
+                                        <li style={{ background: "linear-gradient(#870f06, #c2000d)" }} class="nav-item" > <a style={{ background: "linear-gradient(#870f06, #c2000d)" }} data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2" style={{ background: "linear-gradient(#870f06, #c2000d)" }}></i> Credit Card </a> </li>
+                                        <li style={{ background: "linear-gradient(#870f06, #c2000d)" }} class="nav-item"> <a style={{ background: "linear-gradient(#870f06, #c2000d)", color: "wheat" }} data-toggle="pill" href="#paypal" class="nav-link "> <i style={{ background: "linear-gradient(#870f06, #c2000d)" }} class="fab fa-paypal mr-2"></i> Paypal </a> </li>
+                                        <li style={{ background: "linear-gradient(#870f06, #c2000d)", color: "wheat" }} class="nav-item"> <a style={{ background: "linear-gradient(#870f06, #c2000d)", color: "wheat" }} data-toggle="pill" href="#net-banking" class="nav-link "> <i style={{ background: "linear-gradient(#870f06, #c2000d)" }} class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
                                     </ul>
                                 </div>
 
@@ -57,7 +57,7 @@ function Payment(props) {
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                {props.finished ? <span style={{ fontSize: '14px', color: 'red' }}>Susccessfully payment done, check your profile for the Ticket</span> : <button type="button" className='payBtn'  class="subscribe btn btn-primary btn-block shadow-sm" onClick={() => props.data()}> Checkout </button>}
+                                                {props.finished ? <span style={{ fontSize: '14px', color: 'red' }}>Susccessfully payment done, check your profile for the Ticket</span> : <button type="button" className='payBtn' onClick={() => props.data()}> Checkout </button>}
                                             </div>
                                         </form>
                                     </div>

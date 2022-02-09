@@ -1,31 +1,31 @@
-.pages{
-    font-size: 20px;
+.pages {
+  font-size: 20px;
 }
 .navclass {
-    transition: 1s;
-    margin-left: 150px;
-    };
-
-.sideclass{
-    margin-top: 65px !important;
-    background: linear-gradient(to right, black, transparent) fixed !important;
+  transition: 1s;
+  margin-left: 150px;
 }
 
-.theNavbar{
-    background: linear-gradient(to top, rgb(8, 8, 8), rgb(0, 0, 0));
-    box-shadow: 2px 4px 6px rgba(0, 0, 0), 2px 4px 4px rgba(0, 0, 0);
-    padding-bottom: 1%;
+.sideclass {
+  margin-top: 65px !important;
+  background: linear-gradient(to right, black, transparent) fixed !important;
 }
- .moviemania{
-        font-size: 72px;
-        background: -webkit-linear-gradient(#870F06, #c2000d);
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
- }
 
- .logo{
-    width: 100px;
-    height: auto;
-    text-align: center;
-    margin-left:-18px;
- }
+.theNavbar {
+  background: linear-gradient(to top, rgb(8, 8, 8), rgb(0, 0, 0));
+  box-shadow: 2px 4px 6px rgba(0, 0, 0), 2px 4px 4px rgba(0, 0, 0);
+  padding-bottom: 1%;
+}
+.moviemania {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#870f06, #c2000d);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  text-align: center;
+  margin-left: -18px;
+}
