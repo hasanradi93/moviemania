@@ -40,8 +40,8 @@
 }
 
 .morePadding {
-  padding-bottom: 20px !important;
-  padding-top: 20px !important;
+  padding-bottom: 55px !important;
+  padding-top: 55px !important;
 }
 
 /* .containerMovie:hover {
@@ -84,5 +84,25 @@
   width: 50%;
   height: 50px;
   color: red;
+  text-align: center;
+}
+
+.usersSection {
+  width: 100%;
+  padding-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.usersSection table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid linear-gradient(#870f06, #a3020d);
+}
+
+.usersSection table td {
   text-align: center;
 }

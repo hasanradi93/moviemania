@@ -21,6 +21,7 @@ import Navbar from './components/Navbar'
 import UserContext from "./context/UserContext";
 import BackendDataServices from './services/BackendDataServices'
 import AddMovie from './components/AddMovie'
+import CountTicketsUser from './components/CountTicketsUser'
 function App() {
   //const { userDataCheck } = useContext(UserContext);
   // State variable to send to multiple components
@@ -72,6 +73,7 @@ function App() {
               {/* nest these routes inside of the dashboard route */}
               <Route index element={<AllTickets />} />
               <Route path="Tickets" element={<AllTickets />} />
+              <Route path="AllUsers" element={<CountTicketsUser />} />
               <Route path="Movies" element={<MoviesAdmin />} />
               <Route path="Movies/add" element={<AddMovie />} />
               <Route path="Movies/edit/:id" element={<EditMovie />} />

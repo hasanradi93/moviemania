@@ -10,6 +10,8 @@ router.route('/')
 //get available
 router.route('/get-newest-movies')
     .get(moviesController.theMovies)
+router.route('/find')
+    .post(moviesController.findMovies)
 //get coming soon
 router.route('/ComingSoon')
     .get(moviesController.ComingSoon)

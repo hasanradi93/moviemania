@@ -40,7 +40,7 @@ class TheMovies extends Component {
 
                                         <div className="ratingDiv">
                                             <span className="rating" >{movie.rating}</span>
-                                            <img src="./star.png" className="ratingStar"></img>
+                                            <img src={window.location.origin + '/star.png'} className="ratingStar"></img>
                                         </div>
                                     </div>
                                 </div>

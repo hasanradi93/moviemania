@@ -25,7 +25,7 @@ export default function AuthOptionsSideBar() {
                         <img src={window.location.origin + '/allMovies.png'} style={{ width: "32px", height: "35px" }}></img>
                     </NavIcon>
                     <NavText>
-                        <Link to={"Movies"} className="nav-link">
+                        <Link to={"AdminPanel/Movies"} className="nav-link">
                             All Movies
                         </Link>
                     </NavText>
@@ -35,8 +35,18 @@ export default function AuthOptionsSideBar() {
                         <img src={window.location.origin + '/allTickets.png'} style={{ width: "32px", height: "35px" }}></img>
                     </NavIcon>
                     <NavText>
-                        <Link to={"Tickets"} className="nav-link">
+                        <Link to={"AdminPanel/Tickets"} className="nav-link">
                             All Tickets
+                        </Link>
+                    </NavText>
+                </NavItem>
+                <NavItem eventKey="All Users">
+                    <NavIcon>
+                        <img src={window.location.origin + '/allUsers.png'} style={{ width: "32px", height: "35px" }}></img>
+                    </NavIcon>
+                    <NavText>
+                        <Link to={"AdminPanel/AllUsers"} className="nav-link">
+                            All Users
                         </Link>
                     </NavText>
                 </NavItem>

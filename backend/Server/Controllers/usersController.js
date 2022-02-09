@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const auth = require("../middleware/auth")
 const { v4: uuidv4 } = require('uuid')
 const multer = require('multer')
+const Ticket = require('../models/Ticket')
 
 const DIR = './public/';
 
@@ -32,10 +33,32 @@ const upload = multer({
     }
 })
 
-exports.users = async (req, res) => {
+exports.getUsersAndCountTickets = async (req, res) => {
     try {
         const users = await User.find()
-        res.json(users);
+        const tickets = []
+        for (let i = 0; i < users.length; i++) {
+            let countTickets = await Ticket.find({ userId: users[i]._id })
+            tickets.push(countTickets.length)
+        }
+
+        let tempT = 0
+        let tempU = ''
+        for (let j = 0; j < tickets.length; j++) {
+            for (let l = j; l < tickets.length; l++) {
+                if (tickets[j] < tickets[l]) {
+                    tempT = tickets[l]
+                    tickets[l] = tickets[j]
+                    tickets[j] = tempT
+                    ////
+                    tempU = users[l]
+                    users[l] = users[j]
+                    users[j] = tempU
+                }
+            }
+        }
+
+        res.json({ "users": users, "tickets": tickets });
     } catch (error) {
         res.status(404).json({ message: error })
     }

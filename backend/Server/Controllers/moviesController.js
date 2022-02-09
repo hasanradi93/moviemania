@@ -40,6 +40,20 @@ exports.movies = async (req, res) => {
   }
 }
 
+exports.findMovies = async (req, res) => {
+  try {
+    const name = req.body.name
+    const movies = await Movie.find({ title: new RegExp(name, 'i') })
+      .populate({ path: 'dateTime.room', model: 'Room' })
+      .populate({ path: 'genre', model: 'Genre' })
+      .populate({ path: 'technology.technologyId', model: 'Technology' })
+      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
+    res.json(movies);
+  } catch (error) {
+    res.status(404).json({ message: error })
+  }
+}
+
 exports.uploadPhoto = upload.single('photo')
 exports.addMovie = async (req, res, next) => {
   if (req.body.title === undefined || req.body.releasedate === undefined
