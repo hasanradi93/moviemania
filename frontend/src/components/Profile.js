@@ -124,7 +124,7 @@ function Profile(props) {
                         {editProfileStatus ?
                             <form onSubmit={uploadPhoto} id='formEditPhoto'>
                                 <input type="file" onChange={(e) => onFileChange(e.target.files[0])} />
-                                <button className="btn btn-primary" type="submit">Upload</button>
+                                <button className="btn btn-primary" type="submit" style={{background: 'linear-gradient(#870f06, #c2000d)', border: 'none'}} >Upload</button>
                             </form> : ""
                         }
                     </div>
@@ -136,7 +136,7 @@ function Profile(props) {
                     {editUserNameStatus ?
                         <form onSubmit={updateUserName}>
                             <input type='text' value={userName} onChange={(e) => setUserNameValue(e.target.value)}></input><br></br><br></br>
-                            <button className="btn btn-primary" type="submit">Update UserName</button>
+                            <button style={{background: 'linear-gradient(#870f06, #c2000d)', border: 'none'}} className="btn btn-primary" type="submit">Update UserName</button>
                         </form> : <h2>{userName}</h2>
                     }
                 </div>
