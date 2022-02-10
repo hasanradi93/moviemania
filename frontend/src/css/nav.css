@@ -7,7 +7,6 @@
 }
 
 .sideclass {
-  margin-top: 65px !important;
   background: linear-gradient(to right, black, transparent) fixed !important;
 }
 
@@ -27,5 +26,5 @@
   width: 100px;
   height: auto;
   text-align: center;
-  margin-left: -18px;
+  margin-left: -5px;
 }

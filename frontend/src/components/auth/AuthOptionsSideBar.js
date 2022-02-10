@@ -73,7 +73,7 @@ export default function AuthOptionsSideBar() {
                 </NavItem>
                 <NavItem eventKey="Logout">
                     <NavIcon>
-                        <img alt='' src={window.location.origin + '/logout.png'} style={{ width: "32px", height: "35px" }}></img>
+                        <img alt='' src={window.location.origin + '/logout.png'} style={{ width: "32px", height: "35px", marginLeft: "5px" }}></img>
                     </NavIcon>
                     <NavText onClick={logout}>
                         <Link to={""} className="nav-link">
