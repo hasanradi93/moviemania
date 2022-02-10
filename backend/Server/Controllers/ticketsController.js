@@ -103,9 +103,10 @@ exports.getUserTickets = async (req, res) => {
   console.log("req.body", req.body)
   console.log(userId)
   let dateNow = new Date()
+  console.log(dateNow)
   try {
     console.log(userId)
-    const data = await Ticket.find({ userId: userId, cancelTicket: false, date: { $gte: dateNow } })
+    const data = await Ticket.find({ userId: userId, cancelTicket: false, date: { $gte: dateNow.toISOString().split('T')[0] } })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })

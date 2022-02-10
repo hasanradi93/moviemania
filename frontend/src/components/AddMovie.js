@@ -260,6 +260,7 @@ class AddMovie extends Component {
             BackendDataServices.addMovie(movieData)
                 .then(response => {
                     console.log(response.data)
+                    alert("Movie added successfullty")
                 })
                 .catch(error => {
                     console.log(error.message)

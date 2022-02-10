@@ -320,6 +320,7 @@ class EditMovie extends Component {
             BackendDataServices.updateMovie(id, movieData)
                 .then(response => {
                     console.log(response.data)
+                    alert("Movie updated successfullty")
                 })
                 .catch(error => {
                     console.log(error.message)
