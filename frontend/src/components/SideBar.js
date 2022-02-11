@@ -20,13 +20,13 @@ function SideBar(props) {
     return (
         <div className="sideclass">
             <SideNav className="sideclass" style={{
-                transition: "all 0.7s ease-in-out", paddingTop: "9%", padding: "1%",
-                backgroundColor: 'black', boxShadow: " 12px 10px 10px black", position: "fixed", zIndex: "10"
+                transition: "all 0.7s ease-in-out", padding: "120px 20px 50px 20px",
+                background: 'linear-gradient( to right, rgb(8, 8, 8), rgb(0, 0, 0))', boxShadow: "4px 4px 6px rgba(0, 0, 0), 4px 4px 4px rgba(0, 0, 0)", position: "fixed", zIndex: "10"
             }}>
                 <NavItem eventKey="Logo">
                     <NavIcon className="d-none d-md-block bg-dark">
                         <Link to="/">
-                            <img className='logo' src='./Mlogo.png' />
+                            <img className='logo' src={window.location.origin + '/Mlogo.png'} />
                         </Link>
                     </NavIcon>
                 </NavItem>
@@ -34,7 +34,7 @@ function SideBar(props) {
                 <SideNav.Nav defaultSelected="Home">
                     <NavItem eventKey="Home">
                         <NavIcon>
-                            <img src='./home.png' style={{ width: "35px", height: "35px" }}></img>
+                            <img src={window.location.origin + '/home.png'} style={{ width: "35px", height: "35px" }}></img>
                         </NavIcon>
                         <NavText>
                             <Link to={"/"} className="nav-link">
@@ -44,7 +44,7 @@ function SideBar(props) {
                     </NavItem>
                     <NavItem eventKey="ComingSoon">
                         <NavIcon>
-                            <img src='./comingsoon.png' style={{ width: "32px", height: "32px" }}></img>
+                            <img src={window.location.origin + '/comingsoon.png'} style={{ width: "32px", height: "32px" }}></img>
                         </NavIcon>
                         <NavText>
                             <Link to={"/ComingSoon"} className="nav-link">

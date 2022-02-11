@@ -14,7 +14,7 @@ class BackendDataServices {
         return http.get('movies/ComingSoon')
     }
 
-    get(id) {
+    getMovieData(id) {
         return http.get(`/movies/${id}`);
     }
 
@@ -22,12 +22,12 @@ class BackendDataServices {
         return http.post('tickets/takenSeats', data)
     }
 
-    createMovie(data) {
+    addMovie(data) {
         return http.post("/admin/movies", data);
     }
 
-    updateMovie(data) {
-        return http.put("/movies/${id}", data);
+    updateMovie(id, data) {
+        return http.put(`/admin/movies/${id}`, data);
     }
 
     registerUser(data) {
@@ -54,12 +54,21 @@ class BackendDataServices {
         return http.get('rooms/')
     }
 
+    getTickets() {
+        return http.get('tickets/')
+    }
+
     getTechnologies() {
         return http.get('technologies/')
     }
 
-    uploadPhoto(formData, data) {
-        return http.post(`users/uploadPhoto`, formData, data)
+    uploadPhoto(formData) {
+        return http.post(`users/uploadPhoto`, formData)
+    }
+
+    updateUsername(formData) {
+        console.log(formData)
+        return http.post(`users/updateUsername`, formData)
     }
 
     updateName(formData, id) {
@@ -69,6 +78,18 @@ class BackendDataServices {
     getUserTickets(data) {
         return http.post('/tickets/userTickets', data)
     }
+
+
+    buyTicket(data) {
+        return http.post('/tickets/', data)
+    }
+
+    cancelTicket(data) {
+        return http.post('/tickets/cancelTicket', data)
+    }
+
+
+
 }
 
 export default new BackendDataServices();

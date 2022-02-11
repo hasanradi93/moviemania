@@ -6,6 +6,7 @@ import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 import Modal from 'react-bootstrap/Modal'
 import Payment from "./payment"
+import '../css/screencss.css'
 
 
 
@@ -30,64 +31,105 @@ const MoviesDetails = props => {
     const [technologies, setTechnologies] = useState([])
     const [countSeats, setCountSeats] = useState(0)
     const [chosenSeatArr, setChosenSeatArr] = useState([])
+    const [blocksName, setBlocksName] = useState([])
+    const [seatsNumber, setSeatsNumber] = useState(null)
+    const [userData, setUserData] = useState('')
+    const [isLogin, setIsLogin] = useState(false)
     const movieId = useParams().id
     let daySelected = ''
     useEffect(() => {
         retrieveMovie()
+        isLogincheck()
     }, [])
 
     //MODAL
-// function SeatModal(props) {
-//     return (
-//         <Modal
-//             {...props}
-//             size="lg"
-//             aria-labelledby="contained-modal-title-vcenter"
-//             centered
-//         >
-//             <Modal.Header closeButton>
-//                 <Modal.Title id="contained-modal-title-vcenter">
-//                     Modal heading
-//                 </Modal.Title>
-//             </Modal.Header>
-//             <Modal.Body>
-//             <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
-//             </Modal.Body>
-//             <Modal.Footer>
-//                 <button onClick={props.onHide}>Close</button>
-//             </Modal.Footer>
-//         </Modal>
-//     );
-// }
-const buyTicket = (e) =>{
-    e.preventDefault()
-    alert('okay')
-}
+    // function SeatModal(props) {
+    //     return (
+    //         <Modal
+    //             {...props}
+    //             size="lg"
+    //             aria-labelledby="contained-modal-title-vcenter"
+    //             centered
+    //         >
+    //             <Modal.Header closeButton>
+    //                 <Modal.Title id="contained-modal-title-vcenter">
+    //                     Modal heading
+    //                 </Modal.Title>
+    //             </Modal.Header>
+    //             <Modal.Body>
+    //             <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+    //             </Modal.Body>
+    //             <Modal.Footer>
+    //                 <button onClick={props.onHide}>Close</button>
+    //             </Modal.Footer>
+    //         </Modal>
+    //     );
+    // }
+    const buyTicket = () => {
+        //e.preventDefault()
+
+        for (let i = 0; i < chosenSeatArr.length; i++) {
+            console.log(day)
+            console.log(technology)
+            console.log(roomId)
+            console.log(time)
+            console.log(chosenSeatArr[i])
+            console.log(userData.id)
+            BackendDataServices.buyTicket({ "userId": userData.id, "movieId": movieId, "roomId": roomId, "day": day, "technology": technology, "time": time, "seat": chosenSeatArr[i] })
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+        }
+    }
+
+    const isLogincheck = async () => {
+        let token = localStorage.getItem("auth-token") // grabbing JWT token from localStorage
+        if (token === null) {
+            // if there is no token we then set the localStorage key to auth-token and the value of token to an empty string. This avoids any errors
+            localStorage.setItem("auth-token", "")
+            token = ""
+            setIsLogin(false)
+        }
+        // Here we are calling to our backend to make sure our JWT Response is valid
+        const tokenRes = await BackendDataServices.checkToken({ "data": 0 }, { headers: { "x-auth-token": token } })
+        // if there is token response data then we will grab that user and then setUserData to hold the token information and the user response data
+        if (tokenRes.data) {
+            const userRes = await BackendDataServices.getUserData({ "id": tokenRes.data.id }, { headers: { "x-auth-token": token } })
+            setUserData(userRes.data)
+            setIsLogin(true)
+        }
+    }
 
     const addSeat = (seat, id) => {
-        if (chosenSeatArr.length === 0)
-            chosenSeatArr.push(seat)
-        else {
-            let add = true
-            for (let i = 0; i < chosenSeatArr.length; i++) {
-                if (chosenSeatArr[i] === seat) {
-                    add = false
-                    break
+        if (isLogin) {
+            if (chosenSeatArr.length === 0)
+                chosenSeatArr.push(seat)
+            else {
+                let add = true
+                for (let i = 0; i < chosenSeatArr.length; i++) {
+                    if (chosenSeatArr[i] === seat) {
+                        add = false
+                        break
+                    }
+                }
+                if (add)
+                    chosenSeatArr.push(seat)
+            }
+            for (let y = 0; y < seatsForm.length; y++) {
+                console.log(seatsForm[y])
+                for (let x = 0; x < seatsForm[y].length; x++) {
+                    if (seatsForm[y][x].seatId === seat)
+                        seatsForm[y][x].taken = 1
                 }
             }
-            if (add)
-                chosenSeatArr.push(seat)
+            // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
+            setChosenSeatArr(chosenSeatArr)
+            setCountSeats(chosenSeatArr.length)
         }
-        for (let y = 0; y < seatsForm.length; y++) {
-            console.log(seatsForm[y])
-            for (let x = 0; x < seatsForm[y].length; x++) {
-                if (seatsForm[y][x].seatId === seat)
-                    seatsForm[y][x].taken = 1
-            }
-        }
-        // document.getElementById(id).innerHTML = "<img src='../redSeat.png' class='seat'/>"
-        setChosenSeatArr(chosenSeatArr)
-        setCountSeats(chosenSeatArr.length)
+        else alert("please login first")
         console.log(chosenSeatArr)
     }
 
@@ -111,12 +153,12 @@ const buyTicket = (e) =>{
         setChosenSeatArr(chosenSeatArr)
     }
 
-    const pay = () => { 
+    const pay = () => {
         document.getElementById('paymentForm').style.display = "block"
     }
 
     const retrieveMovie = () => {
-        BackendDataServices.get(movieId)
+        BackendDataServices.getMovieData(movieId)
             .then(response => {
                 setMovie(response.data)
                 //get days from the movie
@@ -168,18 +210,34 @@ const buyTicket = (e) =>{
         }
 
     }
+    // const numberOfSeats = (nbseats) => {
+    //     let nseats = '';
+    //     for (let i = 1; i <= nbseats.length; i++) { 
+    //      nseats += "<span>"+i+"</span>";
+    // }
+    // alert(nseats)
+    // alert(nbseats)
+    //     document.getElementById('nseats').innerHTML = nseats;
+    // }
 
+    const closeSeat = () => {
+        document.getElementById('seatsForm').style.display = "none"
+    }
 
     const getRoomsTechs = (techData, index) => {
         if (movie[0]) {
+            let techId = 0
             const roomsData = movie[0].dateTime.filter((dateTime) => {
-                if (dateTime.day === day && dateTime.technologyId.name === techData)
+                if (dateTime.day === day && dateTime.technologyId.name === techData) {
+                    techId = dateTime.technologyId._id
                     return dateTime
+                }
             })
             console.log(roomsData)
             setChosenTechIndex(index)
             setRooms(roomsData)
-            setTechnology(techData)
+            console.log("techData", techData, "techId", techId)
+            setTechnology(techId)
         }
     }
 
@@ -197,6 +255,7 @@ const buyTicket = (e) =>{
     }
 
     const setSeatsBox = (timeData, index) => {
+        document.getElementById('seatsForm').style.display = "block"
         setTime(timeData)
         setChosenTimeIndex(index)
         let data = { "movieId": movieId, "roomId": roomId, "date": day, "time": timeData }
@@ -205,10 +264,16 @@ const buyTicket = (e) =>{
             .then(response => {
                 setTickets(response.data)
                 let blocks = []
+                let blocksName = []
+                let seatsNumber = 0
                 const allSeatsForm = dataSelected.room.seats.map((block, i, arrD) => {
                     console.log("block", block)
+                    let blockName = block.block
+                    blocksName.push(blockName)
                     let blockSeats = []
+                    seatsNumber = 0
                     block.rowSeats.map((seat) => {
+                        seatsNumber++
                         if (response.data) {
                             let reserved = false
                             response.data.map((ticket) => {
@@ -231,6 +296,8 @@ const buyTicket = (e) =>{
                 })
                 console.log(blocks)
                 setSeatsForm(blocks)
+                setBlocksName(blocksName)
+                setSeatsNumber(seatsNumber)
 
             })
             .catch(e => {
@@ -249,7 +316,7 @@ const buyTicket = (e) =>{
                     <div className="containerImage">
                         <img src={movieDetails.photo} width='380px' height='auto' alt={movieDetails.title} />
                     </div>
-                    <div style={{ border: "4px groove whitesmoke", overflow: "hidden", width: "30%", height: "565px", backgroundColor: "rgba(8, 8, 8, 0.5)" }}>
+                    <div className="movieDetails">
 
                         <div className="containerDetails">
                             <h1 className="card-title">{movieDetails.title}</h1>
@@ -291,21 +358,20 @@ const buyTicket = (e) =>{
                                 {times ? times.map((timeData, i) => { return <li key={i} className={chosenTimeIndex === i ? 'active' : ''} onClick={() => setSeatsBox(timeData, i)}>{timeData}</li> }) : ''}
                             </ul>
                         </div>
-                        {/* <div> */}
-                            {/* <SeatModal
-                                show={modalShow} data = {seatsForm}
-                                onHide={() => setModalShow(false)}
-                            /></div> */}
-                        <div className="seatsForm">{seatsForm ? seatsForm.map((block, b) => { return <div key={b}> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
-                        <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
-                        
+                        <div className="seatsForm" id="seatsForm">
+                            <div><span style={{marginTop: "-90px", float: "right", cursor: "pointer"}} onClick={closeSeat}><img style={{width: "32px", height: "32px"}} src="../close.png"></img></span></div>
+                            <div class="box  left-skew "><div class="box right-skew"></div></div>
+                            <div className="setDataSeats"><span id="nseats">{seatsNumber ? '' : ''}</span>{seatsForm ? seatsForm.map((block, b) => { return <div key={b}><span>{blocksName[b]}</span> {block.map((seat, i) => { return seat.status ? <span key={i}><img src="../redSeat.png" className="seat" /></span> : (seat.taken ? <span key={i} id={i}><img src="../redSeat.png" className="seat" onClick={() => removeSeat(seat.seatId, i)} /></span> : <span key={i} id={i}><img src="../greenSeat.png" className="seat" onClick={() => addSeat(seat.seatId, i)} /></span>) })}</div> }) : ''}</div>
+                            <div className="SeatsNumber">Number of Seats: {countSeats} {countSeats ? <button onClick={pay}>Pay</button> : ''}</div>
+                            <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
+                        </div>
                     </div>
                 </div>
-                <div id="paymentForm" className="paymentForm"><Payment data={buyTicket} /></div>
-                <div className="containerTrailer"><h1>Trailer</h1><iframe width="100%" height="520px" src="https://www.youtube.com/embed/u9Mv98Gr5pY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div className="containerTrailer"><h1 className="trailer">Trailer</h1><iframe className="video" width="100%" height="520px" src={movie[0].videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
 
     }
+
 
     return (
         <div>

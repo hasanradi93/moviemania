@@ -1,0 +1,60 @@
+.moveiDataForm {
+  width: 50%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moveiDataForm form {
+  width: 100%;
+  text-align: left;
+}
+
+.moveiDataForm form strong {
+  width: 150px;
+  display: block;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.moveiDataForm form input,
+.moveiDataForm form select,
+.moveiDataForm form span {
+  width: 250px;
+  margin-top: 10px;
+}
+
+.moveiDataForm form h3 {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.moveiDataForm form div select,
+.moveiDataForm form div input {
+  text-align: center;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moveiDataForm form div button {
+  text-align: center;
+  width: 80px;
+  margin-left: 20px;
+}
+
+.moveiDataForm form .displayData {
+  width: 60%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moveiDataForm form .displayData strong {
+  width: 200px;
+  display: inline;
+}
+
+.moveiDataForm form span input {
+  width: auto;
+}

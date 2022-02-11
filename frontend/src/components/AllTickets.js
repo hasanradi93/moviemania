@@ -2,6 +2,9 @@ import { React, useEffect, useState } from 'react';
 import { renderMatches } from 'react-router-dom';
 import BackendDataServices from "../services/BackendDataServices"
 
+ 
+
+
 function AllTickets() {
     const [tickets, setTickets] = useState([])
     const [error, setError] = useState(null)
@@ -27,10 +30,12 @@ function AllTickets() {
             })
     }, [])
 
-    return <div>
-        {console.log(tickets)}
+    return  <div>
+        {console.log("this is tickets", tickets)}
         <h1 className={{ errorStyle }}>{error}</h1>
-        {tickets.length ? tickets.map((ticket, i) => <li key={i}>{ticket.room.name}</li>) : <h1>No Tickets Today</h1>}
+        {tickets ? tickets.map((ticket, i) => <li key={i}>{ticket.room.name}</li>) : <strong>{tickets.price}</strong>}
+
+
     </div>;
 }
 

@@ -6,6 +6,50 @@
   text-align: center;
 }
 
+.ticketsSection {
+  width: 100%;
+  border-bottom: 3px groove red;
+  padding-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.ticketsSection .containerMovie {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.ticketsSection .containerImage {
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
+  width: 50%;
+}
+
+.ticketsSection .dataTicket {
+  width: 50% !important;
+}
+
+/* .containerMovie:hover {
+  transform: scale(1.05);
+  transition: 1s;
+} */
+.btnTicketCancel:hover {
+  transform: scale(1.05);
+  transition: 1s;
+}
+
+.btnTicketCancel {
+  background: transparent;
+  color: white;
+  width: 200px;
+  margin-bottom: 5px;
+  margin-left: 50px;
+}
+
 .profileData {
   margin-bottom: 50px;
   margin-top: 30px;

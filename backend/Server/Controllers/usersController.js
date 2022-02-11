@@ -91,25 +91,6 @@ exports.register = async (req, res) => {
     }
 }
 
-
-exports.updateUser = async (req, res) => {
-    const userId = req.params.id;
-    const newUser = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        profile: req.body.profile,
-        userType: req.body.userType
-    }
-
-    try {
-        const users = await User.findByIdAndUpdate({ _id: userId }, newUser)
-        res.json(users);
-    } catch (error) {
-        res.status(404).json({ message: error })
-    }
-}
-
 // login route setup
 exports.login = async (req, res) => {
     try {
@@ -155,16 +136,6 @@ exports.login = async (req, res) => {
     }
 }
 
-// delete user account route
-exports.deleteUser = async (req, res) => {
-    try {
-        const deletedUser = await User.findByIdAndDelete(req.user);
-        res.json(deletedUser);
-    } catch (error) {
-        res.status(500).json({ err: error.message });
-    }
-}
-
 // validating if user is logged in by boolean check most useful for front-end
 exports.checkToken = async (req, res) => {
     try {
@@ -194,7 +165,7 @@ exports.getUserData = async (req, res) => {
     })
 }
 
-//upload photo
+//upload phpto
 exports.uploadProfile = upload.single('profileImg')
 exports.savePicture = async (req, res, next) => {
     const userId = req.body.userId
@@ -216,10 +187,11 @@ exports.savePicture = async (req, res, next) => {
 }
 
 //update UserName
-exports.updateUserName = (req, res,next) => { 
-    const userId = req.params.id;
+exports.updateUserName = async (req, res, next) => {
+    console.log(req.body)
+    const userId = req.body.userId;
     const newUserName = {
-        username: req.body.username
+        username: req.body.userName
     }
     try {
         const users = await User.findByIdAndUpdate({ _id: userId }, newUserName)
