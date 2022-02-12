@@ -29,8 +29,19 @@ const MoviesAdmin = props => {
 
 
     const findByName = () => {
-        //find(searchName, "name")
-        console.log("find y name")
+        if (searchName) {
+            console.log("searchName", searchName)
+            BackendDataServices.findMovies({ "name": searchName })
+                .then(response => {
+                    console.log("response.data", response.data)
+                    setMovies(response.data)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+        }
+        else
+            alert("Write movie name")
     }
 
     let setMoviesData = ``
@@ -46,21 +57,21 @@ const MoviesAdmin = props => {
                                         <img className="poster" src={movie.photo} width='100%' height='400px' alt={movie.title} />
                                     </div>
                                 </Link>
-                                <div className="row">
+                                <div className="movieInfo">
                                     <h3 className="movieTitle">{movie.title}</h3><br />
                                     <div className="ratingDiv">
                                         <span className="rating" >{movie.rating}</span>
-                                        <img src="./star.png" className="ratingStar"></img>
+                                        <img src={window.location.origin + '/star.png'} className="ratingStar"></img>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <Link to={"edit/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-                                    Edit Detail
-                                </Link>
-                                <Link to={"tickets/" + movie._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-                                    View tickets
-                                </Link>
+                                <div className="movieInfo">
+                                    <Link to={"edit/" + movie._id} className="btn btn-primary col-lg-6" style={{ background: 'linear-gradient(#870f06, #a3020d)', borderColor: 'black' }}>
+                                        Edit Detail
+                                    </Link>
+                                    <Link to={"tickets/" + movie._id} className="btn btn-primary col-lg-6" style={{ background: 'linear-gradient(#870f06, #a3020d)', borderColor: 'black' }}>
+                                        View tickets
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,7 +84,7 @@ const MoviesAdmin = props => {
     return (
         <div>
             <div className="row pb-1" style={{ textAlign: 'center', marginBottom: '10px' }}>
-                <Link to={"add"}><img src='../add.png' width='32px' height='32px' alt='Add Movie'></img></Link>
+                <Link to={"add"}><img src={window.location.origin + '/add.png'} width='32px' height='32px' alt='Add Movie'></img></Link>
             </div>
             <div className="row pb-1" style={{ marginBottom: '20px' }}>
                 <div className="input-group col-lg-4">
@@ -96,7 +107,7 @@ const MoviesAdmin = props => {
                 </div>
             </div>
             <div className="row">
-                {setMoviesData}
+                {movies ? setMoviesData : 'No Movies'}
             </div>
         </div>
     )

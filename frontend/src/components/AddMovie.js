@@ -260,6 +260,7 @@ class AddMovie extends Component {
             BackendDataServices.addMovie(movieData)
                 .then(response => {
                     console.log(response.data)
+                    alert("Movie added successfullty")
                 })
                 .catch(error => {
                     console.log(error.message)
@@ -284,7 +285,7 @@ class AddMovie extends Component {
                     <strong>To Date:</strong><input type="date" value={this.state.todate} onChange={(e) => this.checkDate(e.target.value, 'todate')} /><br></br>
                     <strong>Availability</strong><input type="checkbox" value={this.state.availability} onChange={(e) => this.setState({ availability: e.target.checked ? 1 : 0 })} /><br></br>
                     <strong>Actors</strong><input type="text" placeholder='Movie Actors [use comma]' value={this.state.actors} onChange={(e) => this.setState({ actors: (e.target.value).split(",") })} /><br></br>
-                    <strong>Genre:</strong>{this.state.genres ? this.state.genres.map((genre, i) => { return <span key={i}><input type='radio' value={genre._id} onChange={(e) => this.setState({ genreId: e.target.value })} />{genre.name}</span> }) : ""}<br></br>
+                    <strong>Genre:</strong>{this.state.genres ? this.state.genres.map((genre, i) => { return <span><span key={i}><input type='radio' value={genre._id} onChange={(e) => this.setState({ genreId: e.target.value })} />{genre.name}</span>{(i % 3 === 0) ? <br></br> : ''} </span> }) : ""}<br></br>
                     <strong>Photo:</strong><input type="file" onChange={(e) => this.setPhoto(e.target.files[0])} /><br></br>
                     <strong>Video:</strong><input type="text" placeholder='Set the IFrame URL Video here' value={this.state.videoUrl} onChange={(e) => this.setVideo(e.target.value)} /><br></br>
                     <h3>Technologies & Prices:</h3>

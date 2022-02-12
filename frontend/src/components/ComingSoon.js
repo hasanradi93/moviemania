@@ -34,10 +34,10 @@ class ComingSoon extends Component {
                     <div key={movie._id} className="col-lg-4 pb-1">
                         <div className="card cardMovies">
                             <div className="card-body">
-                                <div className="card-text">                    
-                                        <div className="imgMovie">
-                                            <img className="poster" src={movie.photo} width='100%' height='auto' alt={movie.title} />
-                                        </div>
+                                <div className="card-text">
+                                    <div className="imgMovie">
+                                        <img className="poster" src={movie.photo} width='100%' height='450px' alt={movie.title} />
+                                    </div>
                                     <div className="movieInfo">
                                         <h3 className="movieTitle">{movie.title}</h3><br />
                                         <h3 className="comingSoonTitle">{FunctionTools.daysLeft(new Date(), movie.fromDate)} Days Left</h3>
@@ -51,10 +51,8 @@ class ComingSoon extends Component {
             })
         }
         return (
-            <div>
-                <div className="row">
-                    {this.allMovies}
-                </div>
+            <div className="row">
+                {this.allMovies}
             </div>
         )
     }

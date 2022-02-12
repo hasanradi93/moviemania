@@ -47,6 +47,8 @@ router.route('/updateUsername')
     .post(usersController.updateUserName)
 router.route('/uploadPhoto')
     .post(usersController.uploadProfile, usersController.savePicture)
+router.route('/getUsersAndCountTickets')
+    .get(usersController.getUsersAndCountTickets)
 
 
 

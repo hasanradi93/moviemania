@@ -22,7 +22,9 @@ const ticketSchema = new mongoose.Schema({
     },
     date: Date,
     time: String,
-    seatNumber: String
+    blockName: String,
+    seatNumber: Number,
+    price: Number
 }, { timestamps: true })
 
 

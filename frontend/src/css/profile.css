@@ -2,13 +2,12 @@
   width: 60%;
   border-bottom: 3px groove red;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 25%;
   text-align: center;
 }
 
 .ticketsSection {
   width: 100%;
-  border-bottom: 3px groove red;
   padding-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
@@ -16,39 +15,63 @@
   text-align: center;
 }
 
-.ticketsSection .containerMovie {
+.ticketsSection {
   margin-left: auto !important;
   margin-right: auto !important;
   margin-bottom: 10px;
   cursor: pointer;
+  height: auto;
 }
 
-.ticketsSection .containerImage {
-  padding-bottom: 5px !important;
-  padding-top: 5px !important;
-  width: 50%;
+.ticketsSection {
+  padding-bottom: 15px !important;
+  padding-top: 15px !important;
+  width: 70%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: auto !important;
+  background-color: transparent !important;
+  border: none;
+  outline: none;
 }
 
 .ticketsSection .dataTicket {
-  width: 50% !important;
+  width: 450px !important;
+  background-color: rgba(8, 8, 8, 0.5);
+  float: left;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  height: 281px;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0), 1px 2px 4px rgba(0, 0, 0);
+}
+
+.morePadding {
+  padding-bottom: 55px !important;
+  padding-top: 55px !important;
 }
 
 /* .containerMovie:hover {
   transform: scale(1.05);
   transition: 1s;
 } */
+.btnTicketCancel {
+  width: 150px;
+  height: 35px;
+  background: linear-gradient(#870f06, #c2000d);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0) 2px 4px 4px rgba(0, 0, 0);
+  font-size: 20px;
+  border: none;
+  color: wheat;
+  border-radius: 10px;
+  margin-top: 15%;
+  margin-right: -70px;
+  float: right;
+}
 .btnTicketCancel:hover {
   transform: scale(1.05);
   transition: 1s;
 }
 
-.btnTicketCancel {
-  background: transparent;
-  color: white;
-  width: 200px;
-  margin-bottom: 5px;
-  margin-left: 50px;
-}
 
 .profileData {
   margin-bottom: 50px;
@@ -74,4 +97,30 @@
   height: 50px;
   color: red;
   text-align: center;
+}
+
+.usersSection {
+  width: 100%;
+  padding-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.usersSection table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid linear-gradient(#870f06, #a3020d);
+}
+
+.usersSection table td {
+  text-align: center;
+}
+.prTickets{
+  background-color: transparent !important;
+    border: none;
+    outline: none;
+    margin-left: 50px;
 }

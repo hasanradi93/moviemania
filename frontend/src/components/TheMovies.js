@@ -32,7 +32,7 @@ class TheMovies extends Component {
                                 <div className="card-text">
                                     <Link to={`Movies/${movie._id}`}>
                                         <div className="imgMovie">
-                                            <img className="poster" src={movie.photo} width='100%' height='auto' alt={movie.title} />
+                                            <img className="poster" src={movie.photo} width='100%' height='500px' alt={movie.title} />
                                         </div>
                                     </Link>
                                     <div className="movieInfo">
@@ -40,7 +40,7 @@ class TheMovies extends Component {
 
                                         <div className="ratingDiv">
                                             <span className="rating" >{movie.rating}</span>
-                                            <img src="./star.png" className="ratingStar"></img>
+                                            <img src={window.location.origin + '/star.png'} className="ratingStar"></img>
                                         </div>
                                     </div>
                                 </div>
@@ -52,10 +52,8 @@ class TheMovies extends Component {
             })
         }
         return (
-            <div>
-                <div className="row">
-                    {this.allMovies}
-                </div>
+            <div className="row">
+                {this.allMovies}
             </div>
         )
     }

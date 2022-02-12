@@ -59,10 +59,12 @@ export default function Login() {
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <input type="submit" value="Log in" />
+                <input className="loginBtn" type="submit" value="Log in" />
                 <br></br>
-                <Link to={"/Register"}>Create account</Link>
+                <Link className="createAccount" to={"/Register"}>Create account</Link>
             </form>
         </div>
     );
 }
+
+

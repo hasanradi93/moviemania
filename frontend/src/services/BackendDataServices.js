@@ -22,6 +22,10 @@ class BackendDataServices {
         return http.post('tickets/takenSeats', data)
     }
 
+    findMovies(data) {
+        return http.post(`admin/movies/find`, data);
+    }
+
     addMovie(data) {
         return http.post("/admin/movies", data);
     }
@@ -79,6 +83,13 @@ class BackendDataServices {
         return http.post('/tickets/userTickets', data)
     }
 
+    getUsersAndCountTickets(data) {
+        return http.get('/users/getUsersAndCountTickets', data)
+    }
+
+    getMovieTickets(id) {
+        return http.post(`/admin/tickets/movie/${id}`);
+    }
 
     buyTicket(data) {
         return http.post('/tickets/', data)

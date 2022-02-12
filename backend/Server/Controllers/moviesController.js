@@ -40,6 +40,20 @@ exports.movies = async (req, res) => {
   }
 }
 
+exports.findMovies = async (req, res) => {
+  try {
+    const name = req.body.name
+    const movies = await Movie.find({ title: new RegExp(name, 'i') })
+      .populate({ path: 'dateTime.room', model: 'Room' })
+      .populate({ path: 'genre', model: 'Genre' })
+      .populate({ path: 'technology.technologyId', model: 'Technology' })
+      .populate({ path: 'dateTime.technologyId', model: 'Technology' })
+    res.json(movies);
+  } catch (error) {
+    res.status(404).json({ message: error })
+  }
+}
+
 exports.uploadPhoto = upload.single('photo')
 exports.addMovie = async (req, res, next) => {
   if (req.body.title === undefined || req.body.releasedate === undefined
@@ -182,9 +196,20 @@ exports.ComingSoon = async (req, res) => {
 //MOVIE DETAILS
 
 exports.movie = async (req, res) => {
+  // let dateNow = new Date().toString()
+  // dateNow = dateNow.split("T")[0]
+  // dateNow = dateNow + "00:00:00.000+00:00"
+  // console.log(dateNow)
   try {
+    // console.log(movieId);
+    // var start = new Date();
+    // start.setHours(0, 0, 0, 0);
+    // var end = new Date();
+    // end.setHours(23, 59, 59, 999);
+    // console.log(start)
+    // console.log(end)
+    //, "dateTime.day": { $gte: start, $lt: end }
     let movieId = req.params.id
-    console.log(movieId);
     const movie = await Movie.find({ _id: movieId })
       .populate({ path: 'dateTime.room', model: 'Room' })
       .populate({ path: 'genre', model: 'Genre' })
