@@ -4,6 +4,7 @@ import BackendDataServices from '../../services/BackendDataServices'
 import UserContext from "../../context/UserContext";
 import ErrorNotice from "./ErrorNotice";
 import "../../css/auth.css";
+import "../../css/authlogin.css";
 export default function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -39,32 +40,33 @@ export default function Login() {
             err.response.data.msg && setError(err.response.data.msg);
         }
     };
-
-    return (
-        <div className="page">
-            <h2>Log In</h2>
-            {error && (
+    return(
+        <div className="shape row justify-content-center">
+             
+            <img className="LogoLandscape" alt="logo" src={window.location.origin + '/moviemaniaTitlepng.png'}></img>
+            
+            
+            <form className="form lab" onSubmit={submit}>
+                 {error && (
                 <ErrorNotice message={error} clearError={() => setError(undefined)} />
             )}
-            <form className="form" onSubmit={submit}>
-                <label htmlFor="register-email">Email</label>
-                <input
-                    id="register-email"
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <label htmlFor="register-password">Password</label>
-                <input
-                    id="register-password"
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input className="loginBtn" type="submit" value="Log in" />
-                <br></br>
-                <Link className="createAccount" to={"/Register"}>Create account</Link>
+                <label htmlFor="email">Enter Your E-mail:</label>
+                    <input className="input" type="email" id="register-email" name="email" onChange={(e) => setEmail(e.target.value)}></input>
+                <label htmlFor="password">Enter Your Password:</label>
+                    <input className="input" type="password" id="register-password" name="password" onChange={(e) => setPassword(e.target.value)}></input>
+                        <label>Remember me
+                             <input type="checkbox" checked="unChecked"></input>
+                        </label>
+                           
+                        
+                <div>
+	            	<button type="submit" class="btnSubmit">Submit</button>
+	            </div>
+                <Link className="createAccount" to={"/Register"}>Dont Have an Account? Please Register</Link><br></br>
+
             </form>
-        </div>
+</div> 
+ 
+               
     );
 }
-
-
