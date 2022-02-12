@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 import Modal from 'react-bootstrap/Modal'
-import Payment from "./payment"
+import Payment from "./Payment"
 import '../css/screencss.css'
 
 
@@ -61,23 +61,16 @@ const MoviesDetails = props => {
                 .catch(e => {
                     console.log(e)
                 })
-
-            // let intervalTimer=setInterval(()=>{
-            //     setDay('')
-            //     setRoom(null)
-            //     setTechnology([])
-            //     setTime(null)
-            //     setPrice(0)
-            //     setCountSeats(0)
-            //     setChosenSeatArr([])
-            //     let interval=setInterval(()=>{
-            //         setPaid(false)
-            //         clearInterval(interval)
-            //     },5000)
-            //     clearInterval(intervalTimer)
-            // },5000)
-
         }
+        let intervalTimer = setInterval(() => {
+            setCountSeats(0)
+            setChosenSeatArr([])
+            let interval = setInterval(() => {
+                setPaid(false)
+                clearInterval(interval)
+            }, 5000)
+            clearInterval(intervalTimer)
+        }, 5000)
     }
 
     const isLogincheck = async () => {

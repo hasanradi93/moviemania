@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb')
 exports.tickets = async (req, res, next) => {
   try {
     const dateNow = new Date()
-    const tickets = await Ticket.find({ date: { $gte: dateNow } })
+    const tickets = await Ticket.find({ date: { $gte: dateNow.toISOString().split('T')[0] } })
       .populate({ path: 'roomId', model: 'Room' })
       .populate({ path: 'movieId', model: 'Movie' })
       .populate({ path: 'userId', model: 'User' })
