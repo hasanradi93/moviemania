@@ -5,7 +5,7 @@ import "../../css/auth.css";
 import UserContext from "../../context/UserContext";
 import ErrorNotice from './ErrorNotice';
 import FunctionTools from "../../services/FunctionTools";
-import "../../css/auth.css";
+import "../../css/authlogin.css";
 
 export default function Register() {
     const [username, setUsername] = useState()
@@ -55,41 +55,85 @@ export default function Register() {
         }
     };
 
-    return (
-        <div className="page">
-            <h2>Register</h2>
-            {error && <ErrorNotice message={error} clearError={() => setError(undefined)} />}
-            <form className="form" onSubmit={submit}>
-                <label htmlFor="register-userName">Username</label>
-                <input
-                    id="register-userName"
-                    type="text"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+    return  (
+         <div className="shape row justify-content-center">
+             
+    <img className="LogoLandscape" alt="logo" src={window.location.origin + '/moviemaniaTitlepng.png'}></img>
+    
+    
+    <form className="form lab" onSubmit={submit}>
+         {error && (
+        <ErrorNotice message={error} clearError={() => setError(undefined)} />
+    )}
+        <label htmlFor="register-userName">UserName</label>
+        <input className = "input " id="register-userName"type="text" onChange={(e) => setUsername(e.target.value)}></input>
 
+        <label htmlFor="register-email">Email</label>
+            <input className="input" id="register-email" type="email" onChange={(e) => setEmail(e.target.value)} ></input>
+      
+       <label htmlFor="register-password" >Password</label>
+       <input  className="input" id="register-password" type="password" onChange={(e) => setPassword(e.target.value)} ></input>
 
-                <label htmlFor="register-email">Email</label>
-                <input
-                    id="register-email"
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+       <label htmlFor="register-password" >Confirm Password</label>
+       <input  className="input" id="register-password" type="password" onChange={(e) => setPasswordCheck(e.target.value)} ></input>
+               
 
-                <label htmlFor="register-password">Password</label>
-                <input
-                    id="register-password"
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <label htmlFor="register-password">Confirm Password</label>
-                <input
-                    type="password"
-                    onChange={(e) => setPasswordCheck(e.target.value)}
-                />
-                <input className="loginBtn" type="submit" value="Register" />
-                <br></br>
-                <Link className="createAccount" to={"/Login"}>Login</Link>
-            </form>
-        </div>
-    );
+       <input className="loginBtn" type="submit" value="Register" />
+           <br></br>
+
+        <Link className="createAccount" to={"/Login"}>Login</Link><br></br>
+
+    </form>
+</div> 
+
+       
+);
 }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//     (
+//         <div className="page">
+//             <h2>Register</h2>
+//             {error && <ErrorNotice message={error} clearError={() => setError(undefined)} />}
+//             <form className="form" onSubmit={submit}>
+//                 <label htmlFor="register-userName">Username</label>
+//                 <input
+//                     id="register-userName"
+//                     type="text"
+//                     onChange={(e) => setUsername(e.target.value)}
+//                 />
+
+
+//                 <label htmlFor="register-email">Email</label>
+//                 <input
+//                     id="register-email"
+//                     type="email"
+//                     onChange={(e) => setEmail(e.target.value)}
+//                 />
+
+//                 <label htmlFor="register-password">Password</label>
+//                 <input
+//                     id="register-password"
+//                     type="password"
+//                     onChange={(e) => setPassword(e.target.value)}
+//                 />
+//                 <label htmlFor="register-password">Confirm Password</label>
+//                 <input
+//                     type="password"
+//                     onChange={(e) => setPasswordCheck(e.target.value)}
+//                 />
+//                 <input className="loginBtn" type="submit" value="Register" />
+//                 <br></br>
+//                 <Link className="createAccount" to={"/Login"}>Login</Link>
+//             </form>
+//         </div>
+//     );
+// }

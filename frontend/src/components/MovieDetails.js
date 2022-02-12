@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import FunctionTools from '../services/FunctionTools'
 import '../css/movieDetails.css'
 import Modal from 'react-bootstrap/Modal'
-import Payment from "./Payment"
+import Payment from "./payment"
 import '../css/screencss.css'
 
 

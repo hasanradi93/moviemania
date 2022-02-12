@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import BackendDataServices from "../services/BackendDataServices"
 import useHidePageInformation from '../hooks/useHidePageInformation'
-// import UserContext from "../context/UserContext"
 import "../css/profile.css";
 import FunctionTools from "../services/FunctionTools";
 
