@@ -176,7 +176,7 @@ class AddMovie extends Component {
 
     checkDate = (e, filed) => {
         let date = new Date(e)
-        if (date < new Date()) {
+        if (date <= new Date()) {
             alert("Check the " + filed + " value")
             return false
         }
