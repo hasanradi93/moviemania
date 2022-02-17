@@ -52,6 +52,7 @@ function App() {
         });
       }
     };
+    console.log(window.location.origin)
     checkLoggedIn();
     const preloader = () => {
       let interval = setInterval(() => {
@@ -68,33 +69,33 @@ function App() {
     <div>
       {/* UserContext.Provider is Context API similiar to Redux. We are wrapping the components that we want to share state with. */}
       <UserContext.Provider value={{ userData, setUserData }}>
-      <div id="preloader"> 
-      <div id="loader" class="nfLoader">   <img className='moviemania' style={{ color: "wheat", textAlign: "center", marginTop: "-200px", marginLeft: "-200px", width: '500px'}} src='../moviemaniaTitlepng.png'></img> </div>
-      </div> 
-      <div id='allWebsite' style={{display: "none"}}>
-        <Navbar />
-        <SideBar />
-        <div className="container mt-3 navclass" id='content' >
-          <Routes>
-            <Route exact path={"/"} element={<TheMovies />} />
-            <Route path={"ComingSoon"} element={<ComingSoon />} />
-            <Route path="Movies/:id" element={<MovieDetails />} />
-            <Route path="Login" element={<Login />} />
-            <Route path="Register" element={<Register />} />
-            <Route path="Profile" element={<Profile />} />
-            <Route path="UserTicket/:id" element={<UserTicket />} />
-            <Route path="AdminPanel" element={<AdminPanel />} >
-              {/* nest these routes inside of the dashboard route */}
-              <Route index element={<AllTickets />} />
-              <Route path="Tickets" element={<AllTickets />} />
-              <Route path="AllUsers" element={<CountTicketsUser />} />
-              <Route path="Movies" element={<MoviesAdmin />} />
-              <Route path="Movies/add" element={<AddMovie />} />
-              <Route path="Movies/edit/:id" element={<EditMovie />} />
-              <Route path="Movies/Tickets/:id" element={<TicketsMovie />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+        <div id="preloader">
+          <div id="loader" class="nfLoader">   <img className='moviemania' style={{ color: "wheat", textAlign: "center", marginTop: "-200px", marginLeft: "-200px", width: '500px' }} src={window.location.origin + '/moviemaniaTitlepng.png'}></img> </div>
+        </div>
+        <div id='allWebsite' style={{ display: "none" }}>
+          <Navbar />
+          <SideBar />
+          <div className="container mt-3 navclass" id='content' >
+            <Routes>
+              <Route exact path={"/"} element={<TheMovies />} />
+              <Route path={"ComingSoon"} element={<ComingSoon />} />
+              <Route path="Movies/:id" element={<MovieDetails />} />
+              <Route path="Login" element={<Login />} />
+              <Route path="Register" element={<Register />} />
+              <Route path="Profile" element={<Profile />} />
+              <Route path="UserTicket/:id" element={<UserTicket />} />
+              <Route path="AdminPanel" element={<AdminPanel />} >
+                {/* nest these routes inside of the dashboard route */}
+                <Route index element={<AllTickets />} />
+                <Route path="Tickets" element={<AllTickets />} />
+                <Route path="AllUsers" element={<CountTicketsUser />} />
+                <Route path="Movies" element={<MoviesAdmin />} />
+                <Route path="Movies/add" element={<AddMovie />} />
+                <Route path="Movies/edit/:id" element={<EditMovie />} />
+                <Route path="Movies/Tickets/:id" element={<TicketsMovie />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
         </div>
       </UserContext.Provider>

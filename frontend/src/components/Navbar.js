@@ -8,7 +8,7 @@ function Navbar(props) {
                 {/* <h1 className='moviemania' style={{ color: "white", textAlign: "center", width: "100%", }}>
                     MovieMania
                 </h1> */}
-                <img className='moviemania' style={{ color: "white", textAlign: "center", height: "auto", margin: "auto", width: '30%', marginTop: '-10px' }} src='../moviemaniaTitlepng.png'></img>
+                <img className='moviemania' style={{ color: "white", textAlign: "center", height: "auto", margin: "auto", width: '30%', marginTop: '-10px' }} src={window.location.origin + '/moviemaniaTitlepng.png'}></img>
             </div>
         </nav>
     );

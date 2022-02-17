@@ -110,7 +110,7 @@ class EditMovie extends Component {
 
     saveTechPrice = () => {
         if (this.state.price && this.state.technologyId) {
-            if (this.state.dateTime.length === 0) {
+            if (this.state.technologiesChoosed.length === 0) {
                 this.state.technologiesChoosed.push({ "technologyId": this.state.technologyId, "price": this.state.price })
                 this.setState({ price: 0 })
             }
@@ -354,7 +354,7 @@ class EditMovie extends Component {
                         <select onChange={(e) => this.setState({ technologyId: e.target.value })}><option value='0'>Choose Technolgy</option>{this.state.technologies ? this.state.technologies.map((technology, i) => { return <option key={i} value={technology._id}>{technology.name}</option> }) : ""}</select><br></br>
                         <input type="number" placeholder='Price Technolgy' value={this.state.price} onChange={(e) => this.setState({ price: (e.target.value) })} />
                         <button type='button' onClick={this.saveTechPrice}>Add</button>
-                        <div class='displayData'>
+                        <div className='displayData'>
                             {this.state.technologiesChoosed ? this.state.technologiesChoosed.map((techPrice, i) => { return (<li key={i}><span><img onClick={() => this.deleteFromTechnology(techPrice.technologyId)} alt="" src={window.location.origin + '/cancel.png'} width="20px" height="20px"></img></span>&nbsp;&nbsp;<strong>Technology :</strong> {this.getTechName(techPrice.technologyId)} | <strong>Price :</strong> {techPrice.price}$</li>) }) : ""}
                         </div>
                     </div><br></br>
@@ -365,7 +365,7 @@ class EditMovie extends Component {
                         <strong>Times:</strong><br></br>{this.state.timesArr.map((time, i) => { return (<span key={i}><input type="checkbox" checked={time.status ? 'checked' : ''} value={time.value} onChange={(e) => this.changeStatusTime(e.target)} />&nbsp;{time.value}{((i + 1) % 6 === 0) ? <br></br> : <span>&nbsp;&nbsp;&nbsp;</span>}</span>) })}<br></br>
                         <select onChange={(e) => this.checkTechnology(e.target.value)}><option value='0'>Choose Technolgy</option>{this.state.technologies ? this.state.technologies.map((technology, i) => { return <option key={i} value={technology._id}>{technology.name}</option> }) : ""}</select>
                         <button type='button' onClick={this.saveDateTimeRoomData}>Add</button>
-                        <div class='displayData'>
+                        <div className='displayData'>
                             {this.state.dateTime ? this.state.dateTime.map((dateTime, i) => { return (<li key={i}><span><img onClick={() => this.deleteFromDateTime(dateTime.room, dateTime.technologyId, dateTime.day)} alt="" src={window.location.origin + '/cancel.png'} width="20px" height="20px"></img></span>&nbsp;&nbsp;<strong>Room :</strong> {this.getRoomName(dateTime.room)} | <strong>Date :</strong>  {new Date(dateTime.day).toISOString().split('T')[0]} | <strong>Technology :</strong>  {this.getTechName(dateTime.technologyId)} | <strong>Times :</strong>  {dateTime.times.map((time, i) => { return <span key={i}><span>{time}</span>, </span> })}</li>) }) : ""}
                         </div>
                     </div><br></br>

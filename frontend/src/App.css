@@ -1,8 +1,18 @@
-body{
+body {
   background: linear-gradient(to right, rgb(8, 8, 8), #9c010b);
-  font-family: 'Bebas Neue', cursive;
-
+  font-family: "Bebas Neue", cursive;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
+.searchBtn {
+  border: 1px solid #9c010b;
+  background-color: #fff;
+  color: #9c010b;
+}
+
+.searchBtn:hover {
+  border: 1px solid #9c010b;
+  background-color: #9c010b;
+  color: #fff;
+}

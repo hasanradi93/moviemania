@@ -97,7 +97,7 @@ const MoviesAdmin = props => {
                     />
                     <div className="input-group-append">
                         <button
-                            className="btn btn-outline-secondary"
+                            className="btn searchBtn"
                             type="button"
                             onClick={findByName}
                         >

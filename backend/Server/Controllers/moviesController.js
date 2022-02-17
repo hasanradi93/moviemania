@@ -185,7 +185,7 @@ exports.ComingSoon = async (req, res) => {
   try {
     let date = new Date()
     console.log(date)
-    const movies = await Movie.find({ "fromDate": { $gt: date } })
+    const movies = await Movie.find({ "fromDate": { $gt: date }, "Availability": 1 })
     console.log(movies)
     res.json(movies);
   } catch (error) {

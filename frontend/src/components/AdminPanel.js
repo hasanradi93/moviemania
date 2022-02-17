@@ -23,7 +23,6 @@ class AdminPanel extends Component {
     render() {
         return (
             <div id='contentAdmin' >
-
                 Admin Panel
                 <Outlet />
             </div>
